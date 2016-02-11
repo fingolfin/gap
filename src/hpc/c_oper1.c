@@ -1,7 +1,7 @@
 #ifndef AVOID_PRECOMPILED
 /* C file produced by GAC */
 #include "compiled.h"
-#define FILE_CRC  "127678438"
+#define FILE_CRC  "-118027710"
 
 /* global variables used in handlers */
 static GVar G_REREADING;
@@ -1775,6 +1775,24 @@ static Obj  HdlrFunc6 (
  }
  /* od */
  
+ /* if IS_CONSTRUCTOR( opr ) then */
+ t_3 = GF_IS__CONSTRUCTOR;
+ t_2 = CALL_1ARGS( t_3, l_opr );
+ CHECK_FUNC_RESULT( t_2 )
+ CHECK_BOOL( t_2 )
+ t_1 = (Obj)(UInt)(t_2 != False);
+ if ( t_1 ) {
+  
+  /* flags[1] := WITH_IMPS_FLAGS( flags[1] ); */
+  t_2 = GF_WITH__IMPS__FLAGS;
+  C_ELM_LIST_FPL( t_3, l_flags, INTOBJ_INT(1) )
+  t_1 = CALL_1ARGS( t_2, t_3 );
+  CHECK_FUNC_RESULT( t_1 )
+  C_ASS_LIST_FPL( l_flags, INTOBJ_INT(1), t_1 )
+  
+ }
+ /* fi */
+ 
  /* if not IsBound( arglist[pos] ) then */
  CHECK_INT_POS( l_pos )
  t_3 = C_ISB_LIST( a_arglist, l_pos );
@@ -2790,8 +2808,8 @@ static Obj  HdlrFunc7 (
    t_6 = NewFunction( NameFunc[8], 1, ArgStringToList("obj"), HdlrFunc8 );
    SET_ENVI_FUNC( t_6, STATE(CurrLVars) );
    t_7 = NewFunctionBody();
-   SET_STARTLINE_BODY(t_7, 671);
-   SET_ENDLINE_BODY(t_7, 689);
+   SET_STARTLINE_BODY(t_7, 677);
+   SET_ENDLINE_BODY(t_7, 695);
    SET_FILENAME_BODY(t_7, FileName);
    SET_BODY_FUNC(t_6, t_7);
    CALL_6ARGS( t_1, t_2, t_3, t_4, t_5, l_rank, t_6 );
@@ -3356,8 +3374,8 @@ static Obj  HdlrFunc11 (
   t_1 = NewFunction( NameFunc[12], 1, ArgStringToList("key"), HdlrFunc12 );
   SET_ENVI_FUNC( t_1, STATE(CurrLVars) );
   t_2 = NewFunctionBody();
-  SET_STARTLINE_BODY(t_2, 868);
-  SET_ENDLINE_BODY(t_2, 872);
+  SET_STARTLINE_BODY(t_2, 874);
+  SET_ENDLINE_BODY(t_2, 878);
   SET_FILENAME_BODY(t_2, FileName);
   SET_BODY_FUNC(t_1, t_2);
   ASS_LVAR( 2, t_1 );
@@ -3435,8 +3453,8 @@ static Obj  HdlrFunc11 (
  t_6 = NewFunction( NameFunc[13], 1, ArgStringToList("D"), HdlrFunc13 );
  SET_ENVI_FUNC( t_6, STATE(CurrLVars) );
  t_7 = NewFunctionBody();
- SET_STARTLINE_BODY(t_7, 889);
- SET_ENDLINE_BODY(t_7, 889);
+ SET_STARTLINE_BODY(t_7, 895);
+ SET_ENDLINE_BODY(t_7, 895);
  SET_FILENAME_BODY(t_7, FileName);
  SET_BODY_FUNC(t_6, t_7);
  CALL_6ARGS( t_1, t_2, t_3, t_4, t_5, INTOBJ_INT(0), t_6 );
@@ -3509,8 +3527,8 @@ static Obj  HdlrFunc11 (
  t_6 = NewFunction( NameFunc[14], 2, ArgStringToList("D,key"), HdlrFunc14 );
  SET_ENVI_FUNC( t_6, STATE(CurrLVars) );
  t_7 = NewFunctionBody();
- SET_STARTLINE_BODY(t_7, 911);
- SET_ENDLINE_BODY(t_7, 934);
+ SET_STARTLINE_BODY(t_7, 917);
+ SET_ENDLINE_BODY(t_7, 940);
  SET_FILENAME_BODY(t_7, FileName);
  SET_BODY_FUNC(t_6, t_7);
  CALL_6ARGS( t_1, t_2, t_3, t_4, t_5, INTOBJ_INT(0), t_6 );
@@ -3557,8 +3575,8 @@ static Obj  HdlrFunc11 (
  t_6 = NewFunction( NameFunc[15], 2, ArgStringToList("D,key"), HdlrFunc15 );
  SET_ENVI_FUNC( t_6, STATE(CurrLVars) );
  t_7 = NewFunctionBody();
- SET_STARTLINE_BODY(t_7, 944);
- SET_ENDLINE_BODY(t_7, 952);
+ SET_STARTLINE_BODY(t_7, 950);
+ SET_ENDLINE_BODY(t_7, 958);
  SET_FILENAME_BODY(t_7, FileName);
  SET_BODY_FUNC(t_6, t_7);
  CALL_6ARGS( t_1, t_2, t_3, t_4, t_5, INTOBJ_INT(0), t_6 );
@@ -3618,8 +3636,8 @@ static Obj  HdlrFunc11 (
  t_6 = NewFunction( NameFunc[16], 3, ArgStringToList("D,key,obj"), HdlrFunc16 );
  SET_ENVI_FUNC( t_6, STATE(CurrLVars) );
  t_7 = NewFunctionBody();
- SET_STARTLINE_BODY(t_7, 961);
- SET_ENDLINE_BODY(t_7, 974);
+ SET_STARTLINE_BODY(t_7, 967);
+ SET_ENDLINE_BODY(t_7, 980);
  SET_FILENAME_BODY(t_7, FileName);
  SET_BODY_FUNC(t_6, t_7);
  CALL_6ARGS( t_1, t_2, t_3, t_4, t_5, INTOBJ_INT(0), t_6 );
@@ -3980,8 +3998,8 @@ static Obj  HdlrFunc17 (
  t_4 = NewFunction( NameFunc[18], -1, ArgStringToList("arg"), HdlrFunc18 );
  SET_ENVI_FUNC( t_4, STATE(CurrLVars) );
  t_5 = NewFunctionBody();
- SET_STARTLINE_BODY(t_5, 1040);
- SET_ENDLINE_BODY(t_5, 1056);
+ SET_STARTLINE_BODY(t_5, 1046);
+ SET_ENDLINE_BODY(t_5, 1062);
  SET_FILENAME_BODY(t_5, FileName);
  SET_BODY_FUNC(t_4, t_5);
  CALL_6ARGS( t_1, t_2, l_info, l_fampred, t_3, l_val, t_4 );
@@ -4298,6 +4316,9 @@ static Obj  HdlrFunc1 (
       for i in filters do
           ADD_LIST( flags, FLAGS_FILTER( i ) );
       od;
+      if IS_CONSTRUCTOR( opr ) then
+          flags[1] := WITH_IMPS_FLAGS( flags[1] );
+      fi;
       if not IsBound( arglist[pos] ) then
           Error( "the method is missing in <arglist>" );
       elif IS_INT( arglist[pos] ) or IS_FUNCTION( arglist[pos] ) and NARG_FUNC( arglist[pos] ) = 0 and pos < LEN_LIST( arglist ) then
@@ -4396,7 +4417,7 @@ static Obj  HdlrFunc1 (
  SET_ENVI_FUNC( t_3, STATE(CurrLVars) );
  t_4 = NewFunctionBody();
  SET_STARTLINE_BODY(t_4, 378);
- SET_ENDLINE_BODY(t_4, 610);
+ SET_ENDLINE_BODY(t_4, 616);
  SET_FILENAME_BODY(t_4, FileName);
  SET_BODY_FUNC(t_3, t_4);
  CALL_2ARGS( t_1, t_2, t_3 );
@@ -4453,8 +4474,8 @@ static Obj  HdlrFunc1 (
  t_2 = NewFunction( NameFunc[7], 6, ArgStringToList("name,filter,getter,setter,tester,mutflag"), HdlrFunc7 );
  SET_ENVI_FUNC( t_2, STATE(CurrLVars) );
  t_3 = NewFunctionBody();
- SET_STARTLINE_BODY(t_3, 629);
- SET_ENDLINE_BODY(t_3, 693);
+ SET_STARTLINE_BODY(t_3, 635);
+ SET_ENDLINE_BODY(t_3, 699);
  SET_FILENAME_BODY(t_3, FileName);
  SET_BODY_FUNC(t_2, t_3);
  CALL_1ARGS( t_1, t_2 );
@@ -4467,8 +4488,8 @@ static Obj  HdlrFunc1 (
  t_2 = NewFunction( NameFunc[9], 6, ArgStringToList("name,filter,getter,setter,tester,mutflag"), HdlrFunc9 );
  SET_ENVI_FUNC( t_2, STATE(CurrLVars) );
  t_3 = NewFunctionBody();
- SET_STARTLINE_BODY(t_3, 696);
- SET_ENDLINE_BODY(t_3, 702);
+ SET_STARTLINE_BODY(t_3, 702);
+ SET_ENDLINE_BODY(t_3, 708);
  SET_FILENAME_BODY(t_3, FileName);
  SET_BODY_FUNC(t_2, t_3);
  CALL_1ARGS( t_1, t_2 );
@@ -4495,8 +4516,8 @@ static Obj  HdlrFunc1 (
  t_3 = NewFunction( NameFunc[10], 2, ArgStringToList("list,elm"), HdlrFunc10 );
  SET_ENVI_FUNC( t_3, STATE(CurrLVars) );
  t_4 = NewFunctionBody();
- SET_STARTLINE_BODY(t_4, 715);
- SET_ENDLINE_BODY(t_4, 739);
+ SET_STARTLINE_BODY(t_4, 721);
+ SET_ENDLINE_BODY(t_4, 745);
  SET_FILENAME_BODY(t_4, FileName);
  SET_BODY_FUNC(t_3, t_4);
  CALL_2ARGS( t_1, t_2, t_3 );
@@ -4579,8 +4600,8 @@ static Obj  HdlrFunc1 (
  t_3 = NewFunction( NameFunc[11], 4, ArgStringToList("name,domreq,keyreq,keytest"), HdlrFunc11 );
  SET_ENVI_FUNC( t_3, STATE(CurrLVars) );
  t_4 = NewFunctionBody();
- SET_STARTLINE_BODY(t_4, 864);
- SET_ENDLINE_BODY(t_4, 975);
+ SET_STARTLINE_BODY(t_4, 870);
+ SET_ENDLINE_BODY(t_4, 981);
  SET_FILENAME_BODY(t_4, FileName);
  SET_BODY_FUNC(t_3, t_4);
  CALL_2ARGS( t_1, t_2, t_3 );
@@ -4630,8 +4651,8 @@ static Obj  HdlrFunc1 (
  t_3 = NewFunction( NameFunc[17], -1, ArgStringToList("arg"), HdlrFunc17 );
  SET_ENVI_FUNC( t_3, STATE(CurrLVars) );
  t_4 = NewFunctionBody();
- SET_STARTLINE_BODY(t_4, 1010);
- SET_ENDLINE_BODY(t_4, 1057);
+ SET_STARTLINE_BODY(t_4, 1016);
+ SET_ENDLINE_BODY(t_4, 1063);
  SET_FILENAME_BODY(t_4, FileName);
  SET_BODY_FUNC(t_3, t_4);
  CALL_2ARGS( t_1, t_2, t_3 );
@@ -4952,7 +4973,7 @@ static Int InitLibrary ( StructInitInfo * module )
 static StructInitInfo module = {
  .type        = MODULE_STATIC,
  .name        = "GAPROOT/lib/oper1.g",
- .crc         = 127678438,
+ .crc         = -118027710,
  .initKernel  = InitKernel,
  .initLibrary = InitLibrary,
  .postRestore = PostRestore,
