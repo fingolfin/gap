@@ -17,8 +17,9 @@
 
 #include        <assert.h>              /* assert                          */
 #include        <time.h>                /* time                            */
-#include	<stdlib.h>		/* exit				   */
-#include	<stdio.h>		/* NULL, fprintf		   */
+#include        <stdlib.h>              /* exit                            */
+#include        <stdio.h>               /* NULL, fprintf                   */
+
 #include        <src/system.h>              /* system dependent part           */
 
 #include        <src/gasman.h>              /* garbage collector               */
@@ -48,10 +49,8 @@
 
 # include       "gapmpi.h"               /* MPI functions and UNIX utils   */
 #include        <mpi.h>                  /* provided with MPI distribution */
-#ifndef SYS_UNISTD_H                     /* definition of 'chdir'          */
-# include <unistd.h>
-# define SYS_UNISTD_H
-#endif
+
+#include <unistd.h>                     /* definition of 'chdir'          */
 #include <sys/time.h>
 #include <sys/resource.h>
 
