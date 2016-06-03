@@ -74,6 +74,48 @@ AC_DEFINE_UNQUOTED([HAVE_ARITHRIGHTSHIFT],
 # C_LONG_ALIGN  # unused?
 
 
+dnl
+dnl User settings
+dnl
+
+dnl HPC-GAP mode (off by default)
+AC_ARG_ENABLE([hpcgap],
+    [AS_HELP_STRING([--enable-hpcgap], [enable HPC-GAP])],
+    [AC_DEFINE([HPCGAP], [1], [define if building HPC-GAP])],
+    [enable_hpcgap=no]
+    )
+AC_MSG_CHECKING([whether to enable HPC-GAP])
+AC_MSG_RESULT([$enable_hpcgap])
+
+AM_CONDITIONAL([HPCGAP], [test x$enable_hpcgap = xyes])
+
+
+dnl Debug mode (off by default)
+AC_ARG_ENABLE([debug],
+    [AS_HELP_STRING([--enable-debug], [enable debug mode])],
+    [AC_DEFINE([DEBUG], [1], [define if building in debug mode])],
+    [enable_debug=no]
+    )
+AC_MSG_CHECKING([whether to enable debug mode])
+AC_MSG_RESULT([$enable_debug])
+
+
+dnl Compatibility mode for packages (on by default)
+AC_ARG_ENABLE([compat-mode],
+    [AS_HELP_STRING([--disable-compat-mode], [enable compatibility mode])],
+    [],
+    [enable_compat_mode=yes]
+    )
+AC_MSG_CHECKING([whether to enable compatibility mode for packages])
+AC_MSG_RESULT([$enable_compat_mode])
+
+AM_CONDITIONAL([COMPAT_MODE], [test x$enable_compat_mode = xyes])
+
+
+dnl
+dnl External dependencies
+dnl
+
 dnl Find GMP
 AC_ARG_WITH([gmp],
   [AS_HELP_STRING([--with-gmp=<path>],  
@@ -119,44 +161,6 @@ AS_IF([test "x$with_readline" != xno],
     ], -lncurses)
   ]
 )
-
-
-dnl
-dnl User settings
-dnl
-
-dnl HPC-GAP mode (off by default)
-AC_ARG_ENABLE([hpcgap],
-    [AS_HELP_STRING([--enable-hpcgap], [enable HPC-GAP])],
-    [AC_DEFINE([HPCGAP], [1], [define if building HPC-GAP])],
-    [enable_hpcgap=no]
-    )
-AC_MSG_CHECKING([whether to enable HPC-GAP])
-AC_MSG_RESULT([$enable_hpcgap])
-
-AM_CONDITIONAL([HPCGAP], [test x$enable_hpcgap = xyes])
-
-
-dnl Debug mode (off by default)
-AC_ARG_ENABLE([debug],
-    [AS_HELP_STRING([--enable-debug], [enable debug mode])],
-    [AC_DEFINE([DEBUG], [1], [define if building in debug mode])],
-    [enable_debug=no]
-    )
-AC_MSG_CHECKING([whether to enable debug mode])
-AC_MSG_RESULT([$enable_debug])
-
-
-dnl Compatibility mode for packages (on by default)
-AC_ARG_ENABLE([compat-mode],
-    [AS_HELP_STRING([--disable-compat-mode], [enable compatibility mode])],
-    [],
-    [enable_compat_mode=yes]
-    )
-AC_MSG_CHECKING([whether to enable compatibility mode for packages])
-AC_MSG_RESULT([$enable_compat_mode])
-
-AM_CONDITIONAL([COMPAT_MODE], [test x$enable_compat_mode = xyes])
 
 
 
