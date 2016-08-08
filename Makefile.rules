@@ -160,28 +160,14 @@ SOURCES := $(addprefix $(top_builddir)/gen/, $(ORIGINAL_SOURCES))
 # determine which sources have a version in in hpcgap/
 HPCGAP_SOURCES := $(subst $(srcdir)/hpcgap/,,$(wildcard $(addprefix $(srcdir)/hpcgap/,$(ORIGINAL_SOURCES))))
 
-# find those in src/ ...
-SRC_HPCGAP_SOURCES := $(filter-out src/hpc/,$(HPCGAP_SOURCES))
-# ... and those in src/hpc/
-HPC_HPCGAP_SOURCES := $(filter src/hpc/,$(HPCGAP_SOURCES))
-
-
 # static pattern rule for sources with an HPCGAP-version
-$(addprefix gen/,$(SRC_HPCGAP_SOURCES)): gen/src/%.c: hpcgap/src/%.c
-	@mkdir -p gen/src/
-	$(QUIET_WARD)$(ADDGUARDS2) $(CPPFLAGS) $< > $@
-
-$(addprefix gen/,$(HPC_HPCGAP_SOURCES)): gen/src/hpc/%.c: hpcgap/src/hpc/%.c
-	@mkdir -p gen/src/hpc/
+$(addprefix gen/,$(HPCGAP_SOURCES)): gen/src/%.c: hpcgap/src/%.c
+	@mkdir -p $(dir $@)
 	$(QUIET_WARD)$(ADDGUARDS2) $(CPPFLAGS) $< > $@
 
 # static pattern rule for sources without an HPCGAP-version
 gen/src/%.c: src/%.c
-	@mkdir -p gen/src/
-	$(QUIET_WARD)$(ADDGUARDS2) $(CPPFLAGS) $< > $@
-
-gen/src/hpc/%.c: src/hpc/%.c
-	@mkdir -p gen/src/hpc/
+	@mkdir -p $(dir $@)
 	$(QUIET_WARD)$(ADDGUARDS2) $(CPPFLAGS) $< > $@
 
 
