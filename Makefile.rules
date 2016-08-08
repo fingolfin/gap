@@ -167,24 +167,22 @@ HPC_HPCGAP_SOURCES := $(filter src/hpc/,$(HPCGAP_SOURCES))
 
 
 # static pattern rule for sources with an HPCGAP-version
-# TODO: invoke "ward" instead of echo + cp
 $(addprefix gen/,$(SRC_HPCGAP_SOURCES)): gen/src/%.c: hpcgap/src/%.c
 	@mkdir -p gen/src/
-	$(QUIET_WARD)echo "#line 1 \"$<\"" > $@ && cat $< >> $@
+	$(QUIET_WARD)$(ADDGUARDS2) $(CPPFLAGS) $< > $@
 
 $(addprefix gen/,$(HPC_HPCGAP_SOURCES)): gen/src/hpc/%.c: hpcgap/src/hpc/%.c
 	@mkdir -p gen/src/hpc/
-	$(QUIET_WARD)echo "#line 1 \"$<\"" > $@ && cat $< >> $@
+	$(QUIET_WARD)$(ADDGUARDS2) $(CPPFLAGS) $< > $@
 
 # static pattern rule for sources without an HPCGAP-version
-# TODO: invoke "ward" instead of simply cp
 gen/src/%.c: src/%.c
 	@mkdir -p gen/src/
-	$(QUIET_WARD)echo "#line 1 \"$<\"" > $@ && cat $< >> $@
+	$(QUIET_WARD)$(ADDGUARDS2) $(CPPFLAGS) $< > $@
 
 gen/src/hpc/%.c: src/hpc/%.c
 	@mkdir -p gen/src/hpc/
-	$(QUIET_WARD)echo "#line 1 \"$<\"" > $@ && cat $< >> $@
+	$(QUIET_WARD)$(ADDGUARDS2) $(CPPFLAGS) $< > $@
 
 
 endif # end of HPCGAP specific code
