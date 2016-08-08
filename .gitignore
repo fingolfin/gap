@@ -19,15 +19,17 @@
 /config.status
 /configure
 /libtool
-/src/.deps/
 /src/config.h.in
 /src/config.h
-/src/stamp-h
 /src/*.o
-/src/gen/
+/src/.deps/
 /src/hpc/.deps/
 
+/stamp-h
+/gen/
 /src/gap_version.c
+
+/build/
 
 /doc/manualbib.xml.bib
 /doc/*/*.html
@@ -67,6 +69,8 @@
 /dev/log
 
 /pkg/
+/bootstrap-pkg-minimal.tar.gz
+/bootstrap-pkg-full.tar.gz
 
 *.core
 *.rej
