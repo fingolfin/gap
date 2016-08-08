@@ -376,13 +376,15 @@ CC_UPDATE_DEP_FLAG = -MMD -MF "$(*D)/$(DEPDIR)/$(*F).d" -MQ "$@" -MP
 # Handle version information
 ######################################################################
 
+GVF = $(srcdir)/cnf/GAP-VERSION-FILE
+
 # the GAP-VERSION-FILE contains the raw version, nothing else
-cnf/GAP-VERSION-FILE: FORCE
+$(GVF): FORCE
 	@cd $(top_srcdir) && $(SHELL) cnf/GAP-VERSION-GEN
--include cnf/GAP-VERSION-FILE
+-include $(GVF)
 
 # generate src/gap_version.c
-src/gap_version.c: $(top_srcdir)/src/gap_version.c.in cnf/GAP-VERSION-FILE
+src/gap_version.c: $(top_srcdir)/src/gap_version.c.in $(GVF)
 	sed -e "s/@GAP_VERSION@/$(GAP_VERSION)/" < $< > $@
 
 
