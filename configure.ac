@@ -191,14 +191,27 @@ AS_IF([test "x$enable_hpcgap" = xyes],
   AS_IF([test "x$ADDGUARDS2" = x], AC_MSG_ERROR([could not locate addguards2]))
 
   AS_BOX(["end of ward hack"])
-  ]
-)
 
 
 # TODO: there are further hpcgap specific external dependencies:
 #  gc - the Boehm garbage collector, see http://www.hboehm.info/gc/
 #  libatomic_ops - part of gc, but see also https://github.com/ivmai/libatomic_ops
 #  ...
+
+# HACK
+AC_DEFINE([BOEHM_GC], [1], [Use Boehm garbage collector])
+
+# FIXME: what about these defines which HPC-GAP seems to "know"?
+# - DISABLE_GC
+# - GC_THREADS
+# - NUM_CPUS
+# - VERBOSE_GUARDS
+# - WITH_ZMQ  (ignore; ZeroMQ support is being moved into a package)
+
+  ]
+)
+
+
 
 dnl
 dnl Detect host specific setting
