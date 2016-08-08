@@ -207,6 +207,7 @@ AC_DEFINE([BOEHM_GC], [1], [Use Boehm garbage collector])
 # - NUM_CPUS
 # - VERBOSE_GUARDS
 # - WITH_ZMQ  (ignore; ZeroMQ support is being moved into a package)
+# - MAX_GC_THREADS
 
   ]
 )
