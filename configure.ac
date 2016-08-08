@@ -259,9 +259,16 @@ dnl
 dnl check for functionality related to child process handling,
 dnl including pseudo TTY support, signals, etc.
 dnl
+dnl TODO: reduce these checks to the minimum! but make sure
+dnl to also adjust the C code simultaneously, and e.g. remove
+dnl checks for things like HAVE_SYS_WAIT_H if appropriate.
+dnl
 
-AC_CHECK_HEADERS([termios.h termio.h sgtty.h])
-AC_CHECK_HEADERS([sys/ioctl.h time.h sys/times.h])
+AC_CHECK_HEADERS([fcntl.h termios.h termio.h sgtty.h])
+AC_CHECK_HEADERS([sys/ioctl.h sys/resource sys/stat.h sys/wait.h])
+
+# FIXME: get rid of the following (requires code changes!!!)
+AC_CHECK_HEADERS( assert.h errno.h math.h stdio.h stdlib.h string.h )
 
 
 # Check for POSIX 98 pty APIs
@@ -362,9 +369,13 @@ AC_TRY_LINK([#include <setjmp.h>], [sigjmp_buf t; _setjmp(t, 0)],
   [AC_MSG_RESULT([no])]
 )
 
-# for rusage
-AC_CHECK_HEADERS([sys/resource.h])
-AC_CHECK_FUNCS([getrusage gettimeofday])
+# for rusage and timers
+AC_CHECK_HEADERS( time.h sys/time.h sys/times.h )
+AC_CHECK_FUNCS( times getrusage gettimeofday clock_gettime clock_getres )
+AC_CHECK_FUNCS( setitimer getitimer)
+AC_CHECK_LIB( [rt], [timer_create])
+AC_CHECK_FUNCS( timer_settime timer_gettime timer_create )
+AC_CHECK_FUNCS( sys_timer_settime sys_timer_gettime sys_timer_create )
 
 
 dnl
