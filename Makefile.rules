@@ -157,7 +157,9 @@ ifeq ($(HPCGAP),yes)
 ORIGINAL_SOURCES := $(SOURCES)
 SOURCES := $(addprefix $(top_builddir)/gen/, $(ORIGINAL_SOURCES))
 
-# determine which sources have a version in in hpcgap/
+# determine which sources have a version in "hpcgap/src".
+# This uses the fact that "wildcard" only returns paths which refer
+# to existing files.
 HPCGAP_SOURCES := $(subst $(srcdir)/hpcgap/,,$(wildcard $(addprefix $(srcdir)/hpcgap/,$(ORIGINAL_SOURCES))))
 
 # static pattern rule for sources with an HPCGAP-version
