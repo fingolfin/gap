@@ -279,7 +279,7 @@ dnl checks for things like HAVE_SYS_WAIT_H if appropriate.
 dnl
 
 AC_CHECK_HEADERS([fcntl.h termios.h termio.h sgtty.h])
-AC_CHECK_HEADERS([sys/ioctl.h sys/resource sys/stat.h sys/wait.h])
+AC_CHECK_HEADERS([sys/ioctl.h sys/resource.h sys/stat.h sys/wait.h])
 
 # FIXME: get rid of the following (requires code changes!!!)
 AC_CHECK_HEADERS( assert.h errno.h math.h stdio.h stdlib.h string.h )
