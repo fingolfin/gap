@@ -108,7 +108,7 @@ AC_ARG_ENABLE([compat-mode],
 AC_MSG_CHECKING([whether to enable compatibility mode for packages])
 AC_MSG_RESULT([$enable_compat_mode])
 
-AC_SUBST([COMPAT_MODE], [test x$enable_compat_mode = xyes])
+AC_SUBST([COMPAT_MODE], [$enable_compat_mode])
 
 
 dnl
