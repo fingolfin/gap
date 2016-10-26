@@ -297,6 +297,7 @@ QUIET_AR      = @echo '   AR      ' $@;
 QUIET_RANLIB  = @echo '   RANLIB  ' $@;
 QUIET_LINK    = @echo '   LINK    ' $@;
 QUIET_WARD    = @echo '   WARD    ' $@;
+QUIET_SED     = @echo '   SED     ' $@;
 QUIET         = @
 endif
 endif
@@ -373,7 +374,7 @@ $(GVF): FORCE
 
 # generate src/gap_version.c
 src/gap_version.c: $(top_srcdir)/src/gap_version.c.in $(GVF)
-	sed -e "s/@GAP_VERSION@/$(GAP_VERSION)/" < $< > $@
+	$(QUIET_SED)sed -e "s/@GAP_VERSION@/$(GAP_VERSION)/" < $< > $@
 
 
 ######################################################################
