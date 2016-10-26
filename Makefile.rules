@@ -291,12 +291,12 @@ bootstrap-pkg-full:
 # Replace regular output with quiet messages (unless V is set, e.g. "make V=1")
 ifneq ($(findstring $(MAKEFLAGS),s),s)
 ifndef V
-QUIET_CC      = @echo '   ' C '      ' $@;
-QUIET_AS      = @echo '   ' AS '     ' $@;
-QUIET_AR      = @echo '   ' AR '     ' $@;
-QUIET_RANLIB  = @echo '   ' RANLIB ' ' $@;
-QUIET_LINK    = @echo '   ' LINK '   ' $@;
-QUIET_WARD    = @echo '   ' WARD '   ' $@;
+QUIET_CC      = @echo '   C       ' $@;
+QUIET_AS      = @echo '   AS      ' $@;
+QUIET_AR      = @echo '   AR      ' $@;
+QUIET_RANLIB  = @echo '   RANLIB  ' $@;
+QUIET_LINK    = @echo '   LINK    ' $@;
+QUIET_WARD    = @echo '   WARD    ' $@;
 QUIET         = @
 endif
 endif
