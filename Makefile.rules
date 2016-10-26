@@ -397,7 +397,11 @@ $(top_srcdir)/configure: $(configure_deps)
 #	cd $(srcdir) && $(ACLOCAL) -I cnf/m4
 
 src/config.h: stamp-h
+	@if test ! -f $@; then rm -f stamp-h; else :; fi
+	@if test ! -f $@; then $(MAKE) stamp-h; else :; fi
+
 stamp-h: $(srcdir)/src/config.h.in $(top_builddir)/config.status
+	@rm -f stamp-h
 	cd $(top_builddir) && $(SHELL) ./config.status src/config.h
 	echo > $@
 
