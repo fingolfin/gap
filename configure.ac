@@ -88,6 +88,10 @@ AC_MSG_CHECKING([whether to enable HPC-GAP])
 AC_MSG_RESULT([$enable_hpcgap])
 
 AC_SUBST([HPCGAP], [$enable_hpcgap])
+if test "x$enable_hpcgap" = xyes ; then
+    # HACK (see issue #9)
+    AC_DEFINE([MAX_GC_THREADS], [4], [maximum number of GC threads])
+fi
 
 dnl Debug mode (off by default)
 AC_ARG_ENABLE([debug],
