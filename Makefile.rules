@@ -8,7 +8,7 @@
 #######################################################################
 all: gap$(EXEEXT)
 
-# Backwards compatibility: add "default" target as alias for "all
+# Backwards compatibility: add "default" target as alias for "all"
 default: all
 
 
@@ -171,7 +171,6 @@ $(addprefix gen/,$(HPCGAP_SOURCES)): gen/src/%.c: hpcgap/src/%.c
 gen/src/%.c: src/%.c
 	@mkdir -p $(dir $@)
 	$(QUIET_WARD)$(ADDGUARDS2) $(CPPFLAGS) $< > $@
-
 
 endif # end of HPCGAP specific code
 
