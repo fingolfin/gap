@@ -31,16 +31,16 @@
 **  to compile and link GAP.
 */
 
-#include        "system.h"              /* system dependent part           */
+#include        <src/system.h>              /* system dependent part           */
 
 #ifndef WARD_ENABLED
-#include        "gap_version.h"         /* SCM information                 */
+#include        <src/gap_version.h>         /* SCM information                 */
 #endif
 
-#include        "gap.h"                 /* get UserHasQUIT                 */
+#include        <src/gap.h>                 /* get UserHasQUIT                 */
 
-#include        "sysfiles.h"            /* file input/output               */
-#include        "gasman.h"            
+#include        <src/sysfiles.h>            /* file input/output               */
+#include        <src/gasman.h>            
 #include        <fcntl.h>
 
 
@@ -71,7 +71,7 @@
 
 /****************************************************************************
 **  The following function is from profile.c. We put a prototype here
-**  Rather than #include "profile.h" to avoid pulling in large chunks
+**  Rather than #include <src/profile.h> to avoid pulling in large chunks
 **  of the GAP type system
 */    
 Int enableProfilingAtStartup( Char **argv, void * dummy);

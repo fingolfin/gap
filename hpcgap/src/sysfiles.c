@@ -15,32 +15,32 @@
 **  various  labels determine which operating  system is  actually used, they
 **  are described in "system.c".
 */
-#include        "system.h"              /* system dependent part           */
+#include        <src/system.h>              /* system dependent part           */
 
 
-#include        "sysfiles.h"            /* file input/output               */
+#include        <src/sysfiles.h>            /* file input/output               */
 
-#include        "gasman.h"              /* garbage collector               */
-#include        "objects.h"             /* objects                         */
-#include        "scanner.h"             /* scanner                         */
+#include        <src/gasman.h>              /* garbage collector               */
+#include        <src/objects.h>             /* objects                         */
+#include        <src/scanner.h>             /* scanner                         */
 
-#include        "gap.h"                 /* error handling, initialisation  */
+#include        <src/gap.h>                 /* error handling, initialisation  */
 
-#include        "gvars.h"               /* global variables                */
-#include        "calls.h"               /* generic call mechanism          */
+#include        <src/gvars.h>               /* global variables                */
+#include        <src/calls.h>               /* generic call mechanism          */
 
-#include        "lists.h"               /* generic lists                   */
-#include        "listfunc.h"            /* functions for generic lists     */
+#include        <src/lists.h>               /* generic lists                   */
+#include        <src/listfunc.h>            /* functions for generic lists     */
 
-#include        "plist.h"               /* plain lists                     */
-#include        "stringobj.h"              /* strings                         */
+#include        <src/plist.h>               /* plain lists                     */
+#include        <src/stringobj.h>              /* strings                         */
 
-#include        "records.h"             /* generic records                 */
-#include        "bool.h"                /* Global True and False           */
+#include        <src/records.h>             /* generic records                 */
+#include        <src/bool.h>                /* Global True and False           */
 
-#include	"code.h"		/* coder                           */
-#include	"hpc/thread.h"		/* threads			   */
-#include	"hpc/tls.h"			/* thread-local storage		   */
+#include	<src/code.h>		/* coder                           */
+#include	<src/hpc/thread.h>		/* threads			   */
+#include	<src/hpc/tls.h>			/* thread-local storage		   */
 
 #include        <assert.h>
 #include        <fcntl.h>
@@ -49,7 +49,7 @@
 #include        <readline/readline.h>   /* readline for interactive input  */
 #endif
 
-#include        "read.h"                /* reader                          */
+#include        <src/read.h>                /* reader                          */
 
 
 #if HAVE_SELECT
@@ -126,7 +126,7 @@ ssize_t writeandcheck(int fd, const char *buf, size_t count) {
 **  3: a GAP file was found
 **  4: a GAP file was found and the CRC value didn't match
 */
-#include        "compstat.h"            /* statically linked modules       */
+#include        <src/compstat.h>            /* statically linked modules       */
 
 
 Int SyFindOrLinkGapRootFile (
