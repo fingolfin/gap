@@ -97,13 +97,17 @@ SOURCES = \
 ifeq ($(HPCGAP),yes)
 SOURCES += \
     src/hpc/aobjects.c \
-    src/hpc/gapmpi.c \
     src/hpc/serialize.c \
     src/hpc/thread.c \
     src/hpc/threadapi.c \
     src/hpc/tls.c \
     src/hpc/traverse.c \
     src/hpc/zmqgap.c
+
+    ifeq ($(GAPMPI),yes)
+    SOURCES += \
+        src/hpc/gapmpi.c
+    endif
 endif
 
 
