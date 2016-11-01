@@ -1,5 +1,4 @@
 /Makefile
-/Makefile.in
 /aclocal.m4
 /autom4te.cache/
 /cnf/GAP-VERSION-FILE
@@ -21,7 +20,6 @@
 /configure
 /libtool
 /src/.deps/
-/src/.dirstamp
 /src/config.h.in
 /src/config.h
 /src/stamp-h1

@@ -20,13 +20,6 @@ AC_DEFINE_UNQUOTED([CONFIGNAME], ["fake-config"], [the CONFIGNAME value of the a
 # GAPARCH ?
 
 dnl
-dnl Setup automake
-dnl
-AM_INIT_AUTOMAKE([1.11 -Wall foreign subdir-objects])
-AM_SILENT_RULES([yes])
-AM_PROG_AR
-
-dnl
 dnl Set the language
 dnl
 AM_PROG_AS
