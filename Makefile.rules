@@ -23,91 +23,88 @@ TESTGAPauto = ./gap$(EXEEXT) -b -m 100m -o 1g -q -x 80 -r $(GAPARGS)
 #######################################################################
 # Source files
 #######################################################################
-SOURCES = \
-    src/ariths.c \
-    src/backtrace.c \
-    src/blister.c \
-    src/bool.c \
-    src/c_filt1.c \
-    src/c_meths1.c \
-    src/c_oper1.c \
-    src/c_random.c \
-    src/c_type1.c \
-    src/calls.c \
-    src/code.c \
-    src/compiler.c \
-    src/compstat.c \
-    src/costab.c \
-    src/cyclotom.c \
-    src/dt.c \
-    src/dteval.c \
-    src/exprs.c \
-    src/ffdata.c \
-    src/finfield.c \
-    src/funcs.c \
-    src/gap.c \
-    src/gap_version.c \
-    src/gasman.c \
-    src/globalstate.c \
-    src/gmpints.c \
-    src/gvars.c \
-    src/intfuncs.c \
-    src/intrprtr.c \
-    src/iostream.c \
-    src/listfunc.c \
-    src/listoper.c \
-    src/lists.c \
-    src/macfloat.c \
-    src/objccoll.c \
-    src/objcftl.c \
-    src/objects.c \
-    src/objfgelm.c \
-    src/objpcgel.c \
-    src/objscoll.c \
-    src/objset.c \
-    src/opers.c \
-    src/permutat.c \
-    src/plist.c \
-    src/pperm.c \
-    src/precord.c \
-    src/profile.c \
-    src/range.c \
-    src/rational.c \
-    src/read.c \
-    src/records.c \
-    src/saveload.c \
-    src/scanner.c \
-    src/sctable.c \
-    src/set.c \
-    src/stats.c \
-    src/streams.c \
-    src/stringobj.c \
-    src/sysfiles.c \
-    src/system.c \
-    src/systimers.c \
-    src/tietze.c \
-    src/trans.c \
-    src/vars.c \
-    src/vec8bit.c \
-    src/vecffe.c \
-    src/vecgf2.c \
-    src/vector.c \
-    src/weakptr.c
+SOURCES =
+SOURCES += src/ariths.c
+SOURCES += src/backtrace.c
+SOURCES += src/blister.c
+SOURCES += src/bool.c
+SOURCES += src/c_filt1.c
+SOURCES += src/c_meths1.c
+SOURCES += src/c_oper1.c
+SOURCES += src/c_random.c
+SOURCES += src/c_type1.c
+SOURCES += src/calls.c
+SOURCES += src/code.c
+SOURCES += src/compiler.c
+SOURCES += src/compstat.c
+SOURCES += src/costab.c
+SOURCES += src/cyclotom.c
+SOURCES += src/dt.c
+SOURCES += src/dteval.c
+SOURCES += src/exprs.c
+SOURCES += src/ffdata.c
+SOURCES += src/finfield.c
+SOURCES += src/funcs.c
+SOURCES += src/gap.c
+SOURCES += src/gap_version.c
+SOURCES += src/gasman.c
+SOURCES += src/globalstate.c
+SOURCES += src/gmpints.c
+SOURCES += src/gvars.c
+SOURCES += src/intfuncs.c
+SOURCES += src/intrprtr.c
+SOURCES += src/iostream.c
+SOURCES += src/listfunc.c
+SOURCES += src/listoper.c
+SOURCES += src/lists.c
+SOURCES += src/macfloat.c
+SOURCES += src/objccoll.c
+SOURCES += src/objcftl.c
+SOURCES += src/objects.c
+SOURCES += src/objfgelm.c
+SOURCES += src/objpcgel.c
+SOURCES += src/objscoll.c
+SOURCES += src/objset.c
+SOURCES += src/opers.c
+SOURCES += src/permutat.c
+SOURCES += src/plist.c
+SOURCES += src/pperm.c
+SOURCES += src/precord.c
+SOURCES += src/profile.c
+SOURCES += src/range.c
+SOURCES += src/rational.c
+SOURCES += src/read.c
+SOURCES += src/records.c
+SOURCES += src/saveload.c
+SOURCES += src/scanner.c
+SOURCES += src/sctable.c
+SOURCES += src/set.c
+SOURCES += src/stats.c
+SOURCES += src/streams.c
+SOURCES += src/stringobj.c
+SOURCES += src/sysfiles.c
+SOURCES += src/system.c
+SOURCES += src/systimers.c
+SOURCES += src/tietze.c
+SOURCES += src/trans.c
+SOURCES += src/vars.c
+SOURCES += src/vec8bit.c
+SOURCES += src/vecffe.c
+SOURCES += src/vecgf2.c
+SOURCES += src/vector.c
+SOURCES += src/weakptr.c
 
 ifeq ($(HPCGAP),yes)
-SOURCES += \
-    src/hpc/aobjects.c \
-    src/hpc/serialize.c \
-    src/hpc/thread.c \
-    src/hpc/threadapi.c \
-    src/hpc/tls.c \
-    src/hpc/traverse.c \
-    src/hpc/zmqgap.c
-
-    ifeq ($(GAPMPI),yes)
-    SOURCES += \
-        src/hpc/gapmpi.c
-    endif
+  SOURCES += src/hpc/aobjects.c
+  ifeq ($(GAPMPI),yes)
+    SOURCES += src/hpc/gapmpi.c
+  endif
+  SOURCES += src/hpc/serialize.c
+  SOURCES += src/hpc/thread.c
+  SOURCES += src/hpc/threadapi.c
+  SOURCES += src/hpc/tls.c
+  SOURCES += src/hpc/traverse.c
+  SOURCES += src/hpc/zmqgap.c
 endif
 
 
