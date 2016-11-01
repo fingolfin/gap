@@ -111,7 +111,7 @@ endif
 # Preprocessor flags
 #######################################################################
 
-# Libraries and autoconf defines
+# Add DEFS (from autoconf, contains -Dfoo flags) and flags for GMP
 CPPFLAGS += $(DEFS) $(GMP_CPPFLAGS)
 
 # Setup include paths. Note: our code usually says #include "foo.h",
