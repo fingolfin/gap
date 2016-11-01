@@ -173,11 +173,6 @@ dnl If HPC-GAP is enabled, check for a usable ward, either in the prefix
 dnl specified by the user, or else in $srcdir/hpcgap/ward
 AS_IF([test "x$enable_hpcgap" = xyes],
   [
-  AS_BOX(["TODO: check for ward"])
-  echo "with_ward = $with_ward"
-  echo "srcdir = $srcdir"
-  echo "ac_abs_top_srcdir = $ac_abs_top_srcdir"
-  echo "ac_abs_srcdir = $ac_abs_srcdir"
   # If the user specified a prefix, check only there.
   # Otherwise, check in various relative paths, and in $PATH
   AS_IF([test "x$with_ward" != xcheck],
@@ -189,8 +184,6 @@ AS_IF([test "x$enable_hpcgap" = xyes],
 
   AC_PATH_PROG([ADDGUARDS2], [addguards2], [], [$WARD_PATH])
   AS_IF([test "x$ADDGUARDS2" = x], AC_MSG_ERROR([could not locate addguards2]))
-
-  AS_BOX(["end of ward hack"])
 
 
 # TODO: there are further hpcgap specific external dependencies:
