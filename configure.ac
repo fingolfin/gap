@@ -22,13 +22,20 @@ AC_DEFINE_UNQUOTED([CONFIGNAME], ["fake-config"], [the CONFIGNAME value of the a
 dnl
 dnl Set the language
 dnl
-AM_PROG_AS
 AC_PROG_CC
 AC_LANG([C])
 
 # TODO: check for C++ in the future??
 #AC_PROG_CXX
 #AC_LANG([C++])
+
+
+dnl
+dnl Misc
+dnl
+AC_PROG_INSTALL
+AC_PROG_MKDIR_P
+
 
 dnl
 dnl Setup libtool (for interfacing with GAP kernel extension)
@@ -80,8 +87,7 @@ AC_ARG_ENABLE([hpcgap],
 AC_MSG_CHECKING([whether to enable HPC-GAP])
 AC_MSG_RESULT([$enable_hpcgap])
 
-AM_CONDITIONAL([HPCGAP], [test x$enable_hpcgap = xyes])
-
+AC_SUBST([HPCGAP], [$enable_hpcgap])
 
 dnl Debug mode (off by default)
 AC_ARG_ENABLE([debug],
@@ -102,7 +108,7 @@ AC_ARG_ENABLE([compat-mode],
 AC_MSG_CHECKING([whether to enable compatibility mode for packages])
 AC_MSG_RESULT([$enable_compat_mode])
 
-AM_CONDITIONAL([COMPAT_MODE], [test x$enable_compat_mode = xyes])
+AC_SUBST([COMPAT_MODE], [test x$enable_compat_mode = xyes])
 
 
 dnl
@@ -110,8 +116,10 @@ dnl External dependencies
 dnl
 
 dnl Find GMP
+GMP_CPPFLAGS=""
+GMP_LDFLAGS=""
 AC_ARG_WITH([gmp],
-  [AS_HELP_STRING([--with-gmp=<path>],  
+  [AS_HELP_STRING([--with-gmp[=DIR]],  
                   [prefix of GMP installation. e.g. /usr/local or /usr])],
   [GMP_PREFIX="$with_gmp"],
   [AC_CHECK_LIB([gmp], [__gmpz_init], ,
@@ -123,13 +131,10 @@ AC_ARG_WITH([gmp],
 if test "x$GMP_PREFIX" != x ; then
   GMP_LDFLAGS=" -L${GMP_PREFIX}/lib"
   GMP_CPPFLAGS=" -I${GMP_PREFIX}/include"
-else
-  GMP_LDFLAGS=""
-  GMP_CPPFLAGS=""
 fi
 GMP_LDFLAGS="${GMP_LDFLAGS} -lgmp"
-AC_SUBST(GMP_LDFLAGS)
-AC_SUBST(GMP_CPPFLAGS)
+AC_SUBST([GMP_LDFLAGS])
+AC_SUBST([GMP_CPPFLAGS])
 AC_DEFINE([USE_GMP], [1], [for backwards compatibility])
 
 
@@ -140,10 +145,10 @@ AC_ARG_WITH([readline],
   [],
   [with_readline=check])
 
-LIBREADLINE=
+READLINE_LDFLAGS=
 AS_IF([test "x$with_readline" != xno],
   [AC_CHECK_LIB([readline], [main],
-    [AC_SUBST([LIBREADLINE], ["-lreadline -lncurses"])
+    [READLINE_LDFLAGS="-lreadline -lncurses"
      AC_DEFINE([HAVE_LIBREADLINE], [1],
                [Define if you have libreadline])
     ],
@@ -154,8 +159,46 @@ AS_IF([test "x$with_readline" != xno],
     ], -lncurses)
   ]
 )
+AC_SUBST([READLINE_LDFLAGS])
 
 
+dnl Find ward (if HPC-GAP mode is enabled)
+AC_ARG_WITH([ward],
+  [AS_HELP_STRING([--with-ward],
+    [prefix to the ward tool (used for building HPC-GAP) @<:@default=check@:>@])],
+  [],
+  [with_ward=check])
+
+dnl If HPC-GAP is enabled, check for a usable ward, either in the prefix
+dnl specified by the user, or else in $srcdir/hpcgap/ward
+AS_IF([test "x$enable_hpcgap" = xyes],
+  [
+  AS_BOX(["TODO: check for ward"])
+  echo "with_ward = $with_ward"
+  echo "srcdir = $srcdir"
+  echo "ac_abs_top_srcdir = $ac_abs_top_srcdir"
+  echo "ac_abs_srcdir = $ac_abs_srcdir"
+  # If the user specified a prefix, check only there.
+  # Otherwise, check in various relative paths, and in $PATH
+  AS_IF([test "x$with_ward" != xcheck],
+        [WARD_PATH="$with_ward/bin"],
+        [WARD_PATH="$srcdir/hpcgap/ward/bin:ward/bin:../ward/bin:$PATH"]
+        )
+  AC_PATH_PROG([WARD], [ward], [], [$WARD_PATH])
+  AS_IF([test "x$WARD" = x], AC_MSG_ERROR([could not locate ward]))
+
+  AC_PATH_PROG([ADDGUARDS2], [addguards2], [], [$WARD_PATH])
+  AS_IF([test "x$ADDGUARDS2" = x], AC_MSG_ERROR([could not locate addguards2]))
+
+  AS_BOX(["end of ward hack"])
+  ]
+)
+
+
+# TODO: there are further hpcgap specific external dependencies:
+#  gc - the Boehm garbage collector, see http://www.hboehm.info/gc/
+#  libatomic_ops - part of gc, but see also https://github.com/ivmai/libatomic_ops
+#  ...
 
 dnl
 dnl Detect host specific setting
@@ -167,6 +210,7 @@ GP_C_LONG_ALIGN
 case "$host_cpu" in 
   sparc* )
     AC_DEFINE([SPARC], [1], [define as 1 on SPARC architecture to flush register windows])
+    SPARC=yes
     ;;
   ia64* ) 
     AC_DEFINE([ITANIUM], [1], [define as 1 on Itanium architecture to flush and mark register stack])
@@ -187,9 +231,10 @@ esac
 
 dnl Note: AC_DEFINE defines conditionals to be put in config.h, while
 dnl AM_CONDITIONAL defines conditionals for use in in Makefile.am
-AM_CONDITIONAL([ITANIUM], [test x$ITANIUM = xyes])
-AM_CONDITIONAL([SYS_IS_CYGWIN32], [test x$CYGWIN = xyes])
-AM_CONDITIONAL([SYS_IS_DARWIN], [test x$DARWIN = xyes])
+AC_SUBST([ITANIUM], [$ITANIUM])
+AC_SUBST([SYS_IS_CYGWIN32], [$CYGWIN])
+SYS_IS_DARWIN=$DARWIN
+AC_SUBST([SYS_IS_DARWIN])
 
 
 dnl
@@ -325,5 +370,5 @@ AC_CHECK_FUNCS([getrusage gettimeofday])
 dnl
 dnl Output everything
 dnl
-AC_CONFIG_FILES([Makefile])
+AC_CONFIG_FILES([GNUmakefile])
 AC_OUTPUT

@@ -156,3 +156,16 @@ funktioniert.
 Ansonsten ist die Option für einige Testszenarien potentiell interessant.
 
 
+
+
+# Short term TODOs:
+# - rules to rerun configure if necessary
+# -
+
+# Future TODOs:
+# - "make install" support
+# - "make uninstall" support
+# - "make dist" support
+
+# TODO: cleanly handle user supplied CPPFLAGS etc.
+

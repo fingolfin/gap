@@ -9,12 +9,10 @@
 
 #include "system.h"
 
-#include "gap_version.h"
-
 /****************************************************************************
 **
 *V  SyBuildVersion  . . . . . . . . . . . . . . . . source version for build
 *V  SyBuildDateTime . . . . . . . . . . . . . . . . . date and time of build
 */
-const Char * SyBuildVersion  = GAP_VERSION;
+const Char * SyBuildVersion  = "@GAP_VERSION@";
 const Char * SyBuildDateTime = "today";
