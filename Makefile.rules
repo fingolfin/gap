@@ -115,6 +115,12 @@ endif
 # Add DEFS (from autoconf, contains -Dfoo flags) and flags for GMP
 CPPFLAGS += $(DEFS) $(GMP_CPPFLAGS)
 
+# HACK: teach GAP how to "find itself". For a proper solution,
+# we should ensure that this value is treated dynamically by the build system,
+# i.e. any change to it triggers a recompile of those files (and only those)
+# using it. That includes running "make install".
+CPPFLAGS += "-DSYS_DEFAULT_PATHS=\"$(srcdir)\""
+
 # Setup include paths. Note: our code usually says #include "foo.h",
 # but there are instances where it says #include "src/foo.h". Therefore,
 # the following include paths come in pairs.
