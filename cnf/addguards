@@ -1,0 +1,26 @@
+#!/bin/sh -e
+#
+# This script expects the WARD and ADDGUARDS environment variables to be set.
+
+OUTFILE="$1" ; shift
+TMPFILE=`mktemp -t XXXXXX` || exit 1
+
+"$WARD" -suggest "$@" > "$TMPFILE"
+
+cat > "$OUTFILE" <<EOF
+/***********************************************************/
+/*                                                         */
+/*       NOTE: This file was preprocessed by Ward.         */
+/*       Do not edit it; changes will be lost.             */
+/*                                                         */
+/***********************************************************/
+
+EOF
+
+# HACK: get last argument (at least when called from the GAP
+# build system, the last argument is the name of the output file.
+for last ; do
+  :
+done
+
+"$ADDGUARDS" "$TMPFILE" "$last" > "$OUTFILE" 

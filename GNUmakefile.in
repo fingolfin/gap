@@ -18,11 +18,14 @@ vpath %.s $(srcdir)
 # The following are settings computed by configure
 
 # GAP specific
-ADDGUARDS2 = @ADDGUARDS2@
-HPCGAP = @HPCGAP@
-WARD = @WARD@
 SYS_IS_DARWIN = @SYS_IS_DARWIN@
 SYS_IS_CYGWIN32 = @SYS_IS_CYGWIN32@
+
+# HPC-GAP specific
+HPCGAP = @HPCGAP@
+WARD = @WARD@
+ADDGUARDS = @ADDGUARDS@
+ADDGUARDS2 = @ADDGUARDS2@
 
 # package metadata
 PACKAGE_BUGREPORT = @PACKAGE_BUGREPORT@
