@@ -263,9 +263,14 @@ doc: gap$(EXEEXT)
 	rm $(abs_top_srcdir)/doc/wsp.g
 
 clean-doc:
-	rm -f 
+	rm -f doc/*/chap*.html doc/*/chap*.txt doc/*/*.css doc/*/*.js
+	rm -f doc/*/chooser.html doc/*/manual*.pdf
+	rm -f doc/*/*.{aux,bbl,blg,brf,idx,ilg,ind,lab,log,out,pnr,six,tex,toc}
+	rm -f doc/manualbib.xml.bib
 
-clean: clean-doc
+# FIXME: we currently build the manual inside $srcdir; so we don't want "make clean"
+# to remove it, as other builds might share the manual.
+#clean: clean-doc
 
 
 .PHONY: doc clean-doc manuals
