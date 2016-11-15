@@ -16,8 +16,8 @@ default: all
 # TODO: clean this up
 #######################################################################
 GAPARGS=
-TESTGAP = ./gap$(EXEEXT) -b -m 100m -o 1g -A -q -x 80 -r $(GAPARGS)
-TESTGAPauto = ./gap$(EXEEXT) -b -m 100m -o 1g -q -x 80 -r $(GAPARGS)
+TESTGAP = $(abs_top_builddir)/gap$(EXEEXT) -b -m 100m -o 1g -A -q -x 80 -r $(GAPARGS)
+TESTGAPauto = $(abs_top_builddir)/gap$(EXEEXT) -b -m 100m -o 1g -q -x 80 -r $(GAPARGS)
 
 
 #######################################################################
@@ -246,20 +246,21 @@ manuals: doc
 # separate chapters, which we can perhaps conditionally
 # compile ?!?
 doc: gap$(EXEEXT)
-	( echo 'SaveWorkspace( "doc/wsp.g" );' | $(TESTGAPauto) )
-	( cd doc/ref; echo 'Read( "makedocrel.g" );' | \
-          ../../$(TESTGAP) -L ../wsp.g | tee make_manuals.out )
-	( cd doc/tut; echo 'Read( "makedocrel.g" );' | \
-          ../../$(TESTGAP) -L ../wsp.g | tee make_manuals.out )
-	( cd doc/changes; echo 'Read( "makedocrel.g" );' | \
-          ../../$(TESTGAP) -L ../wsp.g | tee make_manuals.out )
-	( cd doc/ref; echo 'Read( "makedocrel.g" );' | \
-          ../../$(TESTGAP) -L ../wsp.g | tee make_manuals.out )
-	( cd doc/tut; echo 'Read( "makedocrel.g" );' | \
-          ../../$(TESTGAP) -L ../wsp.g | tee make_manuals.out )
-	( cd doc/changes; echo 'Read( "makedocrel.g" );' | \
-          ../../$(TESTGAP) -L ../wsp.g | tee make_manuals.out )
-	( rm doc/wsp.g )
+	( cd $(abs_top_srcdir) ;\
+	  echo 'SaveWorkspace( "doc/wsp.g" );' | $(TESTGAPauto) )
+	( cd $(abs_top_srcdir)/doc/ref ;\
+	  echo 'Read( "makedocrel.g" );' | $(TESTGAP) -L ../wsp.g | tee make_manuals.out )
+	( cd $(abs_top_srcdir)/doc/tut ;\
+	  echo 'Read( "makedocrel.g" );' | $(TESTGAP) -L ../wsp.g | tee make_manuals.out )
+	( cd $(abs_top_srcdir)/doc/changes ;\
+	  echo 'Read( "makedocrel.g" );' | $(TESTGAP) -L ../wsp.g | tee make_manuals.out )
+	( cd $(abs_top_srcdir)/doc/ref ;\
+	  echo 'Read( "makedocrel.g" );' | $(TESTGAP) -L ../wsp.g | tee make_manuals.out )
+	( cd $(abs_top_srcdir)/doc/tut ;\
+	  echo 'Read( "makedocrel.g" );' | $(TESTGAP) -L ../wsp.g | tee make_manuals.out )
+	( cd $(abs_top_srcdir)/doc/changes ;\
+	  echo 'Read( "makedocrel.g" );' | $(TESTGAP) -L ../wsp.g | tee make_manuals.out )
+	rm $(abs_top_srcdir)/doc/wsp.g
 
 clean-doc:
 	rm -f 
