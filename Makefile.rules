@@ -115,6 +115,10 @@ endif
 # Add DEFS (from autoconf, contains -Dfoo flags) and flags for GMP
 CPPFLAGS += $(DEFS) $(GMP_CPPFLAGS)
 
+ifeq ($(HPCGAP),yes)
+CPPFLAGS += $(BOEHM_CPPFLAGS) $(LIBATOMIC_OPS_CPPFLAGS)
+endif
+
 # HACK: teach GAP how to "find itself". For a proper solution,
 # we should ensure that this value is treated dynamically by the build system,
 # i.e. any change to it triggers a recompile of those files (and only those)
@@ -146,6 +150,10 @@ CPPFLAGS += -I$(srcdir)/src -I$(srcdir)/src/hpc -I$(srcdir)
 # Linker flags
 #######################################################################
 LDFLAGS += $(GMP_LDFLAGS) $(READLINE_LDFLAGS)
+
+ifeq ($(HPCGAP),yes)
+LDFLAGS += $(BOEHM_LDFLAGS) $(LIBATOMIC_OPS_LDFLAGS)
+endif
 
 
 #######################################################################
