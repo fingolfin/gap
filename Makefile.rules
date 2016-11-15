@@ -119,7 +119,7 @@ CPPFLAGS += $(DEFS) $(GMP_CPPFLAGS)
 # we should ensure that this value is treated dynamically by the build system,
 # i.e. any change to it triggers a recompile of those files (and only those)
 # using it. That includes running "make install".
-CPPFLAGS += "-DSYS_DEFAULT_PATHS=\"$(srcdir)\""
+CPPFLAGS += "-DSYS_DEFAULT_PATHS=\"$(abs_top_srcdir)\""
 
 # Setup include paths. Note: our code usually says #include "foo.h",
 # but there are instances where it says #include "src/foo.h". Therefore,
