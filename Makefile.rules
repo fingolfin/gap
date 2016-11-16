@@ -104,7 +104,6 @@ ifeq ($(HPCGAP),yes)
   SOURCES += src/hpc/threadapi.c
   SOURCES += src/hpc/tls.c
   SOURCES += src/hpc/traverse.c
-  SOURCES += src/hpc/zmqgap.c
 endif
 
 
