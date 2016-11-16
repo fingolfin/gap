@@ -201,6 +201,13 @@ AS_IF([test "x$enable_hpcgap" = xyes],
 # HACK
 AC_DEFINE([BOEHM_GC], [1], [Use Boehm garbage collector])
 
+AC_SUBST([BOEHM_CPPFLAGS])
+AC_SUBST([BOEHM_LDFLAGS])
+
+AC_SUBST([LIBATOMIC_OPS_CPPFLAGS])
+AC_SUBST([LIBATOMIC_OPS_LDFLAGS])
+
+
 # FIXME: what about these defines which HPC-GAP seems to "know"?
 # - DISABLE_GC
 # - GC_THREADS
