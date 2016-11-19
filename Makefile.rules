@@ -209,10 +209,23 @@ OBJS = $(SOURCES:.c=.o)
 # all sources implicitly depend on config.h
 $(OBJS): src/config.h
 
+ifeq ($(SYS_IS_CYGWIN32),yes)
+
+# Rename GAP's standard main function
+src/gap.o: CC_EXTRA_FLAGS := -DCOMPILECYGWINDLL
+gap.dll: $(OBJS)
+	$(QUIET_LINK)$(CC) $(LDFLAGS) -shared $(OBJS) $(LDFLAGS) $(LIBS) -o $@
+gap$(EXEEXT): gap.dll
+	$(QUIET_LINK)$(CC) $(LDFLAGS) src/gapw95.c $(LIBS) gap.dll -o $@
+	@( if which peflags > /dev/null ; then peflags --cygwin-heap=2048 gap$(EXEEXT) ; fi )
+
+else
+
 # Linking rule and dependencies for the main gap executable
 gap$(EXEEXT): $(OBJS)
 	$(QUIET_LINK)$(CC) $(OBJS) $(LDFLAGS) $(LIBS) -o $@
 
+endif
 
 # TODO: build gac
 # TODO: create sysinfo.gap files for backwards compatibility
@@ -383,7 +396,7 @@ CC_UPDATE_DEP_FLAG = -MMD -MF "$(*D)/$(DEPDIR)/$(*F).d" -MQ "$@" -MP
 # Build rule for C files
 %.o: %.c
 	@$(MKDIR_P) $(*D)/$(DEPDIR)
-	$(QUIET_CC)$(CC) $(CC_UPDATE_DEP_FLAG) $(CFLAGS) $(CPPFLAGS) -c $< -o $@
+	$(QUIET_CC)$(CC) $(CC_UPDATE_DEP_FLAG) $(CFLAGS) $(CC_EXTRA_FLAGS) $(CPPFLAGS) -c $< -o $@
 
 # Build rule for assembler files
 %.o: %.s
