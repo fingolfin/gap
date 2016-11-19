@@ -43,6 +43,11 @@
 #include        <readline/readline.h>   /* readline for interactive input  */
 #endif
 
+#if HAVE_SYS_TIMES_H                    /* time functions                  */
+# include       <sys/types.h>
+# include       <sys/times.h>
+#endif
+
 #if HAVE_MADVISE
 #include        <sys/mman.h>
 #endif
