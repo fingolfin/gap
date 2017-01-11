@@ -25,9 +25,17 @@ dnl
 AC_PROG_CC
 AC_LANG([C])
 
-# TODO: check for C++ in the future??
-#AC_PROG_CXX
-#AC_LANG([C++])
+
+dnl autoconf may set CXX to g++ even if there is no working C++ compiler.
+dnl So verify that CXX really is able to compile C++ code.
+AC_LANG_PUSH([C++])
+AC_COMPILE_IFELSE([AC_LANG_PROGRAM(
+  [[#include <iostream>
+    #ifndef __cplusplus
+    #error "broken C++"
+    #endif]])],,
+  [CXX=;])
+AC_LANG_POP([C++])
 
 
 dnl
@@ -49,10 +57,14 @@ dnl
 
 dnl determine pointer sizes to distinguish 32 and 64 bit systems.
 AC_CHECK_SIZEOF([void *])
+AC_CHECK_SIZEOF([int])
+AC_CHECK_SIZEOF([long])
+AC_CHECK_SIZEOF([long long])
 
 dnl endianess
 AC_C_BIGENDIAN
 
+dnl shifts
 AC_MSG_CHECKING([whether right shifts are arithmetic])
 AC_COMPUTE_INT(RIGHTSHIFTMINUSONE, [(-1L >> 1)+1])
 if test x"$RIGHTSHIFTMINUSONE" = x0 ; then
@@ -66,12 +78,27 @@ AC_DEFINE_UNQUOTED([HAVE_ARITHRIGHTSHIFT],
     [$HAVE_ARITHRIGHTSHIFT],
     [define as 1 if >> for long int behaves like an arithmetic right shift for negative numbers])
 
+dnl compiler builtins
+AC_DEFUN([CHECK_COMPILER_BUILTIN],
+[AC_MSG_CHECKING([for $1])
+    AC_LINK_IFELSE(
+        [AC_LANG_PROGRAM(
+            [[]],
+            [$1[($2)];
+            ]
+        )],
+        [AS_VAR_SET([[have_]$1], [yes])],
+        [AS_VAR_SET([[have_]$1], [no])]
+        )
+    AC_MSG_RESULT(AS_VAR_GET([[have_]$1]))
+    AS_IF([test yes = AS_VAR_GET([[have_]$1])],
+        [AC_DEFINE_UNQUOTED(AS_TR_CPP([HAVE_]$1), 1,
+            [Define to 1 if the system has the `]$1[' built-in function])], []
+        )])
 
-# TODO: these symbols used to be defined. Check whether we
-# need to keep providing them, and/or whether and how to adapt
-# source code using them.
-# C_UNDERSCORE_SYMBOLS   # for loading kernel extensions
-# C_LONG_ALIGN  # unused?
+CHECK_COMPILER_BUILTIN([__builtin_smul_overflow],[0,0,0]);
+CHECK_COMPILER_BUILTIN([__builtin_smull_overflow],[0,0,0]);
+CHECK_COMPILER_BUILTIN([__builtin_smulll_overflow],[0,0,0]);
 
 
 dnl
