@@ -45,7 +45,10 @@ SOURCES += src/funcs.c
 SOURCES += src/gap.c
 SOURCES += src/gap_version.c
 SOURCES += src/gasman.c
+ifneq ($(HPCGAP),yes)
+# FIXME: HPC-GAP and src/globalstate.c are currently not yet compatible
 SOURCES += src/globalstate.c
+endif
 SOURCES += src/gmpints.c
 SOURCES += src/gvars.c
 SOURCES += src/intfuncs.c
