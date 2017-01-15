@@ -231,6 +231,9 @@ AC_DEFINE([BOEHM_GC], [1], [Use Boehm garbage collector])
 # TODO: detect BOEHM GC and set flags suitably
 #  -> may want to build the one shipped with HPC-GAP,
 #  as that has special improvements for HPC-GAP
+if test "x$enable_hpcgap" = xyes ; then
+  BOEHM_LDFLAGS="-lgc"
+fi
 AC_SUBST([BOEHM_CPPFLAGS])
 AC_SUBST([BOEHM_LDFLAGS])
 
