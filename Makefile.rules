@@ -227,6 +227,22 @@ gap$(EXEEXT): $(OBJS)
 
 endif
 
+
+#
+# The "docomp" target regenerates the various src/c_*.c files, and
+# replaces the old "etc/docomp" script.
+#
+ifeq ($(HPCGAP),yes)
+DOCOMP_PREFIX=$(abs_top_srcdir)/hpcgap
+else
+DOCOMP_PREFIX=$(abs_top_srcdir)
+endif
+docomp: #gap$(EXEEXT)
+	@for file in filter1 methsel1 oper1 random type1 ; do \
+	  "$(abs_top_srcdir)"/cnf/GAP-C-GEN $(DOCOMP_PREFIX) $$file ./gap$(EXEEXT) ; \
+	done
+
+
 # TODO: build gac
 # TODO: create sysinfo.gap files for backwards compatibility
 # TODO: create fake bin/FOOBAR/ subdirectory, for backwards compatibility
@@ -470,7 +486,7 @@ GNUmakefile: $(srcdir)/GNUmakefile.in $(top_builddir)/config.status
 # All .PHONY targets
 ######################################################################
 
-.PHONY: all clean distclean check
+.PHONY: all clean distclean check docomp
 
 # The following is needed for the rules handling the GAP version
 .PHONY: FORCE
