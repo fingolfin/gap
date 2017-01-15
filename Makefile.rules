@@ -150,12 +150,21 @@ CPPFLAGS += -I$(srcdir)/src -I$(srcdir)/src/hpc -I$(srcdir)
 
 
 #######################################################################
+# Compiler flags
+#######################################################################
+ifeq ($(HPCGAP),yes)
+CFLAGS += $(PTHREAD_CFLAGS)
+endif
+
+
+#######################################################################
 # Linker flags
 #######################################################################
 LDFLAGS += $(GMP_LDFLAGS) $(READLINE_LDFLAGS)
 
 ifeq ($(HPCGAP),yes)
 LDFLAGS += $(BOEHM_LDFLAGS) $(LIBATOMIC_OPS_LDFLAGS)
+LDFLAGS += $(PTHREAD_CFLAGS) $(PTHREAD_LIBS)
 endif
 
 

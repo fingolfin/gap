@@ -433,6 +433,11 @@ AC_CHECK_LIB( [rt], [timer_create])
 AC_CHECK_FUNCS( timer_settime timer_gettime timer_create )
 AC_CHECK_FUNCS( sys_timer_settime sys_timer_gettime sys_timer_create )
 
+dnl pthreads
+if test "x$enable_hpcgap" = xyes ; then
+  AX_PTHREAD
+fi
+
 
 dnl
 dnl Output everything
