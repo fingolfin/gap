@@ -84,9 +84,9 @@ static Obj  HdlrFunc2 (
  /* lock := WRITE_LOCK( IMPLICATIONS ); */
  t_2 = GF_WRITE__LOCK;
  t_3 = GC_IMPLICATIONS;
- CHECK_BOUND( t_3, "IMPLICATIONS" )
+ CHECK_BOUND( t_3, "IMPLICATIONS" );
  t_1 = CALL_1ARGS( t_2, t_3 );
- CHECK_FUNC_RESULT( t_1 )
+ CHECK_FUNC_RESULT( t_1 );
  l_lock = t_1;
  
  /* WITH_IMPS_FLAGS_CACHE := MigrateObj( [  ], IMPLICATIONS ); */
@@ -94,9 +94,9 @@ static Obj  HdlrFunc2 (
  t_3 = NEW_PLIST( T_PLIST, 0 );
  SET_LEN_PLIST( t_3, 0 );
  t_4 = GC_IMPLICATIONS;
- CHECK_BOUND( t_4, "IMPLICATIONS" )
+ CHECK_BOUND( t_4, "IMPLICATIONS" );
  t_1 = CALL_2ARGS( t_2, t_3, t_4 );
- CHECK_FUNC_RESULT( t_1 )
+ CHECK_FUNC_RESULT( t_1 );
  AssGVar( G_WITH__IMPS__FLAGS__CACHE, t_1 );
  
  /* UNLOCK( lock ); */
@@ -148,16 +148,16 @@ static Obj  HdlrFunc3 (
  /* hash := HASH_FLAGS( flags ) mod 11001; */
  t_3 = GF_HASH__FLAGS;
  t_2 = CALL_1ARGS( t_3, a_flags );
- CHECK_FUNC_RESULT( t_2 )
+ CHECK_FUNC_RESULT( t_2 );
  t_1 = MOD( t_2, INTOBJ_INT(11001) );
  l_hash = t_1;
  
  /* lock := WRITE_LOCK( IMPLICATIONS ); */
  t_2 = GF_WRITE__LOCK;
  t_3 = GC_IMPLICATIONS;
- CHECK_BOUND( t_3, "IMPLICATIONS" )
+ CHECK_BOUND( t_3, "IMPLICATIONS" );
  t_1 = CALL_1ARGS( t_2, t_3 );
- CHECK_FUNC_RESULT( t_1 )
+ CHECK_FUNC_RESULT( t_1 );
  l_lock = t_1;
  
  /* for i in [ 0 .. 3 ] do */
@@ -167,17 +167,17 @@ static Obj  HdlrFunc3 (
   l_i = t_1;
   
   /* hash2 := 2 * ((hash + 31 * i) mod 11001) + 1; */
-  C_PROD_INTOBJS( t_6, INTOBJ_INT(31), l_i )
-  C_SUM_FIA( t_5, l_hash, t_6 )
+  C_PROD_INTOBJS( t_6, INTOBJ_INT(31), l_i );
+  C_SUM_FIA( t_5, l_hash, t_6 );
   t_4 = MOD( t_5, INTOBJ_INT(11001) );
-  C_PROD_FIA( t_3, INTOBJ_INT(2), t_4 )
-  C_SUM_FIA( t_2, t_3, INTOBJ_INT(1) )
+  C_PROD_FIA( t_3, INTOBJ_INT(2), t_4 );
+  C_SUM_FIA( t_2, t_3, INTOBJ_INT(1) );
   l_hash2 = t_2;
   
   /* if IsBound( WITH_IMPS_FLAGS_CACHE[hash2] ) then */
   t_4 = GC_WITH__IMPS__FLAGS__CACHE;
-  CHECK_BOUND( t_4, "WITH_IMPS_FLAGS_CACHE" )
-  CHECK_INT_POS( l_hash2 )
+  CHECK_BOUND( t_4, "WITH_IMPS_FLAGS_CACHE" );
+  CHECK_INT_POS( l_hash2 );
   t_3 = C_ISB_LIST( t_4, l_hash2 );
   t_2 = (Obj)(UInt)(t_3 != False);
   if ( t_2 ) {
@@ -185,26 +185,26 @@ static Obj  HdlrFunc3 (
    /* if IS_IDENTICAL_OBJ( WITH_IMPS_FLAGS_CACHE[hash2], flags ) then */
    t_4 = GF_IS__IDENTICAL__OBJ;
    t_6 = GC_WITH__IMPS__FLAGS__CACHE;
-   CHECK_BOUND( t_6, "WITH_IMPS_FLAGS_CACHE" )
-   C_ELM_LIST_FPL( t_5, t_6, l_hash2 )
+   CHECK_BOUND( t_6, "WITH_IMPS_FLAGS_CACHE" );
+   C_ELM_LIST_FPL( t_5, t_6, l_hash2 );
    t_3 = CALL_2ARGS( t_4, t_5, a_flags );
-   CHECK_FUNC_RESULT( t_3 )
-   CHECK_BOOL( t_3 )
+   CHECK_FUNC_RESULT( t_3 );
+   CHECK_BOOL( t_3 );
    t_2 = (Obj)(UInt)(t_3 != False);
    if ( t_2 ) {
     
     /* WITH_IMPS_FLAGS_CACHE_HIT := WITH_IMPS_FLAGS_CACHE_HIT + 1; */
     t_3 = GC_WITH__IMPS__FLAGS__CACHE__HIT;
-    CHECK_BOUND( t_3, "WITH_IMPS_FLAGS_CACHE_HIT" )
-    C_SUM_FIA( t_2, t_3, INTOBJ_INT(1) )
+    CHECK_BOUND( t_3, "WITH_IMPS_FLAGS_CACHE_HIT" );
+    C_SUM_FIA( t_2, t_3, INTOBJ_INT(1) );
     AssGVar( G_WITH__IMPS__FLAGS__CACHE__HIT, t_2 );
     
     /* with := WITH_IMPS_FLAGS_CACHE[hash2 + 1]; */
     t_3 = GC_WITH__IMPS__FLAGS__CACHE;
-    CHECK_BOUND( t_3, "WITH_IMPS_FLAGS_CACHE" )
-    C_SUM_FIA( t_4, l_hash2, INTOBJ_INT(1) )
-    CHECK_INT_POS( t_4 )
-    C_ELM_LIST_FPL( t_2, t_3, t_4 )
+    CHECK_BOUND( t_3, "WITH_IMPS_FLAGS_CACHE" );
+    C_SUM_FIA( t_4, l_hash2, INTOBJ_INT(1) );
+    CHECK_INT_POS( t_4 );
+    C_ELM_LIST_FPL( t_2, t_3, t_4 );
     l_with = t_2;
     
     /* UNLOCK( lock ); */
@@ -239,22 +239,22 @@ static Obj  HdlrFunc3 (
   
   /* WITH_IMPS_FLAGS_COUNT := (WITH_IMPS_FLAGS_COUNT + 1) mod 4; */
   t_3 = GC_WITH__IMPS__FLAGS__COUNT;
-  CHECK_BOUND( t_3, "WITH_IMPS_FLAGS_COUNT" )
-  C_SUM_FIA( t_2, t_3, INTOBJ_INT(1) )
+  CHECK_BOUND( t_3, "WITH_IMPS_FLAGS_COUNT" );
+  C_SUM_FIA( t_2, t_3, INTOBJ_INT(1) );
   t_1 = MOD( t_2, INTOBJ_INT(4) );
   AssGVar( G_WITH__IMPS__FLAGS__COUNT, t_1 );
   
   /* i := WITH_IMPS_FLAGS_COUNT; */
   t_1 = GC_WITH__IMPS__FLAGS__COUNT;
-  CHECK_BOUND( t_1, "WITH_IMPS_FLAGS_COUNT" )
+  CHECK_BOUND( t_1, "WITH_IMPS_FLAGS_COUNT" );
   l_i = t_1;
   
   /* hash2 := 2 * ((hash + 31 * i) mod 11001) + 1; */
-  C_PROD_FIA( t_5, INTOBJ_INT(31), l_i )
-  C_SUM_FIA( t_4, l_hash, t_5 )
+  C_PROD_FIA( t_5, INTOBJ_INT(31), l_i );
+  C_SUM_FIA( t_4, l_hash, t_5 );
   t_3 = MOD( t_4, INTOBJ_INT(11001) );
-  C_PROD_FIA( t_2, INTOBJ_INT(2), t_3 )
-  C_SUM_FIA( t_1, t_2, INTOBJ_INT(1) )
+  C_PROD_FIA( t_2, INTOBJ_INT(2), t_3 );
+  C_SUM_FIA( t_1, t_2, INTOBJ_INT(1) );
   l_hash2 = t_1;
   
  }
@@ -262,8 +262,8 @@ static Obj  HdlrFunc3 (
  
  /* WITH_IMPS_FLAGS_CACHE_MISS := WITH_IMPS_FLAGS_CACHE_MISS + 1; */
  t_2 = GC_WITH__IMPS__FLAGS__CACHE__MISS;
- CHECK_BOUND( t_2, "WITH_IMPS_FLAGS_CACHE_MISS" )
- C_SUM_FIA( t_1, t_2, INTOBJ_INT(1) )
+ CHECK_BOUND( t_2, "WITH_IMPS_FLAGS_CACHE_MISS" );
+ C_SUM_FIA( t_1, t_2, INTOBJ_INT(1) );
  AssGVar( G_WITH__IMPS__FLAGS__CACHE__MISS, t_1 );
  
  /* with := flags; */
@@ -284,7 +284,7 @@ static Obj  HdlrFunc3 (
   
   /* for imp in IMPLICATIONS do */
   t_4 = GC_IMPLICATIONS;
-  CHECK_BOUND( t_4, "IMPLICATIONS" )
+  CHECK_BOUND( t_4, "IMPLICATIONS" );
   if ( IS_SMALL_LIST(t_4) ) {
    t_3 = (Obj)(UInt)1;
    t_1 = INTOBJ_INT(1);
@@ -308,18 +308,18 @@ static Obj  HdlrFunc3 (
    
    /* if IS_SUBSET_FLAGS( with, imp[2] ) and not IS_SUBSET_FLAGS( with, imp[1] ) then */
    t_8 = GF_IS__SUBSET__FLAGS;
-   C_ELM_LIST_FPL( t_9, l_imp, INTOBJ_INT(2) )
+   C_ELM_LIST_FPL( t_9, l_imp, INTOBJ_INT(2) );
    t_7 = CALL_2ARGS( t_8, l_with, t_9 );
-   CHECK_FUNC_RESULT( t_7 )
-   CHECK_BOOL( t_7 )
+   CHECK_FUNC_RESULT( t_7 );
+   CHECK_BOOL( t_7 );
    t_6 = (Obj)(UInt)(t_7 != False);
    t_5 = t_6;
    if ( t_5 ) {
     t_10 = GF_IS__SUBSET__FLAGS;
-    C_ELM_LIST_FPL( t_11, l_imp, INTOBJ_INT(1) )
+    C_ELM_LIST_FPL( t_11, l_imp, INTOBJ_INT(1) );
     t_9 = CALL_2ARGS( t_10, l_with, t_11 );
-    CHECK_FUNC_RESULT( t_9 )
-    CHECK_BOOL( t_9 )
+    CHECK_FUNC_RESULT( t_9 );
+    CHECK_BOOL( t_9 );
     t_8 = (Obj)(UInt)(t_9 != False);
     t_7 = (Obj)(UInt)( ! ((Int)t_8) );
     t_5 = t_7;
@@ -328,9 +328,9 @@ static Obj  HdlrFunc3 (
     
     /* with := AND_FLAGS( with, imp[1] ); */
     t_6 = GF_AND__FLAGS;
-    C_ELM_LIST_FPL( t_7, l_imp, INTOBJ_INT(1) )
+    C_ELM_LIST_FPL( t_7, l_imp, INTOBJ_INT(1) );
     t_5 = CALL_2ARGS( t_6, l_with, t_7 );
-    CHECK_FUNC_RESULT( t_5 )
+    CHECK_FUNC_RESULT( t_5 );
     l_with = t_5;
     
     /* changed := true; */
@@ -348,16 +348,16 @@ static Obj  HdlrFunc3 (
  
  /* WITH_IMPS_FLAGS_CACHE[hash2] := flags; */
  t_1 = GC_WITH__IMPS__FLAGS__CACHE;
- CHECK_BOUND( t_1, "WITH_IMPS_FLAGS_CACHE" )
- CHECK_INT_POS( l_hash2 )
- C_ASS_LIST_FPL( t_1, l_hash2, a_flags )
+ CHECK_BOUND( t_1, "WITH_IMPS_FLAGS_CACHE" );
+ CHECK_INT_POS( l_hash2 );
+ C_ASS_LIST_FPL( t_1, l_hash2, a_flags );
  
  /* WITH_IMPS_FLAGS_CACHE[hash2 + 1] := with; */
  t_1 = GC_WITH__IMPS__FLAGS__CACHE;
- CHECK_BOUND( t_1, "WITH_IMPS_FLAGS_CACHE" )
- C_SUM_FIA( t_2, l_hash2, INTOBJ_INT(1) )
- CHECK_INT_POS( t_2 )
- C_ASS_LIST_FPL( t_1, t_2, l_with )
+ CHECK_BOUND( t_1, "WITH_IMPS_FLAGS_CACHE" );
+ C_SUM_FIA( t_2, l_hash2, INTOBJ_INT(1) );
+ CHECK_INT_POS( t_2 );
+ C_ASS_LIST_FPL( t_1, t_2, l_with );
  
  /* UNLOCK( lock ); */
  t_1 = GF_UNLOCK;
@@ -404,15 +404,15 @@ static Obj  HdlrFunc4 (
  /* if IS_FUNCTION( filter ) then */
  t_3 = GF_IS__FUNCTION;
  t_2 = CALL_1ARGS( t_3, a_filter );
- CHECK_FUNC_RESULT( t_2 )
- CHECK_BOOL( t_2 )
+ CHECK_FUNC_RESULT( t_2 );
+ CHECK_BOOL( t_2 );
  t_1 = (Obj)(UInt)(t_2 != False);
  if ( t_1 ) {
   
   /* flags := FLAGS_FILTER( filter ); */
   t_2 = GF_FLAGS__FILTER;
   t_1 = CALL_1ARGS( t_2, a_filter );
-  CHECK_FUNC_RESULT( t_1 )
+  CHECK_FUNC_RESULT( t_1 );
   l_flags = t_1;
   
  }
@@ -429,18 +429,18 @@ static Obj  HdlrFunc4 (
  /* lock := WRITE_LOCK( FILTER_REGION ); */
  t_2 = GF_WRITE__LOCK;
  t_3 = GC_FILTER__REGION;
- CHECK_BOUND( t_3, "FILTER_REGION" )
+ CHECK_BOUND( t_3, "FILTER_REGION" );
  t_1 = CALL_1ARGS( t_2, t_3 );
- CHECK_FUNC_RESULT( t_1 )
+ CHECK_FUNC_RESULT( t_1 );
  l_lock = t_1;
  
  /* for i in TRUES_FLAGS( WITH_HIDDEN_IMPS_FLAGS( flags ) ) do */
  t_5 = GF_TRUES__FLAGS;
  t_7 = GF_WITH__HIDDEN__IMPS__FLAGS;
  t_6 = CALL_1ARGS( t_7, l_flags );
- CHECK_FUNC_RESULT( t_6 )
+ CHECK_FUNC_RESULT( t_6 );
  t_4 = CALL_1ARGS( t_5, t_6 );
- CHECK_FUNC_RESULT( t_4 )
+ CHECK_FUNC_RESULT( t_4 );
  if ( IS_SMALL_LIST(t_4) ) {
   t_3 = (Obj)(UInt)1;
   t_1 = INTOBJ_INT(1);
@@ -464,17 +464,17 @@ static Obj  HdlrFunc4 (
   
   /* if IsBound( RANK_FILTERS[i] ) then */
   t_7 = GC_RANK__FILTERS;
-  CHECK_BOUND( t_7, "RANK_FILTERS" )
-  CHECK_INT_POS( l_i )
+  CHECK_BOUND( t_7, "RANK_FILTERS" );
+  CHECK_INT_POS( l_i );
   t_6 = C_ISB_LIST( t_7, l_i );
   t_5 = (Obj)(UInt)(t_6 != False);
   if ( t_5 ) {
    
    /* rank := rank + RANK_FILTERS[i]; */
    t_7 = GC_RANK__FILTERS;
-   CHECK_BOUND( t_7, "RANK_FILTERS" )
-   C_ELM_LIST_FPL( t_6, t_7, l_i )
-   C_SUM_FIA( t_5, l_rank, t_6 )
+   CHECK_BOUND( t_7, "RANK_FILTERS" );
+   C_ELM_LIST_FPL( t_6, t_7, l_i );
+   C_SUM_FIA( t_5, l_rank, t_6 );
    l_rank = t_5;
    
   }
@@ -483,7 +483,7 @@ static Obj  HdlrFunc4 (
   else {
    
    /* rank := rank + 1; */
-   C_SUM_FIA( t_5, l_rank, INTOBJ_INT(1) )
+   C_SUM_FIA( t_5, l_rank, INTOBJ_INT(1) );
    l_rank = t_5;
    
   }
@@ -537,7 +537,7 @@ static Obj  HdlrFunc1 (
  t_3 = NEW_PLIST( T_PLIST, 0 );
  SET_LEN_PLIST( t_3, 0 );
  t_1 = CALL_1ARGS( t_2, t_3 );
- CHECK_FUNC_RESULT( t_1 )
+ CHECK_FUNC_RESULT( t_1 );
  AssGVar( G_IMPLICATIONS, t_1 );
  
  /* WITH_IMPS_FLAGS_CACHE := LockAndMigrateObj( [  ], IMPLICATIONS ); */
@@ -545,9 +545,9 @@ static Obj  HdlrFunc1 (
  t_3 = NEW_PLIST( T_PLIST, 0 );
  SET_LEN_PLIST( t_3, 0 );
  t_4 = GC_IMPLICATIONS;
- CHECK_BOUND( t_4, "IMPLICATIONS" )
+ CHECK_BOUND( t_4, "IMPLICATIONS" );
  t_1 = CALL_2ARGS( t_2, t_3, t_4 );
- CHECK_FUNC_RESULT( t_1 )
+ CHECK_FUNC_RESULT( t_1 );
  AssGVar( G_WITH__IMPS__FLAGS__CACHE, t_1 );
  
  /* WITH_IMPS_FLAGS_COUNT := 0; */
@@ -670,7 +670,7 @@ static Obj  HdlrFunc1 (
  
  /* RankFilter := RANK_FILTER; */
  t_1 = GC_RANK__FILTER;
- CHECK_BOUND( t_1, "RANK_FILTER" )
+ CHECK_BOUND( t_1, "RANK_FILTER" );
  AssGVar( G_RankFilter, t_1 );
  
  /* return; */

@@ -67,9 +67,9 @@ static Obj  HdlrFunc2 (
  /* r := ATOMIC_ADDITION( RANDOM_SEED_COUNTER, 1, 1 ); */
  t_2 = GF_ATOMIC__ADDITION;
  t_3 = GC_RANDOM__SEED__COUNTER;
- CHECK_BOUND( t_3, "RANDOM_SEED_COUNTER" )
+ CHECK_BOUND( t_3, "RANDOM_SEED_COUNTER" );
  t_1 = CALL_3ARGS( t_2, t_3, INTOBJ_INT(1), INTOBJ_INT(1) );
- CHECK_FUNC_RESULT( t_1 )
+ CHECK_FUNC_RESULT( t_1 );
  l_r = t_1;
  
  /* return r; */
@@ -109,55 +109,55 @@ static Obj  HdlrFunc3 (
  /* r_n := VAL_GVAR( _R_N ); */
  t_2 = GF_VAL__GVAR;
  t_3 = GC___R__N;
- CHECK_BOUND( t_3, "_R_N" )
+ CHECK_BOUND( t_3, "_R_N" );
  t_1 = CALL_1ARGS( t_2, t_3 );
- CHECK_FUNC_RESULT( t_1 )
+ CHECK_FUNC_RESULT( t_1 );
  l_r__n = t_1;
  
  /* r_x := VAL_GVAR( _R_X ); */
  t_2 = GF_VAL__GVAR;
  t_3 = GC___R__X;
- CHECK_BOUND( t_3, "_R_X" )
+ CHECK_BOUND( t_3, "_R_X" );
  t_1 = CALL_1ARGS( t_2, t_3 );
- CHECK_FUNC_RESULT( t_1 )
+ CHECK_FUNC_RESULT( t_1 );
  l_r__x = t_1;
  
  /* ASS_GVAR( _R_N, r_n mod 55 + 1 ); */
  t_1 = GF_ASS__GVAR;
  t_2 = GC___R__N;
- CHECK_BOUND( t_2, "_R_N" )
+ CHECK_BOUND( t_2, "_R_N" );
  t_4 = MOD( l_r__n, INTOBJ_INT(55) );
- C_SUM_FIA( t_3, t_4, INTOBJ_INT(1) )
+ C_SUM_FIA( t_3, t_4, INTOBJ_INT(1) );
  CALL_2ARGS( t_1, t_2, t_3 );
  
  /* r_x[r_n] := (r_x[r_n] + r_x[((r_n + 30) mod 55 + 1)]) mod R_228; */
- CHECK_INT_POS( l_r__n )
- C_ELM_LIST_FPL( t_3, l_r__x, l_r__n )
- C_SUM_FIA( t_7, l_r__n, INTOBJ_INT(30) )
+ CHECK_INT_POS( l_r__n );
+ C_ELM_LIST_FPL( t_3, l_r__x, l_r__n );
+ C_SUM_FIA( t_7, l_r__n, INTOBJ_INT(30) );
  t_6 = MOD( t_7, INTOBJ_INT(55) );
- C_SUM_FIA( t_5, t_6, INTOBJ_INT(1) )
- CHECK_INT_POS( t_5 )
- C_ELM_LIST_FPL( t_4, l_r__x, t_5 )
- C_SUM_FIA( t_2, t_3, t_4 )
+ C_SUM_FIA( t_5, t_6, INTOBJ_INT(1) );
+ CHECK_INT_POS( t_5 );
+ C_ELM_LIST_FPL( t_4, l_r__x, t_5 );
+ C_SUM_FIA( t_2, t_3, t_4 );
  t_3 = GC_R__228;
- CHECK_BOUND( t_3, "R_228" )
+ CHECK_BOUND( t_3, "R_228" );
  t_1 = MOD( t_2, t_3 );
- C_ASS_LIST_FPL( l_r__x, l_r__n, t_1 )
+ C_ASS_LIST_FPL( l_r__x, l_r__n, t_1 );
  
  /* return list[QUO_INT( r_x[r_n] * LEN_LIST( list ), R_228 ) + 1]; */
  t_4 = GF_QUO__INT;
- C_ELM_LIST_FPL( t_6, l_r__x, l_r__n )
+ C_ELM_LIST_FPL( t_6, l_r__x, l_r__n );
  t_8 = GF_LEN__LIST;
  t_7 = CALL_1ARGS( t_8, a_list );
- CHECK_FUNC_RESULT( t_7 )
- C_PROD_FIA( t_5, t_6, t_7 )
+ CHECK_FUNC_RESULT( t_7 );
+ C_PROD_FIA( t_5, t_6, t_7 );
  t_6 = GC_R__228;
- CHECK_BOUND( t_6, "R_228" )
+ CHECK_BOUND( t_6, "R_228" );
  t_3 = CALL_2ARGS( t_4, t_5, t_6 );
- CHECK_FUNC_RESULT( t_3 )
- C_SUM_FIA( t_2, t_3, INTOBJ_INT(1) )
- CHECK_INT_POS( t_2 )
- C_ELM_LIST_FPL( t_1, a_list, t_2 )
+ CHECK_FUNC_RESULT( t_3 );
+ C_SUM_FIA( t_2, t_3, INTOBJ_INT(1) );
+ CHECK_INT_POS( t_2 );
+ C_ELM_LIST_FPL( t_1, a_list, t_2 );
  RES_BRK_CURR_STAT();
  SWITCH_TO_OLD_FRAME(oldFrame);
  return t_1;
@@ -195,17 +195,17 @@ static Obj  HdlrFunc4 (
  /* ASS_GVAR( _R_N, 1 ); */
  t_1 = GF_ASS__GVAR;
  t_2 = GC___R__N;
- CHECK_BOUND( t_2, "_R_N" )
+ CHECK_BOUND( t_2, "_R_N" );
  CALL_2ARGS( t_1, t_2, INTOBJ_INT(1) );
  
  /* ASS_GVAR( _R_X, [ n mod R_228 ] ); */
  t_1 = GF_ASS__GVAR;
  t_2 = GC___R__X;
- CHECK_BOUND( t_2, "_R_X" )
+ CHECK_BOUND( t_2, "_R_X" );
  t_3 = NEW_PLIST( T_PLIST, 1 );
  SET_LEN_PLIST( t_3, 1 );
  t_5 = GC_R__228;
- CHECK_BOUND( t_5, "R_228" )
+ CHECK_BOUND( t_5, "R_228" );
  t_4 = MOD( a_n, t_5 );
  SET_ELM_PLIST( t_3, 1, t_4 );
  CHANGED_BAG( t_3 );
@@ -214,17 +214,17 @@ static Obj  HdlrFunc4 (
  /* r_n := VAL_GVAR( _R_N ); */
  t_2 = GF_VAL__GVAR;
  t_3 = GC___R__N;
- CHECK_BOUND( t_3, "_R_N" )
+ CHECK_BOUND( t_3, "_R_N" );
  t_1 = CALL_1ARGS( t_2, t_3 );
- CHECK_FUNC_RESULT( t_1 )
+ CHECK_FUNC_RESULT( t_1 );
  l_r__n = t_1;
  
  /* r_x := VAL_GVAR( _R_X ); */
  t_2 = GF_VAL__GVAR;
  t_3 = GC___R__X;
- CHECK_BOUND( t_3, "_R_X" )
+ CHECK_BOUND( t_3, "_R_X" );
  t_1 = CALL_1ARGS( t_2, t_3 );
- CHECK_FUNC_RESULT( t_1 )
+ CHECK_FUNC_RESULT( t_1 );
  l_r__x = t_1;
  
  /* for i in [ 2 .. 55 ] do */
@@ -234,15 +234,15 @@ static Obj  HdlrFunc4 (
   l_i = t_1;
   
   /* r_x[i] := (1664525 * r_x[(i - 1)] + 1) mod R_228; */
-  C_DIFF_INTOBJS( t_6, l_i, INTOBJ_INT(1) )
-  CHECK_INT_POS( t_6 )
-  C_ELM_LIST_FPL( t_5, l_r__x, t_6 )
-  C_PROD_FIA( t_4, INTOBJ_INT(1664525), t_5 )
-  C_SUM_FIA( t_3, t_4, INTOBJ_INT(1) )
+  C_DIFF_INTOBJS( t_6, l_i, INTOBJ_INT(1) );
+  CHECK_INT_POS( t_6 );
+  C_ELM_LIST_FPL( t_5, l_r__x, t_6 );
+  C_PROD_FIA( t_4, INTOBJ_INT(1664525), t_5 );
+  C_SUM_FIA( t_3, t_4, INTOBJ_INT(1) );
   t_4 = GC_R__228;
-  CHECK_BOUND( t_4, "R_228" )
+  CHECK_BOUND( t_4, "R_228" );
   t_2 = MOD( t_3, t_4 );
-  C_ASS_LIST_FPL( l_r__x, l_i, t_2 )
+  C_ASS_LIST_FPL( l_r__x, l_i, t_2 );
   
  }
  /* od */
@@ -256,24 +256,24 @@ static Obj  HdlrFunc4 (
   /* ASS_GVAR( _R_N, r_n mod 55 + 1 ); */
   t_2 = GF_ASS__GVAR;
   t_3 = GC___R__N;
-  CHECK_BOUND( t_3, "_R_N" )
+  CHECK_BOUND( t_3, "_R_N" );
   t_5 = MOD( l_r__n, INTOBJ_INT(55) );
-  C_SUM_FIA( t_4, t_5, INTOBJ_INT(1) )
+  C_SUM_FIA( t_4, t_5, INTOBJ_INT(1) );
   CALL_2ARGS( t_2, t_3, t_4 );
   
   /* r_x[r_n] := (r_x[r_n] + r_x[((r_n + 30) mod 55 + 1)]) mod R_228; */
-  CHECK_INT_POS( l_r__n )
-  C_ELM_LIST_FPL( t_4, l_r__x, l_r__n )
-  C_SUM_FIA( t_8, l_r__n, INTOBJ_INT(30) )
+  CHECK_INT_POS( l_r__n );
+  C_ELM_LIST_FPL( t_4, l_r__x, l_r__n );
+  C_SUM_FIA( t_8, l_r__n, INTOBJ_INT(30) );
   t_7 = MOD( t_8, INTOBJ_INT(55) );
-  C_SUM_FIA( t_6, t_7, INTOBJ_INT(1) )
-  CHECK_INT_POS( t_6 )
-  C_ELM_LIST_FPL( t_5, l_r__x, t_6 )
-  C_SUM_FIA( t_3, t_4, t_5 )
+  C_SUM_FIA( t_6, t_7, INTOBJ_INT(1) );
+  CHECK_INT_POS( t_6 );
+  C_ELM_LIST_FPL( t_5, l_r__x, t_6 );
+  C_SUM_FIA( t_3, t_4, t_5 );
   t_4 = GC_R__228;
-  CHECK_BOUND( t_4, "R_228" )
+  CHECK_BOUND( t_4, "R_228" );
   t_2 = MOD( t_3, t_4 );
-  C_ASS_LIST_FPL( l_r__x, l_r__n, t_2 )
+  C_ASS_LIST_FPL( l_r__x, l_r__n, t_2 );
   
  }
  /* od */
@@ -307,14 +307,14 @@ static Obj  HdlrFunc5 (
  /* ASS_GVAR( _R_N, 1 ); */
  t_1 = GF_ASS__GVAR;
  t_2 = GC___R__N;
- CHECK_BOUND( t_2, "_R_N" )
+ CHECK_BOUND( t_2, "_R_N" );
  CALL_2ARGS( t_1, t_2, INTOBJ_INT(1) );
  
  /* RANDOM_SEED( GET_RANDOM_SEED_COUNTER(  ) ); */
  t_1 = GF_RANDOM__SEED;
  t_3 = GF_GET__RANDOM__SEED__COUNTER;
  t_2 = CALL_0ARGS( t_3 );
- CHECK_FUNC_RESULT( t_2 )
+ CHECK_FUNC_RESULT( t_2 );
  CALL_1ARGS( t_1, t_2 );
  
  /* return; */
@@ -351,7 +351,7 @@ static Obj  HdlrFunc1 (
  t_4 = GF_MakeLiteral;
  C_NEW_STRING( t_5, 3, "R_N" );
  t_3 = CALL_1ARGS( t_4, t_5 );
- CHECK_FUNC_RESULT( t_3 )
+ CHECK_FUNC_RESULT( t_3 );
  CALL_2ARGS( t_1, t_2, t_3 );
  
  /* BIND_GLOBAL( "_R_X", MakeLiteral( "R_X" ) ); */
@@ -360,19 +360,19 @@ static Obj  HdlrFunc1 (
  t_4 = GF_MakeLiteral;
  C_NEW_STRING( t_5, 3, "R_X" );
  t_3 = CALL_1ARGS( t_4, t_5 );
- CHECK_FUNC_RESULT( t_3 )
+ CHECK_FUNC_RESULT( t_3 );
  CALL_2ARGS( t_1, t_2, t_3 );
  
  /* MakeThreadLocal( _R_N ); */
  t_1 = GF_MakeThreadLocal;
  t_2 = GC___R__N;
- CHECK_BOUND( t_2, "_R_N" )
+ CHECK_BOUND( t_2, "_R_N" );
  CALL_1ARGS( t_1, t_2 );
  
  /* MakeThreadLocal( _R_X ); */
  t_1 = GF_MakeThreadLocal;
  t_2 = GC___R__X;
- CHECK_BOUND( t_2, "_R_X" )
+ CHECK_BOUND( t_2, "_R_X" );
  CALL_1ARGS( t_1, t_2 );
  
  /* BIND_GLOBAL( "RANDOM_SEED_COUNTER", FixedAtomicList( 1, 0 ) ); */
@@ -380,7 +380,7 @@ static Obj  HdlrFunc1 (
  C_NEW_STRING( t_2, 19, "RANDOM_SEED_COUNTER" );
  t_4 = GF_FixedAtomicList;
  t_3 = CALL_2ARGS( t_4, INTOBJ_INT(1), INTOBJ_INT(0) );
- CHECK_FUNC_RESULT( t_3 )
+ CHECK_FUNC_RESULT( t_3 );
  CALL_2ARGS( t_1, t_2, t_3 );
  
  /* BIND_GLOBAL( "GET_RANDOM_SEED_COUNTER", function (  )
@@ -467,17 +467,17 @@ static Obj  HdlrFunc1 (
  /* BindThreadLocalConstructor( _R_N, RANDOM_SEED_CONSTRUCTOR ); */
  t_1 = GF_BindThreadLocalConstructor;
  t_2 = GC___R__N;
- CHECK_BOUND( t_2, "_R_N" )
+ CHECK_BOUND( t_2, "_R_N" );
  t_3 = GC_RANDOM__SEED__CONSTRUCTOR;
- CHECK_BOUND( t_3, "RANDOM_SEED_CONSTRUCTOR" )
+ CHECK_BOUND( t_3, "RANDOM_SEED_CONSTRUCTOR" );
  CALL_2ARGS( t_1, t_2, t_3 );
  
  /* BindThreadLocalConstructor( _R_X, RANDOM_SEED_CONSTRUCTOR ); */
  t_1 = GF_BindThreadLocalConstructor;
  t_2 = GC___R__X;
- CHECK_BOUND( t_2, "_R_X" )
+ CHECK_BOUND( t_2, "_R_X" );
  t_3 = GC_RANDOM__SEED__CONSTRUCTOR;
- CHECK_BOUND( t_3, "RANDOM_SEED_CONSTRUCTOR" )
+ CHECK_BOUND( t_3, "RANDOM_SEED_CONSTRUCTOR" );
  CALL_2ARGS( t_1, t_2, t_3 );
  
  /* return; */
