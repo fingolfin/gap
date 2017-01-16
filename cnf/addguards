@@ -18,9 +18,9 @@ cat > "$OUTFILE" <<EOF
 EOF
 
 # HACK: get last argument (at least when called from the GAP
-# build system, the last argument is the name of the output file.
+# build system, the last argument is the name of the input file.
 for last ; do
   :
 done
 
-"$ADDGUARDS" "$TMPFILE" "$last" > "$OUTFILE"
+"$ADDGUARDS" "$TMPFILE" "$last" >> "$OUTFILE"
