@@ -26,6 +26,13 @@ AC_PROG_CC
 AC_LANG([C])
 
 
+dnl
+dnl Check whether to use _GNU_SOURCE etc. (needed for e.g. exp10)
+dnl
+
+AC_USE_SYSTEM_EXTENSIONS
+
+
 dnl autoconf may set CXX to g++ even if there is no working C++ compiler.
 dnl So verify that CXX really is able to compile C++ code.
 AC_LANG_PUSH([C++])
