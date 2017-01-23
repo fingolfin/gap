@@ -154,25 +154,38 @@ dnl External dependencies
 dnl
 
 dnl Find GMP
-GMP_CPPFLAGS=""
-GMP_LDFLAGS=""
 AC_ARG_WITH([gmp],
   [AS_HELP_STRING([--with-gmp[=DIR]],  
                   [prefix of GMP installation. e.g. /usr/local or /usr])],
   [GMP_PREFIX="$with_gmp"],
-  [AC_CHECK_LIB([gmp], [__gmpz_init], ,
-    AC_MSG_ERROR([GNU Multiple Precision Arithmetic Library not found.
-    Maybe you want to call configure with the --with-gmp=<path> option?
-    This tells configure where to find the GMP library and headers.
-    e.g. --with-gmp=/usr/local or --with-gmp=/usr]))]
+  [AC_CHECK_LIB([gmp], [__gmpz_init],
+    [
+    GMP_USE_BUILTIN=no
+    if test "x$GMP_PREFIX" != x ; then
+      GMP_CPPFLAGS=" -I${GMP_PREFIX}/include"
+      GMP_LDFLAGS=" -L${GMP_PREFIX}/lib -lgmp"
+    else
+      GMP_CPPFLAGS=""
+      GMP_LDFLAGS="-lgmp"
+    fi
+    ],
+    [
+    AC_CONFIG_SUBDIRS([extern/gmp])
+    GMP_USE_BUILTIN=yes
+    GMP_PREFIX='${builddir}/extern/gmp'
+    GMP_CPPFLAGS=" -I${GMP_PREFIX}"
+    GMP_LDFLAGS=" -L${GMP_PREFIX} -lgmp"
+    AC_MSG_NOTICE([No usable GMP found, switching to included GMP])
+#     AC_MSG_ERROR([GNU Multiple Precision Arithmetic Library not found.
+#     Maybe you want to call configure with the --with-gmp=<path> option?
+#     This tells configure where to find the GMP library and headers.
+#     e.g. --with-gmp=/usr/local or --with-gmp=/usr])
+    ])]
 )
-if test "x$GMP_PREFIX" != x ; then
-  GMP_LDFLAGS=" -L${GMP_PREFIX}/lib"
-  GMP_CPPFLAGS=" -I${GMP_PREFIX}/include"
-fi
-GMP_LDFLAGS="${GMP_LDFLAGS} -lgmp"
-AC_SUBST([GMP_LDFLAGS])
+AC_SUBST([GMP_USE_BUILTIN])
+AC_SUBST([GMP_PREFIX])
 AC_SUBST([GMP_CPPFLAGS])
+AC_SUBST([GMP_LDFLAGS])
 AC_DEFINE([USE_GMP], [1], [for backwards compatibility])
 
 

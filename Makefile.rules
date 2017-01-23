@@ -271,6 +271,30 @@ distclean: clean
 clean:
 	rm -f $(OBJS) gap$(EXEEXT)
 
+######################################################################
+# Building subprojects
+######################################################################
+
+ifeq ($(GMP_USE_BUILTIN),yes)
+gap$(EXEEXT): gmp
+gmp:
+	$(MAKE) -C $(GMP_PREFIX) -s
+
+$(OBJS): $(GMP_PREFIX)/gmp.h
+$(GMP_PREFIX)/gmp.h:
+	$(MAKE) -C $(GMP_PREFIX) -s gmp.h
+
+clean: clean-gmp
+clean-gmp:
+	$(MAKE) -C $(GMP_PREFIX) -s clean
+
+check: check-gmp
+check-gmp:
+	$(MAKE) -C $(GMP_PREFIX) -s check
+
+.PHONY: gmp clean-gmp check-gmp
+
+endif
 
 ######################################################################
 # Documentation rules
