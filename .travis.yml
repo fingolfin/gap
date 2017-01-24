@@ -57,6 +57,7 @@ matrix:
 
 script:
   - ./autogen.sh
+  - cat aclocal.m4
   - ./configure
   - make -j4
   - make bootstrap-pkg-full
