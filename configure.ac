@@ -189,7 +189,9 @@ AC_SUBST([GMP_LDFLAGS])
 AC_DEFINE([USE_GMP], [1], [for backwards compatibility])
 
 
-dnl Find readline
+dnl Find GNU readline
+dnl We check for the symbol rl_ding to distinguish GNU readline
+dnl from other readline implementation.
 AC_ARG_WITH([readline],
   [AS_HELP_STRING([--with-readline],
     [support fancy command line editing @<:@default=check@:>@])],
@@ -197,8 +199,18 @@ AC_ARG_WITH([readline],
   [with_readline=check])
 
 READLINE_LDFLAGS=
+use_readline=no
 AS_IF([test "x$with_readline" != xno],
-  [AC_CHECK_LIB([readline], [main],
+  [AC_CHECK_LIB([readline], [rl_ding],
+    [
+      AC_CHECK_HEADER(readline/readline.h,
+        [AC_CHECK_HEADER(readline/history.h, use_readline=yes)]
+      )
+    ],
+    [], -lncurses)
+  ]
+)
+AS_IF([test "x$use_readline" = xyes],
     [READLINE_LDFLAGS="-lreadline -lncurses"
      AC_DEFINE([HAVE_LIBREADLINE], [1],
                [Define if you have libreadline])
@@ -207,8 +219,7 @@ AS_IF([test "x$with_readline" != xno],
        AC_MSG_FAILURE(
          [--with-readline was given, but test for readline failed])
      fi
-    ], -lncurses)
-  ]
+    ]
 )
 AC_SUBST([READLINE_LDFLAGS])
 
