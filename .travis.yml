@@ -1,4 +1,8 @@
 language: c
+addons:
+  apt_packages:
+    - autoconf
+    - libtool
 matrix:
   include:
     - os: linux
@@ -56,8 +60,8 @@ matrix:
           - bash <(curl -s https://codecov.io/bash)
 
 script:
-  - ./configure --with-gmp=system
-  - make config
+  - ./autogen.sh
+  - ./configure
   - make -j4
   - make bootstrap-pkg-full
   - bash etc/ci.sh
