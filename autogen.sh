@@ -4,4 +4,4 @@
 #
 # Requires GNU autoconf.
 #
-autoreconf -vif --no-recursive `dirname "$0"`
+autoreconf -vif --no-recursive -I cnf/m4 `dirname "$0"`
