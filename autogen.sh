@@ -4,4 +4,4 @@
 #
 # Requires GNU autoconf.
 #
-autoreconf -vif `dirname "$0"`
+autoreconf -vif --no-recursive `dirname "$0"`
