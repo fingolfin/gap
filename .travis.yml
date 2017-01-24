@@ -1,8 +1,4 @@
 language: c
-addons:
-  apt_packages:
-    - autoconf
-    - libtool
 matrix:
   include:
     - os: linux
