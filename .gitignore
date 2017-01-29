@@ -13,14 +13,9 @@
 /configure
 /libtool
 /src/config.h.in
-/src/config.h
-/src/*.o
-/src/.deps/
-/src/hpc/.deps/
 
-/stamp-h
 /gen/
-/src/gap_version.c
+/obj/
 
 /build/
 

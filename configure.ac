@@ -5,19 +5,17 @@ AC_PREREQ([2.68])
 AC_INIT([GAP], [4.dev], [support@gap-system.org], [gap], [http://www.gap-system.org/])
 
 AC_CONFIG_SRCDIR([src/gap.c])
-AC_CONFIG_HEADERS([src/config.h])
-AC_CONFIG_MACRO_DIR([cnf/m4])
 AC_CONFIG_AUX_DIR([cnf])
+AC_CONFIG_MACRO_DIR([cnf/m4])
+
+AC_CONFIG_HEADERS([gen/config.h:src/config.h.in])
+AC_CONFIG_COMMANDS([gen/stamp-h], [echo timestamp > gen/stamp-h])
 
 dnl
 dnl Get canonical host information
 dnl
 AC_CANONICAL_HOST
 
-# HACK
-AC_DEFINE_UNQUOTED([SYS_ARCH], ["fake-gap-arch"], [define the name of the architucture])
-AC_DEFINE_UNQUOTED([CONFIGNAME], ["fake-config"], [the CONFIGNAME value of the active configuration])
-# GAPARCH ?
 
 dnl
 dnl Set the language
@@ -27,10 +25,64 @@ AC_LANG([C])
 
 
 dnl
-dnl Check whether to use _GNU_SOURCE etc. (needed for e.g. exp10)
+dnl Check whether to use _GNU_SOURCE etc. (needed for e.g. exp10).
+dnl Must come before anything else using AC_COMPILE_IFELSE
 dnl
-
 AC_USE_SYSTEM_EXTENSIONS
+
+
+dnl
+dnl ABI settings
+dnl
+AC_ARG_VAR(ABI, [Set this equal to 32 or 64 to build GAP (and GMP provided you
+     do not deselect it) in 32- or 64-bit mode. The default value
+     for this option is determined by testing the behaviour of your
+     compiler, so should be 32 on a 32-bit system and 64 on one
+     which is 64-bit. If this is unset, the build system will set
+     a value of 64 or 32 depending of the pointer size of the host.])
+
+AC_MSG_CHECKING([ABI flags])
+AC_MSG_CHECKING([ABI bit size])
+if test "x$ABI" = "x" ;  then
+  ABI_CFLAGS=""
+elif test "$ABI" = "64"; then
+  ABI_CFLAGS="-m64"
+elif test "$ABI" = "32"; then
+  ABI_CFLAGS="-m32"
+else
+  AC_MSG_WARN([ $ABI is not a supported value for ABI. The supported values are ABI=64
+                 or 32.])
+fi
+AC_MSG_RESULT([$ABI_CFLAGS])
+AC_SUBST(ABI_CFLAGS)
+
+dnl Add ABI_CFLAGS to CFLAGS *now*, so that all config tests we
+dnl run from here on use it.
+CFLAGS="$CFLAGS $ABI_CFLAGS"
+LDFLAGS="$LDFLAGS $ABI_CFLAGS"
+
+dnl determine pointer sizes to distinguish 32 and 64 bit systems.
+AC_CHECK_SIZEOF([void *])
+
+dnl ensure that ABI and sizeof(void *) match
+AC_MSG_CHECKING([ABI bit size])
+if test "x$ABI" = "x" ;  then
+  if test $ac_cv_sizeof_void_p = 8; then
+    ABI="64"
+  else
+    ABI="32"
+  fi
+elif test "$ABI" = "32"; then
+  if test $ac_cv_sizeof_void_p != 4; then
+    AC_MSG_ERROR([ ABI=32 used by sizeof(void *) != 4.])
+  fi
+elif test "$ABI" = "64"; then
+  if test $ac_cv_sizeof_void_p != 8; then
+    AC_MSG_ERROR([ ABI=64 used by sizeof(void *) != 8.])
+  fi
+fi
+AC_MSG_RESULT([$ABI])
+AC_SUBST(ABI)
 
 
 dnl autoconf may set CXX to g++ even if there is no working C++ compiler.
@@ -46,7 +98,7 @@ AC_LANG_POP([C++])
 
 
 dnl
-dnl Misc
+dnl Miscellaneous tools
 dnl
 AC_PROG_INSTALL
 AC_PROG_MKDIR_P
@@ -58,15 +110,10 @@ dnl
 LT_PREREQ([2.4.2])
 LT_INIT([disable-static dlopen win32-dll])
 
+
 dnl
 dnl Check for properties of the host system and compiler
 dnl
-
-dnl determine pointer sizes to distinguish 32 and 64 bit systems.
-AC_CHECK_SIZEOF([void *])
-AC_CHECK_SIZEOF([int])
-AC_CHECK_SIZEOF([long])
-AC_CHECK_SIZEOF([long long])
 
 dnl endianess
 AC_C_BIGENDIAN
@@ -106,13 +153,27 @@ AC_DEFUN([CHECK_COMPILER_BUILTIN],
 CHECK_COMPILER_BUILTIN([__builtin_smul_overflow],[0,0,0]);
 CHECK_COMPILER_BUILTIN([__builtin_smull_overflow],[0,0,0]);
 CHECK_COMPILER_BUILTIN([__builtin_smulll_overflow],[0,0,0]);
+CHECK_COMPILER_BUILTIN([__builtin_clz],[0]);
+CHECK_COMPILER_BUILTIN([__builtin_clzl],[0]);
+CHECK_COMPILER_BUILTIN([__builtin_clzll],[0]);
+
+dnl determine sizeof of some standard types, so that the GAP headers
+dnl can pick the correct builtins among those we just tested
+AC_CHECK_SIZEOF([int])
+AC_CHECK_SIZEOF([long])
+AC_CHECK_SIZEOF([long long])
+
 
 
 dnl
 dnl User settings
 dnl
 
-dnl HPC-GAP mode (off by default)
+dnl
+dnl User setting: HPC-GAP mode (off by default)
+dnl
+dnl If on, build an HPCGAP executable instead of standard GAP.
+dnl
 AC_ARG_ENABLE([hpcgap],
     [AS_HELP_STRING([--enable-hpcgap], [enable HPC-GAP])],
     [AC_DEFINE([HPCGAP], [1], [define if building HPC-GAP])],
@@ -122,12 +183,17 @@ AC_MSG_CHECKING([whether to enable HPC-GAP])
 AC_MSG_RESULT([$enable_hpcgap])
 
 AC_SUBST([HPCGAP], [$enable_hpcgap])
-if test "x$enable_hpcgap" = xyes ; then
+AS_IF([test "x$enable_hpcgap" = xyes],[
     # HACK (see issue #9)
     AC_DEFINE([MAX_GC_THREADS], [4], [maximum number of GC threads])
-fi
+    ])
 
-dnl Debug mode (off by default)
+dnl
+dnl User setting: Debug mode (off by default)
+dnl
+dnl TODO: make this actually do something, e.g. disable or reduce optimizations,
+dnl enable/disable C level assertions, etc.
+dnl
 AC_ARG_ENABLE([debug],
     [AS_HELP_STRING([--enable-debug], [enable debug mode])],
     [AC_DEFINE([DEBUG], [1], [define if building in debug mode])],
@@ -136,8 +202,16 @@ AC_ARG_ENABLE([debug],
 AC_MSG_CHECKING([whether to enable debug mode])
 AC_MSG_RESULT([$enable_debug])
 
+dnl
+dnl User setting: Compatibility mode (on by default)
+dnl
+CONFIGNAME="default${ABI}"
+BASECC=`basename ${CC}`
+GAPARCH=$host-$BASECC-${CONFIGNAME}
+AC_DEFINE_UNQUOTED([CONFIGNAME], ["$CONFIGNAME"], [for backwards compatibility])
+AC_DEFINE_UNQUOTED([SYS_ARCH], ["$GAPARCH"], [for backwards compatibility])
+AC_SUBST([GAPARCH])
 
-dnl Compatibility mode for packages (on by default)
 AC_ARG_ENABLE([compat-mode],
     [AS_HELP_STRING([--disable-compat-mode], [enable compatibility mode])],
     [],
@@ -147,6 +221,12 @@ AC_MSG_CHECKING([whether to enable compatibility mode for packages])
 AC_MSG_RESULT([$enable_compat_mode])
 
 AC_SUBST([COMPAT_MODE], [$enable_compat_mode])
+AS_IF([test "x$enable_compat_mode" = xyes],
+    [
+        AC_CONFIG_FILES([sysinfo.gap])
+        AC_CONFIG_LINKS([bin/$GAPARCH/src:src])
+    ])
+
 
 
 dnl
@@ -161,13 +241,13 @@ AC_ARG_WITH([gmp],
   [AC_CHECK_LIB([gmp], [__gmpz_init],
     [
     GMP_USE_BUILTIN=no
-    if test "x$GMP_PREFIX" != x ; then
+    AS_IF([test "x$GMP_PREFIX" != x],[
       GMP_CPPFLAGS=" -I${GMP_PREFIX}/include"
       GMP_LDFLAGS=" -L${GMP_PREFIX}/lib -lgmp"
-    else
+    ],[
       GMP_CPPFLAGS=""
       GMP_LDFLAGS="-lgmp"
-    fi
+    ])
     ],
     [
     AC_CONFIG_SUBDIRS([extern/gmp])
@@ -262,9 +342,7 @@ AC_DEFINE([BOEHM_GC], [1], [Use Boehm garbage collector])
 # TODO: detect BOEHM GC and set flags suitably
 #  -> may want to build the one shipped with HPC-GAP,
 #  as that has special improvements for HPC-GAP
-if test "x$enable_hpcgap" = xyes ; then
-  BOEHM_LDFLAGS="-lgc"
-fi
+AS_IF([test "x$enable_hpcgap" = xyes],[BOEHM_LDFLAGS="-lgc"])
 AC_SUBST([BOEHM_CPPFLAGS])
 AC_SUBST([BOEHM_LDFLAGS])
 
@@ -465,9 +543,13 @@ AC_CHECK_FUNCS( timer_settime timer_gettime timer_create )
 AC_CHECK_FUNCS( sys_timer_settime sys_timer_gettime sys_timer_create )
 
 dnl pthreads
-if test "x$enable_hpcgap" = xyes ; then
+AS_IF([test "x$enable_hpcgap" = xyes],[
   AX_PTHREAD
-fi
+  ])
+
+AS_IF([test "x$enable_hpcgap" = xyes],[
+  AS_BOX([WARNING: Experimental HPC-GAP mode enabled])
+  ])
 
 
 dnl
