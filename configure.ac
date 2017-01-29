@@ -121,13 +121,14 @@ AC_C_BIGENDIAN
 dnl shifts
 AC_MSG_CHECKING([whether right shifts are arithmetic])
 AC_COMPUTE_INT(RIGHTSHIFTMINUSONE, [(-1L >> 1)+1])
-if test x"$RIGHTSHIFTMINUSONE" = x0 ; then
+AS_IF([test x"$RIGHTSHIFTMINUSONE" = x0],
+    [
     HAVE_ARITHRIGHTSHIFT=1
     AC_MSG_RESULT([yes])
-else
+    ],[
     HAVE_ARITHRIGHTSHIFT=0
     AC_MSG_RESULT([no])
-fi
+    ])
 AC_DEFINE_UNQUOTED([HAVE_ARITHRIGHTSHIFT],
     [$HAVE_ARITHRIGHTSHIFT],
     [define as 1 if >> for long int behaves like an arithmetic right shift for negative numbers])
@@ -183,7 +184,8 @@ AC_MSG_CHECKING([whether to enable HPC-GAP])
 AC_MSG_RESULT([$enable_hpcgap])
 
 AC_SUBST([HPCGAP], [$enable_hpcgap])
-AS_IF([test "x$enable_hpcgap" = xyes],[
+AS_IF([test "x$enable_hpcgap" = xyes],
+    [
     # HACK (see issue #9)
     AC_DEFINE([MAX_GC_THREADS], [4], [maximum number of GC threads])
     ])
@@ -207,7 +209,7 @@ dnl User setting: Compatibility mode (on by default)
 dnl
 CONFIGNAME="default${ABI}"
 BASECC=`basename ${CC}`
-GAPARCH=$host-$BASECC-${CONFIGNAME}
+GAPARCH="$host-$BASECC-${CONFIGNAME}"
 AC_DEFINE_UNQUOTED([CONFIGNAME], ["$CONFIGNAME"], [for backwards compatibility])
 AC_DEFINE_UNQUOTED([SYS_ARCH], ["$GAPARCH"], [for backwards compatibility])
 AC_SUBST([GAPARCH])
@@ -223,8 +225,24 @@ AC_MSG_RESULT([$enable_compat_mode])
 AC_SUBST([COMPAT_MODE], [$enable_compat_mode])
 AS_IF([test "x$enable_compat_mode" = xyes],
     [
-        AC_CONFIG_FILES([sysinfo.gap])
-        AC_CONFIG_LINKS([bin/$GAPARCH/src:src])
+    AC_CONFIG_FILES([bin/gap.sh:cnf/compat/gap.sh.in], [chmod +x bin/gap.sh])
+    AC_CONFIG_FILES([sysinfo.gap:cnf/compat/sysinfo.gap.in])
+    AC_CONFIG_LINKS([bin/$GAPARCH/config.h:gen/config.h])
+    AC_CONFIG_LINKS([bin/$GAPARCH/src:src])
+    AS_IF([test "x$srcdir" = x.],
+        [
+            AC_MSG_NOTICE([in-tree build])
+        ],
+        [
+            AC_MSG_NOTICE([out-of-tree build])
+            # FIXME: the following config command
+            # works if invoked explicitly, but for some reason
+            # is not added to the list of automatic command
+            AC_CONFIG_COMMANDS([src/compiled.h],
+                [
+                echo "#include \"$ac_abs_top_srcdir/src/compiled.h\"" > src/compiled.h
+                ])
+        ])
     ])
 
 
@@ -241,13 +259,14 @@ AC_ARG_WITH([gmp],
   [AC_CHECK_LIB([gmp], [__gmpz_init],
     [
     GMP_USE_BUILTIN=no
-    AS_IF([test "x$GMP_PREFIX" != x],[
+    AS_IF([test "x$GMP_PREFIX" != x],
+      [
       GMP_CPPFLAGS=" -I${GMP_PREFIX}/include"
       GMP_LDFLAGS=" -L${GMP_PREFIX}/lib -lgmp"
-    ],[
+      ],[
       GMP_CPPFLAGS=""
       GMP_LDFLAGS="-lgmp"
-    ])
+      ])
     ],
     [
     AC_CONFIG_SUBDIRS([extern/gmp])
@@ -295,10 +314,10 @@ AS_IF([test "x$use_readline" = xyes],
      AC_DEFINE([HAVE_LIBREADLINE], [1],
                [Define if you have libreadline])
     ],
-    [if test "x$with_readline" != xcheck; then
+    [AS_IF([test "x$with_readline" != xcheck],[
        AC_MSG_FAILURE(
          [--with-readline was given, but test for readline failed])
-     fi
+     ])
     ]
 )
 AC_SUBST([READLINE_LDFLAGS])
@@ -402,10 +421,6 @@ AC_SUBST([SYS_IS_DARWIN])
 dnl
 dnl check for the existence of various header files
 dnl
-
-# FIXME: needed?
-#AC_HEADER_STDC
-
 
 dnl check for stdint.h and the types int8_t, uint8_t etc. it defines
 AC_TYPE_INT8_T
@@ -520,27 +535,29 @@ AC_CHECK_FUNCS([log2 log10 log1p exp2 expm1 exp10 trunc])
 
 dnl sigsetjmp is a macro on some platforms, cannot use AC_CHECK_FUNCS
 AC_MSG_CHECKING([for sigsetjmp])
-AC_TRY_LINK([#include <setjmp.h>], [sigjmp_buf t; sigsetjmp(t, 0)],
+AC_LINK_IFELSE(
+  [AC_LANG_PROGRAM([[#include <setjmp.h>]],
+      [[sigjmp_buf t; sigsetjmp(t, 0)]])],
   [AC_MSG_RESULT([yes])
    AC_DEFINE([HAVE_SIGSETJMP], [1], [Define to 1 if you have the `sigsetjmp' function.])],
-  [AC_MSG_RESULT([no])]
-)
+  [AC_MSG_RESULT([no])])
 
 dnl _setjmp is a macro on some platforms, cannot use AC_CHECK_FUNCS
 AC_MSG_CHECKING([for _setjmp])
-AC_TRY_LINK([#include <setjmp.h>], [sigjmp_buf t; _setjmp(t, 0)],
+AC_LINK_IFELSE(
+  [AC_LANG_PROGRAM([[#include <setjmp.h>]],
+      [[sigjmp_buf t; _setjmp(t, 0)]])],
   [AC_MSG_RESULT([yes])
    AC_DEFINE([HAVE__SETJMP], [1], [Define to 1 if you have the `_setjmp' function.])],
-  [AC_MSG_RESULT([no])]
-)
+  [AC_MSG_RESULT([no])])
 
 # for rusage and timers
-AC_CHECK_HEADERS( time.h sys/time.h sys/times.h )
-AC_CHECK_FUNCS( times getrusage gettimeofday clock_gettime clock_getres )
-AC_CHECK_FUNCS( setitimer getitimer)
+AC_CHECK_HEADERS([time.h sys/time.h sys/times.h])
+AC_CHECK_FUNCS([times getrusage gettimeofday clock_gettime clock_getres])
+AC_CHECK_FUNCS([setitimer getitimer])
 AC_CHECK_LIB( [rt], [timer_create])
-AC_CHECK_FUNCS( timer_settime timer_gettime timer_create )
-AC_CHECK_FUNCS( sys_timer_settime sys_timer_gettime sys_timer_create )
+AC_CHECK_FUNCS([timer_settime timer_gettime timer_create])
+AC_CHECK_FUNCS([sys_timer_settime sys_timer_gettime sys_timer_create])
 
 dnl pthreads
 AS_IF([test "x$enable_hpcgap" = xyes],[

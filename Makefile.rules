@@ -397,31 +397,13 @@ ifeq ($(COMPAT_MODE),yes)
 
 # regenerate sysinfo.gap if necessary
 all: sysinfo.gap
-sysinfo.gap: $(srcdir)/sysinfo.gap.in config.status
-	$(SHELL) ./config.status sysinfo.gap
+sysinfo.gap: $(srcdir)/cnf/compat/sysinfo.gap.in config.status
+	$(SHELL) ./config.status $@
 
-# 
-all: bin/$(GAPARCH)/config.h
-bin/$(GAPARCH)/config.h:
-	@$(MKDIR_P) $(@D)
-	echo '#include "../../gen/config.h"' > $@
-
-# bin/$(GAPARCH)/src:
-# 	@$(MKDIR_P) bin/$(GAPARCH)
-# 	ln -s $(abs_srcdir)/src bin/$(GAPARCH)/src ; \
-
-# all: setup_compat_mode
-# .PHONY: setup_compat_mode
-# setup_compat_mode:
-# 	@if ! [ -f src/compiled.h ] ; then \
-# 		$(MKDIR_P) src ; \
-# 		echo "#include \"$(abs_top_srcdir)/src/compiled.h\"" > src/compiled.h ; \
-# 	fi
-
-# TODO: docment what the above files do
-# TODO: perhaps let configure and config.status take care of these files?
-
-# TODO: move all generated files to gen, including config.h and gap_version.c ??
+# regenerate bin/gap.sh if necessary
+all: bin/gap.sh
+bin/gap.sh: $(srcdir)/cnf/compat/gap.sh.in config.status
+	$(SHELL) ./config.status $@
 
 endif
 
@@ -567,7 +549,7 @@ $(srcdir)/src/config.h.in: $(configure_deps)
 	touch $@
 
 GNUmakefile: $(srcdir)/GNUmakefile.in config.status
-	$(SHELL) ./config.status GNUmakefile
+	$(SHELL) ./config.status $@
 
 
 ########################################################################
