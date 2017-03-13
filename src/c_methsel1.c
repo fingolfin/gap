@@ -89,14 +89,14 @@ static Obj  HdlrFunc2 (
  /* methods := METHODS_OPERATION( operation, 0 ); */
  t_2 = GF_METHODS__OPERATION;
  t_1 = CALL_2ARGS( t_2, a_operation, INTOBJ_INT(0) );
- CHECK_FUNC_RESULT( t_1 );
+ CHECK_FUNC_RESULT( t_1 )
  l_methods = t_1;
  
  /* for i in [ 1, 5 .. LEN_LIST( methods ) - 3 ] do */
  t_7 = GF_LEN__LIST;
  t_6 = CALL_1ARGS( t_7, l_methods );
- CHECK_FUNC_RESULT( t_6 );
- C_DIFF_FIA( t_5, t_6, INTOBJ_INT(3) );
+ CHECK_FUNC_RESULT( t_6 )
+ C_DIFF_FIA( t_5, t_6, INTOBJ_INT(3) )
  t_4 = Range3Check( INTOBJ_INT(1), INTOBJ_INT(5), t_5 );
  if ( IS_SMALL_LIST(t_4) ) {
   t_3 = (Obj)(UInt)1;
@@ -120,19 +120,19 @@ static Obj  HdlrFunc2 (
   l_i = t_2;
   
   /* if methods[i](  ) then */
-  CHECK_INT_POS( l_i );
-  C_ELM_LIST_FPL( t_7, l_methods, l_i );
-  CHECK_FUNC( t_7 );
+  CHECK_INT_POS( l_i )
+  C_ELM_LIST_FPL( t_7, l_methods, l_i )
+  CHECK_FUNC( t_7 )
   t_6 = CALL_0ARGS( t_7 );
-  CHECK_FUNC_RESULT( t_6 );
-  CHECK_BOOL( t_6 );
+  CHECK_FUNC_RESULT( t_6 )
+  CHECK_BOOL( t_6 )
   t_5 = (Obj)(UInt)(t_6 != False);
   if ( t_5 ) {
    
    /* return methods[i + 1]; */
-   C_SUM_FIA( t_6, l_i, INTOBJ_INT(1) );
-   CHECK_INT_POS( t_6 );
-   C_ELM_LIST_FPL( t_5, l_methods, t_6 );
+   C_SUM_FIA( t_6, l_i, INTOBJ_INT(1) )
+   CHECK_INT_POS( t_6 )
+   C_ELM_LIST_FPL( t_5, l_methods, t_6 )
    RES_BRK_CURR_STAT();
    SWITCH_TO_OLD_FRAME(oldFrame);
    return t_5;
@@ -145,7 +145,7 @@ static Obj  HdlrFunc2 (
  
  /* return fail; */
  t_1 = GC_fail;
- CHECK_BOUND( t_1, "fail" );
+ CHECK_BOUND( t_1, "fail" )
  RES_BRK_CURR_STAT();
  SWITCH_TO_OLD_FRAME(oldFrame);
  return t_1;
@@ -186,14 +186,14 @@ static Obj  HdlrFunc3 (
  /* methods := METHODS_OPERATION( operation, 1 ); */
  t_2 = GF_METHODS__OPERATION;
  t_1 = CALL_2ARGS( t_2, a_operation, INTOBJ_INT(1) );
- CHECK_FUNC_RESULT( t_1 );
+ CHECK_FUNC_RESULT( t_1 )
  l_methods = t_1;
  
  /* for i in [ 1, 6 .. LEN_LIST( methods ) - 4 ] do */
  t_7 = GF_LEN__LIST;
  t_6 = CALL_1ARGS( t_7, l_methods );
- CHECK_FUNC_RESULT( t_6 );
- C_DIFF_FIA( t_5, t_6, INTOBJ_INT(4) );
+ CHECK_FUNC_RESULT( t_6 )
+ C_DIFF_FIA( t_5, t_6, INTOBJ_INT(4) )
  t_4 = Range3Check( INTOBJ_INT(1), INTOBJ_INT(6), t_5 );
  if ( IS_SMALL_LIST(t_4) ) {
   t_3 = (Obj)(UInt)1;
@@ -219,31 +219,31 @@ static Obj  HdlrFunc3 (
   /* if IS_SUBSET_FLAGS( type1![2], methods[i + 1] ) and methods[i]( type1![1] ) then */
   t_8 = GF_IS__SUBSET__FLAGS;
   C_ELM_POSOBJ_NLE( t_9, a_type1, 2 );
-  C_SUM_FIA( t_11, l_i, INTOBJ_INT(1) );
-  CHECK_INT_POS( t_11 );
-  C_ELM_LIST_FPL( t_10, l_methods, t_11 );
+  C_SUM_FIA( t_11, l_i, INTOBJ_INT(1) )
+  CHECK_INT_POS( t_11 )
+  C_ELM_LIST_FPL( t_10, l_methods, t_11 )
   t_7 = CALL_2ARGS( t_8, t_9, t_10 );
-  CHECK_FUNC_RESULT( t_7 );
-  CHECK_BOOL( t_7 );
+  CHECK_FUNC_RESULT( t_7 )
+  CHECK_BOOL( t_7 )
   t_6 = (Obj)(UInt)(t_7 != False);
   t_5 = t_6;
   if ( t_5 ) {
-   CHECK_INT_POS( l_i );
-   C_ELM_LIST_FPL( t_9, l_methods, l_i );
-   CHECK_FUNC( t_9 );
+   CHECK_INT_POS( l_i )
+   C_ELM_LIST_FPL( t_9, l_methods, l_i )
+   CHECK_FUNC( t_9 )
    C_ELM_POSOBJ_NLE( t_10, a_type1, 1 );
    t_8 = CALL_1ARGS( t_9, t_10 );
-   CHECK_FUNC_RESULT( t_8 );
-   CHECK_BOOL( t_8 );
+   CHECK_FUNC_RESULT( t_8 )
+   CHECK_BOOL( t_8 )
    t_7 = (Obj)(UInt)(t_8 != False);
    t_5 = t_7;
   }
   if ( t_5 ) {
    
    /* return methods[i + 2]; */
-   C_SUM_FIA( t_6, l_i, INTOBJ_INT(2) );
-   CHECK_INT_POS( t_6 );
-   C_ELM_LIST_FPL( t_5, l_methods, t_6 );
+   C_SUM_FIA( t_6, l_i, INTOBJ_INT(2) )
+   CHECK_INT_POS( t_6 )
+   C_ELM_LIST_FPL( t_5, l_methods, t_6 )
    RES_BRK_CURR_STAT();
    SWITCH_TO_OLD_FRAME(oldFrame);
    return t_5;
@@ -256,7 +256,7 @@ static Obj  HdlrFunc3 (
  
  /* return fail; */
  t_1 = GC_fail;
- CHECK_BOUND( t_1, "fail" );
+ CHECK_BOUND( t_1, "fail" )
  RES_BRK_CURR_STAT();
  SWITCH_TO_OLD_FRAME(oldFrame);
  return t_1;
@@ -300,14 +300,14 @@ static Obj  HdlrFunc4 (
  /* methods := METHODS_OPERATION( operation, 2 ); */
  t_2 = GF_METHODS__OPERATION;
  t_1 = CALL_2ARGS( t_2, a_operation, INTOBJ_INT(2) );
- CHECK_FUNC_RESULT( t_1 );
+ CHECK_FUNC_RESULT( t_1 )
  l_methods = t_1;
  
  /* for i in [ 1, 7 .. LEN_LIST( methods ) - 5 ] do */
  t_7 = GF_LEN__LIST;
  t_6 = CALL_1ARGS( t_7, l_methods );
- CHECK_FUNC_RESULT( t_6 );
- C_DIFF_FIA( t_5, t_6, INTOBJ_INT(5) );
+ CHECK_FUNC_RESULT( t_6 )
+ C_DIFF_FIA( t_5, t_6, INTOBJ_INT(5) )
  t_4 = Range3Check( INTOBJ_INT(1), INTOBJ_INT(7), t_5 );
  if ( IS_SMALL_LIST(t_4) ) {
   t_3 = (Obj)(UInt)1;
@@ -333,45 +333,45 @@ static Obj  HdlrFunc4 (
   /* if IS_SUBSET_FLAGS( type1![2], methods[i + 1] ) and IS_SUBSET_FLAGS( type2![2], methods[i + 2] ) and methods[i]( type1![1], type2![1] ) then */
   t_9 = GF_IS__SUBSET__FLAGS;
   C_ELM_POSOBJ_NLE( t_10, a_type1, 2 );
-  C_SUM_FIA( t_12, l_i, INTOBJ_INT(1) );
-  CHECK_INT_POS( t_12 );
-  C_ELM_LIST_FPL( t_11, l_methods, t_12 );
+  C_SUM_FIA( t_12, l_i, INTOBJ_INT(1) )
+  CHECK_INT_POS( t_12 )
+  C_ELM_LIST_FPL( t_11, l_methods, t_12 )
   t_8 = CALL_2ARGS( t_9, t_10, t_11 );
-  CHECK_FUNC_RESULT( t_8 );
-  CHECK_BOOL( t_8 );
+  CHECK_FUNC_RESULT( t_8 )
+  CHECK_BOOL( t_8 )
   t_7 = (Obj)(UInt)(t_8 != False);
   t_6 = t_7;
   if ( t_6 ) {
    t_10 = GF_IS__SUBSET__FLAGS;
    C_ELM_POSOBJ_NLE( t_11, a_type2, 2 );
-   C_SUM_FIA( t_13, l_i, INTOBJ_INT(2) );
-   CHECK_INT_POS( t_13 );
-   C_ELM_LIST_FPL( t_12, l_methods, t_13 );
+   C_SUM_FIA( t_13, l_i, INTOBJ_INT(2) )
+   CHECK_INT_POS( t_13 )
+   C_ELM_LIST_FPL( t_12, l_methods, t_13 )
    t_9 = CALL_2ARGS( t_10, t_11, t_12 );
-   CHECK_FUNC_RESULT( t_9 );
-   CHECK_BOOL( t_9 );
+   CHECK_FUNC_RESULT( t_9 )
+   CHECK_BOOL( t_9 )
    t_8 = (Obj)(UInt)(t_9 != False);
    t_6 = t_8;
   }
   t_5 = t_6;
   if ( t_5 ) {
-   CHECK_INT_POS( l_i );
-   C_ELM_LIST_FPL( t_9, l_methods, l_i );
-   CHECK_FUNC( t_9 );
+   CHECK_INT_POS( l_i )
+   C_ELM_LIST_FPL( t_9, l_methods, l_i )
+   CHECK_FUNC( t_9 )
    C_ELM_POSOBJ_NLE( t_10, a_type1, 1 );
    C_ELM_POSOBJ_NLE( t_11, a_type2, 1 );
    t_8 = CALL_2ARGS( t_9, t_10, t_11 );
-   CHECK_FUNC_RESULT( t_8 );
-   CHECK_BOOL( t_8 );
+   CHECK_FUNC_RESULT( t_8 )
+   CHECK_BOOL( t_8 )
    t_7 = (Obj)(UInt)(t_8 != False);
    t_5 = t_7;
   }
   if ( t_5 ) {
    
    /* return methods[i + 3]; */
-   C_SUM_FIA( t_6, l_i, INTOBJ_INT(3) );
-   CHECK_INT_POS( t_6 );
-   C_ELM_LIST_FPL( t_5, l_methods, t_6 );
+   C_SUM_FIA( t_6, l_i, INTOBJ_INT(3) )
+   CHECK_INT_POS( t_6 )
+   C_ELM_LIST_FPL( t_5, l_methods, t_6 )
    RES_BRK_CURR_STAT();
    SWITCH_TO_OLD_FRAME(oldFrame);
    return t_5;
@@ -384,7 +384,7 @@ static Obj  HdlrFunc4 (
  
  /* return fail; */
  t_1 = GC_fail;
- CHECK_BOUND( t_1, "fail" );
+ CHECK_BOUND( t_1, "fail" )
  RES_BRK_CURR_STAT();
  SWITCH_TO_OLD_FRAME(oldFrame);
  return t_1;
@@ -430,14 +430,14 @@ static Obj  HdlrFunc5 (
  /* methods := METHODS_OPERATION( operation, 3 ); */
  t_2 = GF_METHODS__OPERATION;
  t_1 = CALL_2ARGS( t_2, a_operation, INTOBJ_INT(3) );
- CHECK_FUNC_RESULT( t_1 );
+ CHECK_FUNC_RESULT( t_1 )
  l_methods = t_1;
  
  /* for i in [ 1, 8 .. LEN_LIST( methods ) - 6 ] do */
  t_7 = GF_LEN__LIST;
  t_6 = CALL_1ARGS( t_7, l_methods );
- CHECK_FUNC_RESULT( t_6 );
- C_DIFF_FIA( t_5, t_6, INTOBJ_INT(6) );
+ CHECK_FUNC_RESULT( t_6 )
+ C_DIFF_FIA( t_5, t_6, INTOBJ_INT(6) )
  t_4 = Range3Check( INTOBJ_INT(1), INTOBJ_INT(8), t_5 );
  if ( IS_SMALL_LIST(t_4) ) {
   t_3 = (Obj)(UInt)1;
@@ -463,23 +463,23 @@ static Obj  HdlrFunc5 (
   /* if IS_SUBSET_FLAGS( type1![2], methods[i + 1] ) and IS_SUBSET_FLAGS( type2![2], methods[i + 2] ) and IS_SUBSET_FLAGS( type3![2], methods[i + 3] ) and methods[i]( type1![1], type2![1], type3![1] ) then */
   t_10 = GF_IS__SUBSET__FLAGS;
   C_ELM_POSOBJ_NLE( t_11, a_type1, 2 );
-  C_SUM_FIA( t_13, l_i, INTOBJ_INT(1) );
-  CHECK_INT_POS( t_13 );
-  C_ELM_LIST_FPL( t_12, l_methods, t_13 );
+  C_SUM_FIA( t_13, l_i, INTOBJ_INT(1) )
+  CHECK_INT_POS( t_13 )
+  C_ELM_LIST_FPL( t_12, l_methods, t_13 )
   t_9 = CALL_2ARGS( t_10, t_11, t_12 );
-  CHECK_FUNC_RESULT( t_9 );
-  CHECK_BOOL( t_9 );
+  CHECK_FUNC_RESULT( t_9 )
+  CHECK_BOOL( t_9 )
   t_8 = (Obj)(UInt)(t_9 != False);
   t_7 = t_8;
   if ( t_7 ) {
    t_11 = GF_IS__SUBSET__FLAGS;
    C_ELM_POSOBJ_NLE( t_12, a_type2, 2 );
-   C_SUM_FIA( t_14, l_i, INTOBJ_INT(2) );
-   CHECK_INT_POS( t_14 );
-   C_ELM_LIST_FPL( t_13, l_methods, t_14 );
+   C_SUM_FIA( t_14, l_i, INTOBJ_INT(2) )
+   CHECK_INT_POS( t_14 )
+   C_ELM_LIST_FPL( t_13, l_methods, t_14 )
    t_10 = CALL_2ARGS( t_11, t_12, t_13 );
-   CHECK_FUNC_RESULT( t_10 );
-   CHECK_BOOL( t_10 );
+   CHECK_FUNC_RESULT( t_10 )
+   CHECK_BOOL( t_10 )
    t_9 = (Obj)(UInt)(t_10 != False);
    t_7 = t_9;
   }
@@ -487,35 +487,35 @@ static Obj  HdlrFunc5 (
   if ( t_6 ) {
    t_10 = GF_IS__SUBSET__FLAGS;
    C_ELM_POSOBJ_NLE( t_11, a_type3, 2 );
-   C_SUM_FIA( t_13, l_i, INTOBJ_INT(3) );
-   CHECK_INT_POS( t_13 );
-   C_ELM_LIST_FPL( t_12, l_methods, t_13 );
+   C_SUM_FIA( t_13, l_i, INTOBJ_INT(3) )
+   CHECK_INT_POS( t_13 )
+   C_ELM_LIST_FPL( t_12, l_methods, t_13 )
    t_9 = CALL_2ARGS( t_10, t_11, t_12 );
-   CHECK_FUNC_RESULT( t_9 );
-   CHECK_BOOL( t_9 );
+   CHECK_FUNC_RESULT( t_9 )
+   CHECK_BOOL( t_9 )
    t_8 = (Obj)(UInt)(t_9 != False);
    t_6 = t_8;
   }
   t_5 = t_6;
   if ( t_5 ) {
-   CHECK_INT_POS( l_i );
-   C_ELM_LIST_FPL( t_9, l_methods, l_i );
-   CHECK_FUNC( t_9 );
+   CHECK_INT_POS( l_i )
+   C_ELM_LIST_FPL( t_9, l_methods, l_i )
+   CHECK_FUNC( t_9 )
    C_ELM_POSOBJ_NLE( t_10, a_type1, 1 );
    C_ELM_POSOBJ_NLE( t_11, a_type2, 1 );
    C_ELM_POSOBJ_NLE( t_12, a_type3, 1 );
    t_8 = CALL_3ARGS( t_9, t_10, t_11, t_12 );
-   CHECK_FUNC_RESULT( t_8 );
-   CHECK_BOOL( t_8 );
+   CHECK_FUNC_RESULT( t_8 )
+   CHECK_BOOL( t_8 )
    t_7 = (Obj)(UInt)(t_8 != False);
    t_5 = t_7;
   }
   if ( t_5 ) {
    
    /* return methods[i + 4]; */
-   C_SUM_FIA( t_6, l_i, INTOBJ_INT(4) );
-   CHECK_INT_POS( t_6 );
-   C_ELM_LIST_FPL( t_5, l_methods, t_6 );
+   C_SUM_FIA( t_6, l_i, INTOBJ_INT(4) )
+   CHECK_INT_POS( t_6 )
+   C_ELM_LIST_FPL( t_5, l_methods, t_6 )
    RES_BRK_CURR_STAT();
    SWITCH_TO_OLD_FRAME(oldFrame);
    return t_5;
@@ -528,7 +528,7 @@ static Obj  HdlrFunc5 (
  
  /* return fail; */
  t_1 = GC_fail;
- CHECK_BOUND( t_1, "fail" );
+ CHECK_BOUND( t_1, "fail" )
  RES_BRK_CURR_STAT();
  SWITCH_TO_OLD_FRAME(oldFrame);
  return t_1;
@@ -576,14 +576,14 @@ static Obj  HdlrFunc6 (
  /* methods := METHODS_OPERATION( operation, 4 ); */
  t_2 = GF_METHODS__OPERATION;
  t_1 = CALL_2ARGS( t_2, a_operation, INTOBJ_INT(4) );
- CHECK_FUNC_RESULT( t_1 );
+ CHECK_FUNC_RESULT( t_1 )
  l_methods = t_1;
  
  /* for i in [ 1, 9 .. LEN_LIST( methods ) - 7 ] do */
  t_7 = GF_LEN__LIST;
  t_6 = CALL_1ARGS( t_7, l_methods );
- CHECK_FUNC_RESULT( t_6 );
- C_DIFF_FIA( t_5, t_6, INTOBJ_INT(7) );
+ CHECK_FUNC_RESULT( t_6 )
+ C_DIFF_FIA( t_5, t_6, INTOBJ_INT(7) )
  t_4 = Range3Check( INTOBJ_INT(1), INTOBJ_INT(9), t_5 );
  if ( IS_SMALL_LIST(t_4) ) {
   t_3 = (Obj)(UInt)1;
@@ -610,23 +610,23 @@ static Obj  HdlrFunc6 (
    type4![1] ) then */
   t_11 = GF_IS__SUBSET__FLAGS;
   C_ELM_POSOBJ_NLE( t_12, a_type1, 2 );
-  C_SUM_FIA( t_14, l_i, INTOBJ_INT(1) );
-  CHECK_INT_POS( t_14 );
-  C_ELM_LIST_FPL( t_13, l_methods, t_14 );
+  C_SUM_FIA( t_14, l_i, INTOBJ_INT(1) )
+  CHECK_INT_POS( t_14 )
+  C_ELM_LIST_FPL( t_13, l_methods, t_14 )
   t_10 = CALL_2ARGS( t_11, t_12, t_13 );
-  CHECK_FUNC_RESULT( t_10 );
-  CHECK_BOOL( t_10 );
+  CHECK_FUNC_RESULT( t_10 )
+  CHECK_BOOL( t_10 )
   t_9 = (Obj)(UInt)(t_10 != False);
   t_8 = t_9;
   if ( t_8 ) {
    t_12 = GF_IS__SUBSET__FLAGS;
    C_ELM_POSOBJ_NLE( t_13, a_type2, 2 );
-   C_SUM_FIA( t_15, l_i, INTOBJ_INT(2) );
-   CHECK_INT_POS( t_15 );
-   C_ELM_LIST_FPL( t_14, l_methods, t_15 );
+   C_SUM_FIA( t_15, l_i, INTOBJ_INT(2) )
+   CHECK_INT_POS( t_15 )
+   C_ELM_LIST_FPL( t_14, l_methods, t_15 )
    t_11 = CALL_2ARGS( t_12, t_13, t_14 );
-   CHECK_FUNC_RESULT( t_11 );
-   CHECK_BOOL( t_11 );
+   CHECK_FUNC_RESULT( t_11 )
+   CHECK_BOOL( t_11 )
    t_10 = (Obj)(UInt)(t_11 != False);
    t_8 = t_10;
   }
@@ -634,12 +634,12 @@ static Obj  HdlrFunc6 (
   if ( t_7 ) {
    t_11 = GF_IS__SUBSET__FLAGS;
    C_ELM_POSOBJ_NLE( t_12, a_type3, 2 );
-   C_SUM_FIA( t_14, l_i, INTOBJ_INT(3) );
-   CHECK_INT_POS( t_14 );
-   C_ELM_LIST_FPL( t_13, l_methods, t_14 );
+   C_SUM_FIA( t_14, l_i, INTOBJ_INT(3) )
+   CHECK_INT_POS( t_14 )
+   C_ELM_LIST_FPL( t_13, l_methods, t_14 )
    t_10 = CALL_2ARGS( t_11, t_12, t_13 );
-   CHECK_FUNC_RESULT( t_10 );
-   CHECK_BOOL( t_10 );
+   CHECK_FUNC_RESULT( t_10 )
+   CHECK_BOOL( t_10 )
    t_9 = (Obj)(UInt)(t_10 != False);
    t_7 = t_9;
   }
@@ -647,36 +647,36 @@ static Obj  HdlrFunc6 (
   if ( t_6 ) {
    t_10 = GF_IS__SUBSET__FLAGS;
    C_ELM_POSOBJ_NLE( t_11, a_type4, 2 );
-   C_SUM_FIA( t_13, l_i, INTOBJ_INT(4) );
-   CHECK_INT_POS( t_13 );
-   C_ELM_LIST_FPL( t_12, l_methods, t_13 );
+   C_SUM_FIA( t_13, l_i, INTOBJ_INT(4) )
+   CHECK_INT_POS( t_13 )
+   C_ELM_LIST_FPL( t_12, l_methods, t_13 )
    t_9 = CALL_2ARGS( t_10, t_11, t_12 );
-   CHECK_FUNC_RESULT( t_9 );
-   CHECK_BOOL( t_9 );
+   CHECK_FUNC_RESULT( t_9 )
+   CHECK_BOOL( t_9 )
    t_8 = (Obj)(UInt)(t_9 != False);
    t_6 = t_8;
   }
   t_5 = t_6;
   if ( t_5 ) {
-   CHECK_INT_POS( l_i );
-   C_ELM_LIST_FPL( t_9, l_methods, l_i );
-   CHECK_FUNC( t_9 );
+   CHECK_INT_POS( l_i )
+   C_ELM_LIST_FPL( t_9, l_methods, l_i )
+   CHECK_FUNC( t_9 )
    C_ELM_POSOBJ_NLE( t_10, a_type1, 1 );
    C_ELM_POSOBJ_NLE( t_11, a_type2, 1 );
    C_ELM_POSOBJ_NLE( t_12, a_type3, 1 );
    C_ELM_POSOBJ_NLE( t_13, a_type4, 1 );
    t_8 = CALL_4ARGS( t_9, t_10, t_11, t_12, t_13 );
-   CHECK_FUNC_RESULT( t_8 );
-   CHECK_BOOL( t_8 );
+   CHECK_FUNC_RESULT( t_8 )
+   CHECK_BOOL( t_8 )
    t_7 = (Obj)(UInt)(t_8 != False);
    t_5 = t_7;
   }
   if ( t_5 ) {
    
    /* return methods[i + 5]; */
-   C_SUM_FIA( t_6, l_i, INTOBJ_INT(5) );
-   CHECK_INT_POS( t_6 );
-   C_ELM_LIST_FPL( t_5, l_methods, t_6 );
+   C_SUM_FIA( t_6, l_i, INTOBJ_INT(5) )
+   CHECK_INT_POS( t_6 )
+   C_ELM_LIST_FPL( t_5, l_methods, t_6 )
    RES_BRK_CURR_STAT();
    SWITCH_TO_OLD_FRAME(oldFrame);
    return t_5;
@@ -689,7 +689,7 @@ static Obj  HdlrFunc6 (
  
  /* return fail; */
  t_1 = GC_fail;
- CHECK_BOUND( t_1, "fail" );
+ CHECK_BOUND( t_1, "fail" )
  RES_BRK_CURR_STAT();
  SWITCH_TO_OLD_FRAME(oldFrame);
  return t_1;
@@ -739,14 +739,14 @@ static Obj  HdlrFunc7 (
  /* methods := METHODS_OPERATION( operation, 5 ); */
  t_2 = GF_METHODS__OPERATION;
  t_1 = CALL_2ARGS( t_2, a_operation, INTOBJ_INT(5) );
- CHECK_FUNC_RESULT( t_1 );
+ CHECK_FUNC_RESULT( t_1 )
  l_methods = t_1;
  
  /* for i in [ 1, 10 .. LEN_LIST( methods ) - 8 ] do */
  t_7 = GF_LEN__LIST;
  t_6 = CALL_1ARGS( t_7, l_methods );
- CHECK_FUNC_RESULT( t_6 );
- C_DIFF_FIA( t_5, t_6, INTOBJ_INT(8) );
+ CHECK_FUNC_RESULT( t_6 )
+ C_DIFF_FIA( t_5, t_6, INTOBJ_INT(8) )
  t_4 = Range3Check( INTOBJ_INT(1), INTOBJ_INT(10), t_5 );
  if ( IS_SMALL_LIST(t_4) ) {
   t_3 = (Obj)(UInt)1;
@@ -773,23 +773,23 @@ static Obj  HdlrFunc7 (
 and methods[i]( type1![1], type2![1], type3![1], type4![1], type5![1] ) then */
   t_12 = GF_IS__SUBSET__FLAGS;
   C_ELM_POSOBJ_NLE( t_13, a_type1, 2 );
-  C_SUM_FIA( t_15, l_i, INTOBJ_INT(1) );
-  CHECK_INT_POS( t_15 );
-  C_ELM_LIST_FPL( t_14, l_methods, t_15 );
+  C_SUM_FIA( t_15, l_i, INTOBJ_INT(1) )
+  CHECK_INT_POS( t_15 )
+  C_ELM_LIST_FPL( t_14, l_methods, t_15 )
   t_11 = CALL_2ARGS( t_12, t_13, t_14 );
-  CHECK_FUNC_RESULT( t_11 );
-  CHECK_BOOL( t_11 );
+  CHECK_FUNC_RESULT( t_11 )
+  CHECK_BOOL( t_11 )
   t_10 = (Obj)(UInt)(t_11 != False);
   t_9 = t_10;
   if ( t_9 ) {
    t_13 = GF_IS__SUBSET__FLAGS;
    C_ELM_POSOBJ_NLE( t_14, a_type2, 2 );
-   C_SUM_FIA( t_16, l_i, INTOBJ_INT(2) );
-   CHECK_INT_POS( t_16 );
-   C_ELM_LIST_FPL( t_15, l_methods, t_16 );
+   C_SUM_FIA( t_16, l_i, INTOBJ_INT(2) )
+   CHECK_INT_POS( t_16 )
+   C_ELM_LIST_FPL( t_15, l_methods, t_16 )
    t_12 = CALL_2ARGS( t_13, t_14, t_15 );
-   CHECK_FUNC_RESULT( t_12 );
-   CHECK_BOOL( t_12 );
+   CHECK_FUNC_RESULT( t_12 )
+   CHECK_BOOL( t_12 )
    t_11 = (Obj)(UInt)(t_12 != False);
    t_9 = t_11;
   }
@@ -797,12 +797,12 @@ and methods[i]( type1![1], type2![1], type3![1], type4![1], type5![1] ) then */
   if ( t_8 ) {
    t_12 = GF_IS__SUBSET__FLAGS;
    C_ELM_POSOBJ_NLE( t_13, a_type3, 2 );
-   C_SUM_FIA( t_15, l_i, INTOBJ_INT(3) );
-   CHECK_INT_POS( t_15 );
-   C_ELM_LIST_FPL( t_14, l_methods, t_15 );
+   C_SUM_FIA( t_15, l_i, INTOBJ_INT(3) )
+   CHECK_INT_POS( t_15 )
+   C_ELM_LIST_FPL( t_14, l_methods, t_15 )
    t_11 = CALL_2ARGS( t_12, t_13, t_14 );
-   CHECK_FUNC_RESULT( t_11 );
-   CHECK_BOOL( t_11 );
+   CHECK_FUNC_RESULT( t_11 )
+   CHECK_BOOL( t_11 )
    t_10 = (Obj)(UInt)(t_11 != False);
    t_8 = t_10;
   }
@@ -810,12 +810,12 @@ and methods[i]( type1![1], type2![1], type3![1], type4![1], type5![1] ) then */
   if ( t_7 ) {
    t_11 = GF_IS__SUBSET__FLAGS;
    C_ELM_POSOBJ_NLE( t_12, a_type4, 2 );
-   C_SUM_FIA( t_14, l_i, INTOBJ_INT(4) );
-   CHECK_INT_POS( t_14 );
-   C_ELM_LIST_FPL( t_13, l_methods, t_14 );
+   C_SUM_FIA( t_14, l_i, INTOBJ_INT(4) )
+   CHECK_INT_POS( t_14 )
+   C_ELM_LIST_FPL( t_13, l_methods, t_14 )
    t_10 = CALL_2ARGS( t_11, t_12, t_13 );
-   CHECK_FUNC_RESULT( t_10 );
-   CHECK_BOOL( t_10 );
+   CHECK_FUNC_RESULT( t_10 )
+   CHECK_BOOL( t_10 )
    t_9 = (Obj)(UInt)(t_10 != False);
    t_7 = t_9;
   }
@@ -823,37 +823,37 @@ and methods[i]( type1![1], type2![1], type3![1], type4![1], type5![1] ) then */
   if ( t_6 ) {
    t_10 = GF_IS__SUBSET__FLAGS;
    C_ELM_POSOBJ_NLE( t_11, a_type5, 2 );
-   C_SUM_FIA( t_13, l_i, INTOBJ_INT(5) );
-   CHECK_INT_POS( t_13 );
-   C_ELM_LIST_FPL( t_12, l_methods, t_13 );
+   C_SUM_FIA( t_13, l_i, INTOBJ_INT(5) )
+   CHECK_INT_POS( t_13 )
+   C_ELM_LIST_FPL( t_12, l_methods, t_13 )
    t_9 = CALL_2ARGS( t_10, t_11, t_12 );
-   CHECK_FUNC_RESULT( t_9 );
-   CHECK_BOOL( t_9 );
+   CHECK_FUNC_RESULT( t_9 )
+   CHECK_BOOL( t_9 )
    t_8 = (Obj)(UInt)(t_9 != False);
    t_6 = t_8;
   }
   t_5 = t_6;
   if ( t_5 ) {
-   CHECK_INT_POS( l_i );
-   C_ELM_LIST_FPL( t_9, l_methods, l_i );
-   CHECK_FUNC( t_9 );
+   CHECK_INT_POS( l_i )
+   C_ELM_LIST_FPL( t_9, l_methods, l_i )
+   CHECK_FUNC( t_9 )
    C_ELM_POSOBJ_NLE( t_10, a_type1, 1 );
    C_ELM_POSOBJ_NLE( t_11, a_type2, 1 );
    C_ELM_POSOBJ_NLE( t_12, a_type3, 1 );
    C_ELM_POSOBJ_NLE( t_13, a_type4, 1 );
    C_ELM_POSOBJ_NLE( t_14, a_type5, 1 );
    t_8 = CALL_5ARGS( t_9, t_10, t_11, t_12, t_13, t_14 );
-   CHECK_FUNC_RESULT( t_8 );
-   CHECK_BOOL( t_8 );
+   CHECK_FUNC_RESULT( t_8 )
+   CHECK_BOOL( t_8 )
    t_7 = (Obj)(UInt)(t_8 != False);
    t_5 = t_7;
   }
   if ( t_5 ) {
    
    /* return methods[i + 6]; */
-   C_SUM_FIA( t_6, l_i, INTOBJ_INT(6) );
-   CHECK_INT_POS( t_6 );
-   C_ELM_LIST_FPL( t_5, l_methods, t_6 );
+   C_SUM_FIA( t_6, l_i, INTOBJ_INT(6) )
+   CHECK_INT_POS( t_6 )
+   C_ELM_LIST_FPL( t_5, l_methods, t_6 )
    RES_BRK_CURR_STAT();
    SWITCH_TO_OLD_FRAME(oldFrame);
    return t_5;
@@ -866,7 +866,7 @@ and methods[i]( type1![1], type2![1], type3![1], type4![1], type5![1] ) then */
  
  /* return fail; */
  t_1 = GC_fail;
- CHECK_BOUND( t_1, "fail" );
+ CHECK_BOUND( t_1, "fail" )
  RES_BRK_CURR_STAT();
  SWITCH_TO_OLD_FRAME(oldFrame);
  return t_1;
@@ -910,7 +910,7 @@ static Obj  HdlrFunc8 (
  Obj t_17 = 0;
  Bag oldFrame;
  OLD_BRK_CURR_STAT
- CHECK_NR_ARGS( 7, args );
+ CHECK_NR_ARGS( 7, args )
  a_operation = ELM_PLIST( args, 1 );
  a_type1 = ELM_PLIST( args, 2 );
  a_type2 = ELM_PLIST( args, 3 );
@@ -927,14 +927,14 @@ static Obj  HdlrFunc8 (
  /* methods := METHODS_OPERATION( operation, 6 ); */
  t_2 = GF_METHODS__OPERATION;
  t_1 = CALL_2ARGS( t_2, a_operation, INTOBJ_INT(6) );
- CHECK_FUNC_RESULT( t_1 );
+ CHECK_FUNC_RESULT( t_1 )
  l_methods = t_1;
  
  /* for i in [ 1, 11 .. LEN_LIST( methods ) - 9 ] do */
  t_7 = GF_LEN__LIST;
  t_6 = CALL_1ARGS( t_7, l_methods );
- CHECK_FUNC_RESULT( t_6 );
- C_DIFF_FIA( t_5, t_6, INTOBJ_INT(9) );
+ CHECK_FUNC_RESULT( t_6 )
+ C_DIFF_FIA( t_5, t_6, INTOBJ_INT(9) )
  t_4 = Range3Check( INTOBJ_INT(1), INTOBJ_INT(11), t_5 );
  if ( IS_SMALL_LIST(t_4) ) {
   t_3 = (Obj)(UInt)1;
@@ -961,23 +961,23 @@ static Obj  HdlrFunc8 (
   and IS_SUBSET_FLAGS( type6![2], methods[i + 6] ) and methods[i]( type1![1], type2![1], type3![1], type4![1], type5![1], type6![1] ) then */
   t_13 = GF_IS__SUBSET__FLAGS;
   C_ELM_POSOBJ_NLE( t_14, a_type1, 2 );
-  C_SUM_FIA( t_16, l_i, INTOBJ_INT(1) );
-  CHECK_INT_POS( t_16 );
-  C_ELM_LIST_FPL( t_15, l_methods, t_16 );
+  C_SUM_FIA( t_16, l_i, INTOBJ_INT(1) )
+  CHECK_INT_POS( t_16 )
+  C_ELM_LIST_FPL( t_15, l_methods, t_16 )
   t_12 = CALL_2ARGS( t_13, t_14, t_15 );
-  CHECK_FUNC_RESULT( t_12 );
-  CHECK_BOOL( t_12 );
+  CHECK_FUNC_RESULT( t_12 )
+  CHECK_BOOL( t_12 )
   t_11 = (Obj)(UInt)(t_12 != False);
   t_10 = t_11;
   if ( t_10 ) {
    t_14 = GF_IS__SUBSET__FLAGS;
    C_ELM_POSOBJ_NLE( t_15, a_type2, 2 );
-   C_SUM_FIA( t_17, l_i, INTOBJ_INT(2) );
-   CHECK_INT_POS( t_17 );
-   C_ELM_LIST_FPL( t_16, l_methods, t_17 );
+   C_SUM_FIA( t_17, l_i, INTOBJ_INT(2) )
+   CHECK_INT_POS( t_17 )
+   C_ELM_LIST_FPL( t_16, l_methods, t_17 )
    t_13 = CALL_2ARGS( t_14, t_15, t_16 );
-   CHECK_FUNC_RESULT( t_13 );
-   CHECK_BOOL( t_13 );
+   CHECK_FUNC_RESULT( t_13 )
+   CHECK_BOOL( t_13 )
    t_12 = (Obj)(UInt)(t_13 != False);
    t_10 = t_12;
   }
@@ -985,12 +985,12 @@ static Obj  HdlrFunc8 (
   if ( t_9 ) {
    t_13 = GF_IS__SUBSET__FLAGS;
    C_ELM_POSOBJ_NLE( t_14, a_type3, 2 );
-   C_SUM_FIA( t_16, l_i, INTOBJ_INT(3) );
-   CHECK_INT_POS( t_16 );
-   C_ELM_LIST_FPL( t_15, l_methods, t_16 );
+   C_SUM_FIA( t_16, l_i, INTOBJ_INT(3) )
+   CHECK_INT_POS( t_16 )
+   C_ELM_LIST_FPL( t_15, l_methods, t_16 )
    t_12 = CALL_2ARGS( t_13, t_14, t_15 );
-   CHECK_FUNC_RESULT( t_12 );
-   CHECK_BOOL( t_12 );
+   CHECK_FUNC_RESULT( t_12 )
+   CHECK_BOOL( t_12 )
    t_11 = (Obj)(UInt)(t_12 != False);
    t_9 = t_11;
   }
@@ -998,12 +998,12 @@ static Obj  HdlrFunc8 (
   if ( t_8 ) {
    t_12 = GF_IS__SUBSET__FLAGS;
    C_ELM_POSOBJ_NLE( t_13, a_type4, 2 );
-   C_SUM_FIA( t_15, l_i, INTOBJ_INT(4) );
-   CHECK_INT_POS( t_15 );
-   C_ELM_LIST_FPL( t_14, l_methods, t_15 );
+   C_SUM_FIA( t_15, l_i, INTOBJ_INT(4) )
+   CHECK_INT_POS( t_15 )
+   C_ELM_LIST_FPL( t_14, l_methods, t_15 )
    t_11 = CALL_2ARGS( t_12, t_13, t_14 );
-   CHECK_FUNC_RESULT( t_11 );
-   CHECK_BOOL( t_11 );
+   CHECK_FUNC_RESULT( t_11 )
+   CHECK_BOOL( t_11 )
    t_10 = (Obj)(UInt)(t_11 != False);
    t_8 = t_10;
   }
@@ -1011,12 +1011,12 @@ static Obj  HdlrFunc8 (
   if ( t_7 ) {
    t_11 = GF_IS__SUBSET__FLAGS;
    C_ELM_POSOBJ_NLE( t_12, a_type5, 2 );
-   C_SUM_FIA( t_14, l_i, INTOBJ_INT(5) );
-   CHECK_INT_POS( t_14 );
-   C_ELM_LIST_FPL( t_13, l_methods, t_14 );
+   C_SUM_FIA( t_14, l_i, INTOBJ_INT(5) )
+   CHECK_INT_POS( t_14 )
+   C_ELM_LIST_FPL( t_13, l_methods, t_14 )
    t_10 = CALL_2ARGS( t_11, t_12, t_13 );
-   CHECK_FUNC_RESULT( t_10 );
-   CHECK_BOOL( t_10 );
+   CHECK_FUNC_RESULT( t_10 )
+   CHECK_BOOL( t_10 )
    t_9 = (Obj)(UInt)(t_10 != False);
    t_7 = t_9;
   }
@@ -1024,20 +1024,20 @@ static Obj  HdlrFunc8 (
   if ( t_6 ) {
    t_10 = GF_IS__SUBSET__FLAGS;
    C_ELM_POSOBJ_NLE( t_11, a_type6, 2 );
-   C_SUM_FIA( t_13, l_i, INTOBJ_INT(6) );
-   CHECK_INT_POS( t_13 );
-   C_ELM_LIST_FPL( t_12, l_methods, t_13 );
+   C_SUM_FIA( t_13, l_i, INTOBJ_INT(6) )
+   CHECK_INT_POS( t_13 )
+   C_ELM_LIST_FPL( t_12, l_methods, t_13 )
    t_9 = CALL_2ARGS( t_10, t_11, t_12 );
-   CHECK_FUNC_RESULT( t_9 );
-   CHECK_BOOL( t_9 );
+   CHECK_FUNC_RESULT( t_9 )
+   CHECK_BOOL( t_9 )
    t_8 = (Obj)(UInt)(t_9 != False);
    t_6 = t_8;
   }
   t_5 = t_6;
   if ( t_5 ) {
-   CHECK_INT_POS( l_i );
-   C_ELM_LIST_FPL( t_9, l_methods, l_i );
-   CHECK_FUNC( t_9 );
+   CHECK_INT_POS( l_i )
+   C_ELM_LIST_FPL( t_9, l_methods, l_i )
+   CHECK_FUNC( t_9 )
    C_ELM_POSOBJ_NLE( t_10, a_type1, 1 );
    C_ELM_POSOBJ_NLE( t_11, a_type2, 1 );
    C_ELM_POSOBJ_NLE( t_12, a_type3, 1 );
@@ -1045,17 +1045,17 @@ static Obj  HdlrFunc8 (
    C_ELM_POSOBJ_NLE( t_14, a_type5, 1 );
    C_ELM_POSOBJ_NLE( t_15, a_type6, 1 );
    t_8 = CALL_6ARGS( t_9, t_10, t_11, t_12, t_13, t_14, t_15 );
-   CHECK_FUNC_RESULT( t_8 );
-   CHECK_BOOL( t_8 );
+   CHECK_FUNC_RESULT( t_8 )
+   CHECK_BOOL( t_8 )
    t_7 = (Obj)(UInt)(t_8 != False);
    t_5 = t_7;
   }
   if ( t_5 ) {
    
    /* return methods[i + 7]; */
-   C_SUM_FIA( t_6, l_i, INTOBJ_INT(7) );
-   CHECK_INT_POS( t_6 );
-   C_ELM_LIST_FPL( t_5, l_methods, t_6 );
+   C_SUM_FIA( t_6, l_i, INTOBJ_INT(7) )
+   CHECK_INT_POS( t_6 )
+   C_ELM_LIST_FPL( t_5, l_methods, t_6 )
    RES_BRK_CURR_STAT();
    SWITCH_TO_OLD_FRAME(oldFrame);
    return t_5;
@@ -1068,7 +1068,7 @@ static Obj  HdlrFunc8 (
  
  /* return fail; */
  t_1 = GC_fail;
- CHECK_BOUND( t_1, "fail" );
+ CHECK_BOUND( t_1, "fail" )
  RES_BRK_CURR_STAT();
  SWITCH_TO_OLD_FRAME(oldFrame);
  return t_1;
@@ -1138,7 +1138,7 @@ static Obj  HdlrFunc10 (
  /* methods := METHODS_OPERATION( operation, 0 ); */
  t_2 = GF_METHODS__OPERATION;
  t_1 = CALL_2ARGS( t_2, a_operation, INTOBJ_INT(0) );
- CHECK_FUNC_RESULT( t_1 );
+ CHECK_FUNC_RESULT( t_1 )
  l_methods = t_1;
  
  /* j := 0; */
@@ -1147,24 +1147,24 @@ static Obj  HdlrFunc10 (
  /* for i in [ 1 .. LEN_LIST( methods ) / 4 ] do */
  t_4 = GF_LEN__LIST;
  t_3 = CALL_1ARGS( t_4, l_methods );
- CHECK_FUNC_RESULT( t_3 );
+ CHECK_FUNC_RESULT( t_3 )
  t_2 = QUO( t_3, INTOBJ_INT(4) );
- CHECK_INT_SMALL( t_2 );
+ CHECK_INT_SMALL( t_2 )
  for ( t_1 = INTOBJ_INT(1);
        ((Int)t_1) <= ((Int)t_2);
        t_1 = (Obj)(((UInt)t_1)+4) ) {
   l_i = t_1;
   
   /* if methods[4 * (i - 1) + 1](  ) then */
-  C_DIFF_INTOBJS( t_8, l_i, INTOBJ_INT(1) );
-  C_PROD_FIA( t_7, INTOBJ_INT(4), t_8 );
-  C_SUM_FIA( t_6, t_7, INTOBJ_INT(1) );
-  CHECK_INT_POS( t_6 );
-  C_ELM_LIST_FPL( t_5, l_methods, t_6 );
-  CHECK_FUNC( t_5 );
+  C_DIFF_INTOBJS( t_8, l_i, INTOBJ_INT(1) )
+  C_PROD_FIA( t_7, INTOBJ_INT(4), t_8 )
+  C_SUM_FIA( t_6, t_7, INTOBJ_INT(1) )
+  CHECK_INT_POS( t_6 )
+  C_ELM_LIST_FPL( t_5, l_methods, t_6 )
+  CHECK_FUNC( t_5 )
   t_4 = CALL_0ARGS( t_5 );
-  CHECK_FUNC_RESULT( t_4 );
-  CHECK_BOOL( t_4 );
+  CHECK_FUNC_RESULT( t_4 )
+  CHECK_BOOL( t_4 )
   t_3 = (Obj)(UInt)(t_4 != False);
   if ( t_3 ) {
    
@@ -1173,11 +1173,11 @@ static Obj  HdlrFunc10 (
    if ( t_3 ) {
     
     /* return methods[4 * (i - 1) + 2]; */
-    C_DIFF_INTOBJS( t_6, l_i, INTOBJ_INT(1) );
-    C_PROD_FIA( t_5, INTOBJ_INT(4), t_6 );
-    C_SUM_FIA( t_4, t_5, INTOBJ_INT(2) );
-    CHECK_INT_POS( t_4 );
-    C_ELM_LIST_FPL( t_3, l_methods, t_4 );
+    C_DIFF_INTOBJS( t_6, l_i, INTOBJ_INT(1) )
+    C_PROD_FIA( t_5, INTOBJ_INT(4), t_6 )
+    C_SUM_FIA( t_4, t_5, INTOBJ_INT(2) )
+    CHECK_INT_POS( t_4 )
+    C_ELM_LIST_FPL( t_3, l_methods, t_4 )
     RES_BRK_CURR_STAT();
     SWITCH_TO_OLD_FRAME(oldFrame);
     return t_3;
@@ -1188,7 +1188,7 @@ static Obj  HdlrFunc10 (
    else {
     
     /* j := j + 1; */
-    C_SUM_FIA( t_3, l_j, INTOBJ_INT(1) );
+    C_SUM_FIA( t_3, l_j, INTOBJ_INT(1) )
     l_j = t_3;
     
    }
@@ -1202,7 +1202,7 @@ static Obj  HdlrFunc10 (
  
  /* return fail; */
  t_1 = GC_fail;
- CHECK_BOUND( t_1, "fail" );
+ CHECK_BOUND( t_1, "fail" )
  RES_BRK_CURR_STAT();
  SWITCH_TO_OLD_FRAME(oldFrame);
  return t_1;
@@ -1245,7 +1245,7 @@ static Obj  HdlrFunc11 (
  /* methods := METHODS_OPERATION( operation, 1 ); */
  t_2 = GF_METHODS__OPERATION;
  t_1 = CALL_2ARGS( t_2, a_operation, INTOBJ_INT(1) );
- CHECK_FUNC_RESULT( t_1 );
+ CHECK_FUNC_RESULT( t_1 )
  l_methods = t_1;
  
  /* j := 0; */
@@ -1254,9 +1254,9 @@ static Obj  HdlrFunc11 (
  /* for i in [ 1 .. LEN_LIST( methods ) / 5 ] do */
  t_4 = GF_LEN__LIST;
  t_3 = CALL_1ARGS( t_4, l_methods );
- CHECK_FUNC_RESULT( t_3 );
+ CHECK_FUNC_RESULT( t_3 )
  t_2 = QUO( t_3, INTOBJ_INT(5) );
- CHECK_INT_SMALL( t_2 );
+ CHECK_INT_SMALL( t_2 )
  for ( t_1 = INTOBJ_INT(1);
        ((Int)t_1) <= ((Int)t_2);
        t_1 = (Obj)(((UInt)t_1)+4) ) {
@@ -1265,27 +1265,27 @@ static Obj  HdlrFunc11 (
   /* if IS_SUBSET_FLAGS( type1![2], methods[5 * (i - 1) + 2] ) and methods[5 * (i - 1) + 1]( type1![1] ) then */
   t_6 = GF_IS__SUBSET__FLAGS;
   C_ELM_POSOBJ_NLE( t_7, a_type1, 2 );
-  C_DIFF_INTOBJS( t_11, l_i, INTOBJ_INT(1) );
-  C_PROD_FIA( t_10, INTOBJ_INT(5), t_11 );
-  C_SUM_FIA( t_9, t_10, INTOBJ_INT(2) );
-  CHECK_INT_POS( t_9 );
-  C_ELM_LIST_FPL( t_8, l_methods, t_9 );
+  C_DIFF_INTOBJS( t_11, l_i, INTOBJ_INT(1) )
+  C_PROD_FIA( t_10, INTOBJ_INT(5), t_11 )
+  C_SUM_FIA( t_9, t_10, INTOBJ_INT(2) )
+  CHECK_INT_POS( t_9 )
+  C_ELM_LIST_FPL( t_8, l_methods, t_9 )
   t_5 = CALL_2ARGS( t_6, t_7, t_8 );
-  CHECK_FUNC_RESULT( t_5 );
-  CHECK_BOOL( t_5 );
+  CHECK_FUNC_RESULT( t_5 )
+  CHECK_BOOL( t_5 )
   t_4 = (Obj)(UInt)(t_5 != False);
   t_3 = t_4;
   if ( t_3 ) {
-   C_DIFF_INTOBJS( t_10, l_i, INTOBJ_INT(1) );
-   C_PROD_FIA( t_9, INTOBJ_INT(5), t_10 );
-   C_SUM_FIA( t_8, t_9, INTOBJ_INT(1) );
-   CHECK_INT_POS( t_8 );
-   C_ELM_LIST_FPL( t_7, l_methods, t_8 );
-   CHECK_FUNC( t_7 );
+   C_DIFF_INTOBJS( t_10, l_i, INTOBJ_INT(1) )
+   C_PROD_FIA( t_9, INTOBJ_INT(5), t_10 )
+   C_SUM_FIA( t_8, t_9, INTOBJ_INT(1) )
+   CHECK_INT_POS( t_8 )
+   C_ELM_LIST_FPL( t_7, l_methods, t_8 )
+   CHECK_FUNC( t_7 )
    C_ELM_POSOBJ_NLE( t_8, a_type1, 1 );
    t_6 = CALL_1ARGS( t_7, t_8 );
-   CHECK_FUNC_RESULT( t_6 );
-   CHECK_BOOL( t_6 );
+   CHECK_FUNC_RESULT( t_6 )
+   CHECK_BOOL( t_6 )
    t_5 = (Obj)(UInt)(t_6 != False);
    t_3 = t_5;
   }
@@ -1296,11 +1296,11 @@ static Obj  HdlrFunc11 (
    if ( t_3 ) {
     
     /* return methods[5 * (i - 1) + 3]; */
-    C_DIFF_INTOBJS( t_6, l_i, INTOBJ_INT(1) );
-    C_PROD_FIA( t_5, INTOBJ_INT(5), t_6 );
-    C_SUM_FIA( t_4, t_5, INTOBJ_INT(3) );
-    CHECK_INT_POS( t_4 );
-    C_ELM_LIST_FPL( t_3, l_methods, t_4 );
+    C_DIFF_INTOBJS( t_6, l_i, INTOBJ_INT(1) )
+    C_PROD_FIA( t_5, INTOBJ_INT(5), t_6 )
+    C_SUM_FIA( t_4, t_5, INTOBJ_INT(3) )
+    CHECK_INT_POS( t_4 )
+    C_ELM_LIST_FPL( t_3, l_methods, t_4 )
     RES_BRK_CURR_STAT();
     SWITCH_TO_OLD_FRAME(oldFrame);
     return t_3;
@@ -1311,7 +1311,7 @@ static Obj  HdlrFunc11 (
    else {
     
     /* j := j + 1; */
-    C_SUM_FIA( t_3, l_j, INTOBJ_INT(1) );
+    C_SUM_FIA( t_3, l_j, INTOBJ_INT(1) )
     l_j = t_3;
     
    }
@@ -1325,7 +1325,7 @@ static Obj  HdlrFunc11 (
  
  /* return fail; */
  t_1 = GC_fail;
- CHECK_BOUND( t_1, "fail" );
+ CHECK_BOUND( t_1, "fail" )
  RES_BRK_CURR_STAT();
  SWITCH_TO_OLD_FRAME(oldFrame);
  return t_1;
@@ -1371,7 +1371,7 @@ static Obj  HdlrFunc12 (
  /* methods := METHODS_OPERATION( operation, 2 ); */
  t_2 = GF_METHODS__OPERATION;
  t_1 = CALL_2ARGS( t_2, a_operation, INTOBJ_INT(2) );
- CHECK_FUNC_RESULT( t_1 );
+ CHECK_FUNC_RESULT( t_1 )
  l_methods = t_1;
  
  /* j := 0; */
@@ -1380,9 +1380,9 @@ static Obj  HdlrFunc12 (
  /* for i in [ 1 .. LEN_LIST( methods ) / 6 ] do */
  t_4 = GF_LEN__LIST;
  t_3 = CALL_1ARGS( t_4, l_methods );
- CHECK_FUNC_RESULT( t_3 );
+ CHECK_FUNC_RESULT( t_3 )
  t_2 = QUO( t_3, INTOBJ_INT(6) );
- CHECK_INT_SMALL( t_2 );
+ CHECK_INT_SMALL( t_2 )
  for ( t_1 = INTOBJ_INT(1);
        ((Int)t_1) <= ((Int)t_2);
        t_1 = (Obj)(((UInt)t_1)+4) ) {
@@ -1391,43 +1391,43 @@ static Obj  HdlrFunc12 (
   /* if IS_SUBSET_FLAGS( type1![2], methods[6 * (i - 1) + 2] ) and IS_SUBSET_FLAGS( type2![2], methods[6 * (i - 1) + 3] ) and methods[6 * (i - 1) + 1]( type1![1], type2![1] ) then */
   t_7 = GF_IS__SUBSET__FLAGS;
   C_ELM_POSOBJ_NLE( t_8, a_type1, 2 );
-  C_DIFF_INTOBJS( t_12, l_i, INTOBJ_INT(1) );
-  C_PROD_FIA( t_11, INTOBJ_INT(6), t_12 );
-  C_SUM_FIA( t_10, t_11, INTOBJ_INT(2) );
-  CHECK_INT_POS( t_10 );
-  C_ELM_LIST_FPL( t_9, l_methods, t_10 );
+  C_DIFF_INTOBJS( t_12, l_i, INTOBJ_INT(1) )
+  C_PROD_FIA( t_11, INTOBJ_INT(6), t_12 )
+  C_SUM_FIA( t_10, t_11, INTOBJ_INT(2) )
+  CHECK_INT_POS( t_10 )
+  C_ELM_LIST_FPL( t_9, l_methods, t_10 )
   t_6 = CALL_2ARGS( t_7, t_8, t_9 );
-  CHECK_FUNC_RESULT( t_6 );
-  CHECK_BOOL( t_6 );
+  CHECK_FUNC_RESULT( t_6 )
+  CHECK_BOOL( t_6 )
   t_5 = (Obj)(UInt)(t_6 != False);
   t_4 = t_5;
   if ( t_4 ) {
    t_8 = GF_IS__SUBSET__FLAGS;
    C_ELM_POSOBJ_NLE( t_9, a_type2, 2 );
-   C_DIFF_INTOBJS( t_13, l_i, INTOBJ_INT(1) );
-   C_PROD_FIA( t_12, INTOBJ_INT(6), t_13 );
-   C_SUM_FIA( t_11, t_12, INTOBJ_INT(3) );
-   CHECK_INT_POS( t_11 );
-   C_ELM_LIST_FPL( t_10, l_methods, t_11 );
+   C_DIFF_INTOBJS( t_13, l_i, INTOBJ_INT(1) )
+   C_PROD_FIA( t_12, INTOBJ_INT(6), t_13 )
+   C_SUM_FIA( t_11, t_12, INTOBJ_INT(3) )
+   CHECK_INT_POS( t_11 )
+   C_ELM_LIST_FPL( t_10, l_methods, t_11 )
    t_7 = CALL_2ARGS( t_8, t_9, t_10 );
-   CHECK_FUNC_RESULT( t_7 );
-   CHECK_BOOL( t_7 );
+   CHECK_FUNC_RESULT( t_7 )
+   CHECK_BOOL( t_7 )
    t_6 = (Obj)(UInt)(t_7 != False);
    t_4 = t_6;
   }
   t_3 = t_4;
   if ( t_3 ) {
-   C_DIFF_INTOBJS( t_10, l_i, INTOBJ_INT(1) );
-   C_PROD_FIA( t_9, INTOBJ_INT(6), t_10 );
-   C_SUM_FIA( t_8, t_9, INTOBJ_INT(1) );
-   CHECK_INT_POS( t_8 );
-   C_ELM_LIST_FPL( t_7, l_methods, t_8 );
-   CHECK_FUNC( t_7 );
+   C_DIFF_INTOBJS( t_10, l_i, INTOBJ_INT(1) )
+   C_PROD_FIA( t_9, INTOBJ_INT(6), t_10 )
+   C_SUM_FIA( t_8, t_9, INTOBJ_INT(1) )
+   CHECK_INT_POS( t_8 )
+   C_ELM_LIST_FPL( t_7, l_methods, t_8 )
+   CHECK_FUNC( t_7 )
    C_ELM_POSOBJ_NLE( t_8, a_type1, 1 );
    C_ELM_POSOBJ_NLE( t_9, a_type2, 1 );
    t_6 = CALL_2ARGS( t_7, t_8, t_9 );
-   CHECK_FUNC_RESULT( t_6 );
-   CHECK_BOOL( t_6 );
+   CHECK_FUNC_RESULT( t_6 )
+   CHECK_BOOL( t_6 )
    t_5 = (Obj)(UInt)(t_6 != False);
    t_3 = t_5;
   }
@@ -1438,11 +1438,11 @@ static Obj  HdlrFunc12 (
    if ( t_3 ) {
     
     /* return methods[6 * (i - 1) + 4]; */
-    C_DIFF_INTOBJS( t_6, l_i, INTOBJ_INT(1) );
-    C_PROD_FIA( t_5, INTOBJ_INT(6), t_6 );
-    C_SUM_FIA( t_4, t_5, INTOBJ_INT(4) );
-    CHECK_INT_POS( t_4 );
-    C_ELM_LIST_FPL( t_3, l_methods, t_4 );
+    C_DIFF_INTOBJS( t_6, l_i, INTOBJ_INT(1) )
+    C_PROD_FIA( t_5, INTOBJ_INT(6), t_6 )
+    C_SUM_FIA( t_4, t_5, INTOBJ_INT(4) )
+    CHECK_INT_POS( t_4 )
+    C_ELM_LIST_FPL( t_3, l_methods, t_4 )
     RES_BRK_CURR_STAT();
     SWITCH_TO_OLD_FRAME(oldFrame);
     return t_3;
@@ -1453,7 +1453,7 @@ static Obj  HdlrFunc12 (
    else {
     
     /* j := j + 1; */
-    C_SUM_FIA( t_3, l_j, INTOBJ_INT(1) );
+    C_SUM_FIA( t_3, l_j, INTOBJ_INT(1) )
     l_j = t_3;
     
    }
@@ -1467,7 +1467,7 @@ static Obj  HdlrFunc12 (
  
  /* return fail; */
  t_1 = GC_fail;
- CHECK_BOUND( t_1, "fail" );
+ CHECK_BOUND( t_1, "fail" )
  RES_BRK_CURR_STAT();
  SWITCH_TO_OLD_FRAME(oldFrame);
  return t_1;
@@ -1515,7 +1515,7 @@ static Obj  HdlrFunc13 (
  /* methods := METHODS_OPERATION( operation, 3 ); */
  t_2 = GF_METHODS__OPERATION;
  t_1 = CALL_2ARGS( t_2, a_operation, INTOBJ_INT(3) );
- CHECK_FUNC_RESULT( t_1 );
+ CHECK_FUNC_RESULT( t_1 )
  l_methods = t_1;
  
  /* j := 0; */
@@ -1524,9 +1524,9 @@ static Obj  HdlrFunc13 (
  /* for i in [ 1 .. LEN_LIST( methods ) / 7 ] do */
  t_4 = GF_LEN__LIST;
  t_3 = CALL_1ARGS( t_4, l_methods );
- CHECK_FUNC_RESULT( t_3 );
+ CHECK_FUNC_RESULT( t_3 )
  t_2 = QUO( t_3, INTOBJ_INT(7) );
- CHECK_INT_SMALL( t_2 );
+ CHECK_INT_SMALL( t_2 )
  for ( t_1 = INTOBJ_INT(1);
        ((Int)t_1) <= ((Int)t_2);
        t_1 = (Obj)(((UInt)t_1)+4) ) {
@@ -1535,27 +1535,27 @@ static Obj  HdlrFunc13 (
   /* if IS_SUBSET_FLAGS( type1![2], methods[7 * (i - 1) + 2] ) and IS_SUBSET_FLAGS( type2![2], methods[7 * (i - 1) + 3] ) and IS_SUBSET_FLAGS( type3![2], methods[7 * (i - 1) + 4] ) and methods[7 * (i - 1) + 1]( type1![1], type2![1], type3![1] ) then */
   t_8 = GF_IS__SUBSET__FLAGS;
   C_ELM_POSOBJ_NLE( t_9, a_type1, 2 );
-  C_DIFF_INTOBJS( t_13, l_i, INTOBJ_INT(1) );
-  C_PROD_FIA( t_12, INTOBJ_INT(7), t_13 );
-  C_SUM_FIA( t_11, t_12, INTOBJ_INT(2) );
-  CHECK_INT_POS( t_11 );
-  C_ELM_LIST_FPL( t_10, l_methods, t_11 );
+  C_DIFF_INTOBJS( t_13, l_i, INTOBJ_INT(1) )
+  C_PROD_FIA( t_12, INTOBJ_INT(7), t_13 )
+  C_SUM_FIA( t_11, t_12, INTOBJ_INT(2) )
+  CHECK_INT_POS( t_11 )
+  C_ELM_LIST_FPL( t_10, l_methods, t_11 )
   t_7 = CALL_2ARGS( t_8, t_9, t_10 );
-  CHECK_FUNC_RESULT( t_7 );
-  CHECK_BOOL( t_7 );
+  CHECK_FUNC_RESULT( t_7 )
+  CHECK_BOOL( t_7 )
   t_6 = (Obj)(UInt)(t_7 != False);
   t_5 = t_6;
   if ( t_5 ) {
    t_9 = GF_IS__SUBSET__FLAGS;
    C_ELM_POSOBJ_NLE( t_10, a_type2, 2 );
-   C_DIFF_INTOBJS( t_14, l_i, INTOBJ_INT(1) );
-   C_PROD_FIA( t_13, INTOBJ_INT(7), t_14 );
-   C_SUM_FIA( t_12, t_13, INTOBJ_INT(3) );
-   CHECK_INT_POS( t_12 );
-   C_ELM_LIST_FPL( t_11, l_methods, t_12 );
+   C_DIFF_INTOBJS( t_14, l_i, INTOBJ_INT(1) )
+   C_PROD_FIA( t_13, INTOBJ_INT(7), t_14 )
+   C_SUM_FIA( t_12, t_13, INTOBJ_INT(3) )
+   CHECK_INT_POS( t_12 )
+   C_ELM_LIST_FPL( t_11, l_methods, t_12 )
    t_8 = CALL_2ARGS( t_9, t_10, t_11 );
-   CHECK_FUNC_RESULT( t_8 );
-   CHECK_BOOL( t_8 );
+   CHECK_FUNC_RESULT( t_8 )
+   CHECK_BOOL( t_8 )
    t_7 = (Obj)(UInt)(t_8 != False);
    t_5 = t_7;
   }
@@ -1563,31 +1563,31 @@ static Obj  HdlrFunc13 (
   if ( t_4 ) {
    t_8 = GF_IS__SUBSET__FLAGS;
    C_ELM_POSOBJ_NLE( t_9, a_type3, 2 );
-   C_DIFF_INTOBJS( t_13, l_i, INTOBJ_INT(1) );
-   C_PROD_FIA( t_12, INTOBJ_INT(7), t_13 );
-   C_SUM_FIA( t_11, t_12, INTOBJ_INT(4) );
-   CHECK_INT_POS( t_11 );
-   C_ELM_LIST_FPL( t_10, l_methods, t_11 );
+   C_DIFF_INTOBJS( t_13, l_i, INTOBJ_INT(1) )
+   C_PROD_FIA( t_12, INTOBJ_INT(7), t_13 )
+   C_SUM_FIA( t_11, t_12, INTOBJ_INT(4) )
+   CHECK_INT_POS( t_11 )
+   C_ELM_LIST_FPL( t_10, l_methods, t_11 )
    t_7 = CALL_2ARGS( t_8, t_9, t_10 );
-   CHECK_FUNC_RESULT( t_7 );
-   CHECK_BOOL( t_7 );
+   CHECK_FUNC_RESULT( t_7 )
+   CHECK_BOOL( t_7 )
    t_6 = (Obj)(UInt)(t_7 != False);
    t_4 = t_6;
   }
   t_3 = t_4;
   if ( t_3 ) {
-   C_DIFF_INTOBJS( t_10, l_i, INTOBJ_INT(1) );
-   C_PROD_FIA( t_9, INTOBJ_INT(7), t_10 );
-   C_SUM_FIA( t_8, t_9, INTOBJ_INT(1) );
-   CHECK_INT_POS( t_8 );
-   C_ELM_LIST_FPL( t_7, l_methods, t_8 );
-   CHECK_FUNC( t_7 );
+   C_DIFF_INTOBJS( t_10, l_i, INTOBJ_INT(1) )
+   C_PROD_FIA( t_9, INTOBJ_INT(7), t_10 )
+   C_SUM_FIA( t_8, t_9, INTOBJ_INT(1) )
+   CHECK_INT_POS( t_8 )
+   C_ELM_LIST_FPL( t_7, l_methods, t_8 )
+   CHECK_FUNC( t_7 )
    C_ELM_POSOBJ_NLE( t_8, a_type1, 1 );
    C_ELM_POSOBJ_NLE( t_9, a_type2, 1 );
    C_ELM_POSOBJ_NLE( t_10, a_type3, 1 );
    t_6 = CALL_3ARGS( t_7, t_8, t_9, t_10 );
-   CHECK_FUNC_RESULT( t_6 );
-   CHECK_BOOL( t_6 );
+   CHECK_FUNC_RESULT( t_6 )
+   CHECK_BOOL( t_6 )
    t_5 = (Obj)(UInt)(t_6 != False);
    t_3 = t_5;
   }
@@ -1598,11 +1598,11 @@ static Obj  HdlrFunc13 (
    if ( t_3 ) {
     
     /* return methods[7 * (i - 1) + 5]; */
-    C_DIFF_INTOBJS( t_6, l_i, INTOBJ_INT(1) );
-    C_PROD_FIA( t_5, INTOBJ_INT(7), t_6 );
-    C_SUM_FIA( t_4, t_5, INTOBJ_INT(5) );
-    CHECK_INT_POS( t_4 );
-    C_ELM_LIST_FPL( t_3, l_methods, t_4 );
+    C_DIFF_INTOBJS( t_6, l_i, INTOBJ_INT(1) )
+    C_PROD_FIA( t_5, INTOBJ_INT(7), t_6 )
+    C_SUM_FIA( t_4, t_5, INTOBJ_INT(5) )
+    CHECK_INT_POS( t_4 )
+    C_ELM_LIST_FPL( t_3, l_methods, t_4 )
     RES_BRK_CURR_STAT();
     SWITCH_TO_OLD_FRAME(oldFrame);
     return t_3;
@@ -1613,7 +1613,7 @@ static Obj  HdlrFunc13 (
    else {
     
     /* j := j + 1; */
-    C_SUM_FIA( t_3, l_j, INTOBJ_INT(1) );
+    C_SUM_FIA( t_3, l_j, INTOBJ_INT(1) )
     l_j = t_3;
     
    }
@@ -1627,7 +1627,7 @@ static Obj  HdlrFunc13 (
  
  /* return fail; */
  t_1 = GC_fail;
- CHECK_BOUND( t_1, "fail" );
+ CHECK_BOUND( t_1, "fail" )
  RES_BRK_CURR_STAT();
  SWITCH_TO_OLD_FRAME(oldFrame);
  return t_1;
@@ -1677,7 +1677,7 @@ static Obj  HdlrFunc14 (
  /* methods := METHODS_OPERATION( operation, 4 ); */
  t_2 = GF_METHODS__OPERATION;
  t_1 = CALL_2ARGS( t_2, a_operation, INTOBJ_INT(4) );
- CHECK_FUNC_RESULT( t_1 );
+ CHECK_FUNC_RESULT( t_1 )
  l_methods = t_1;
  
  /* j := 0; */
@@ -1686,9 +1686,9 @@ static Obj  HdlrFunc14 (
  /* for i in [ 1 .. LEN_LIST( methods ) / 8 ] do */
  t_4 = GF_LEN__LIST;
  t_3 = CALL_1ARGS( t_4, l_methods );
- CHECK_FUNC_RESULT( t_3 );
+ CHECK_FUNC_RESULT( t_3 )
  t_2 = QUO( t_3, INTOBJ_INT(8) );
- CHECK_INT_SMALL( t_2 );
+ CHECK_INT_SMALL( t_2 )
  for ( t_1 = INTOBJ_INT(1);
        ((Int)t_1) <= ((Int)t_2);
        t_1 = (Obj)(((UInt)t_1)+4) ) {
@@ -1698,27 +1698,27 @@ static Obj  HdlrFunc14 (
 and methods[8 * (i - 1) + 1]( type1![1], type2![1], type3![1], type4![1] ) then */
   t_9 = GF_IS__SUBSET__FLAGS;
   C_ELM_POSOBJ_NLE( t_10, a_type1, 2 );
-  C_DIFF_INTOBJS( t_14, l_i, INTOBJ_INT(1) );
-  C_PROD_FIA( t_13, INTOBJ_INT(8), t_14 );
-  C_SUM_FIA( t_12, t_13, INTOBJ_INT(2) );
-  CHECK_INT_POS( t_12 );
-  C_ELM_LIST_FPL( t_11, l_methods, t_12 );
+  C_DIFF_INTOBJS( t_14, l_i, INTOBJ_INT(1) )
+  C_PROD_FIA( t_13, INTOBJ_INT(8), t_14 )
+  C_SUM_FIA( t_12, t_13, INTOBJ_INT(2) )
+  CHECK_INT_POS( t_12 )
+  C_ELM_LIST_FPL( t_11, l_methods, t_12 )
   t_8 = CALL_2ARGS( t_9, t_10, t_11 );
-  CHECK_FUNC_RESULT( t_8 );
-  CHECK_BOOL( t_8 );
+  CHECK_FUNC_RESULT( t_8 )
+  CHECK_BOOL( t_8 )
   t_7 = (Obj)(UInt)(t_8 != False);
   t_6 = t_7;
   if ( t_6 ) {
    t_10 = GF_IS__SUBSET__FLAGS;
    C_ELM_POSOBJ_NLE( t_11, a_type2, 2 );
-   C_DIFF_INTOBJS( t_15, l_i, INTOBJ_INT(1) );
-   C_PROD_FIA( t_14, INTOBJ_INT(8), t_15 );
-   C_SUM_FIA( t_13, t_14, INTOBJ_INT(3) );
-   CHECK_INT_POS( t_13 );
-   C_ELM_LIST_FPL( t_12, l_methods, t_13 );
+   C_DIFF_INTOBJS( t_15, l_i, INTOBJ_INT(1) )
+   C_PROD_FIA( t_14, INTOBJ_INT(8), t_15 )
+   C_SUM_FIA( t_13, t_14, INTOBJ_INT(3) )
+   CHECK_INT_POS( t_13 )
+   C_ELM_LIST_FPL( t_12, l_methods, t_13 )
    t_9 = CALL_2ARGS( t_10, t_11, t_12 );
-   CHECK_FUNC_RESULT( t_9 );
-   CHECK_BOOL( t_9 );
+   CHECK_FUNC_RESULT( t_9 )
+   CHECK_BOOL( t_9 )
    t_8 = (Obj)(UInt)(t_9 != False);
    t_6 = t_8;
   }
@@ -1726,14 +1726,14 @@ and methods[8 * (i - 1) + 1]( type1![1], type2![1], type3![1], type4![1] ) then 
   if ( t_5 ) {
    t_9 = GF_IS__SUBSET__FLAGS;
    C_ELM_POSOBJ_NLE( t_10, a_type3, 2 );
-   C_DIFF_INTOBJS( t_14, l_i, INTOBJ_INT(1) );
-   C_PROD_FIA( t_13, INTOBJ_INT(8), t_14 );
-   C_SUM_FIA( t_12, t_13, INTOBJ_INT(4) );
-   CHECK_INT_POS( t_12 );
-   C_ELM_LIST_FPL( t_11, l_methods, t_12 );
+   C_DIFF_INTOBJS( t_14, l_i, INTOBJ_INT(1) )
+   C_PROD_FIA( t_13, INTOBJ_INT(8), t_14 )
+   C_SUM_FIA( t_12, t_13, INTOBJ_INT(4) )
+   CHECK_INT_POS( t_12 )
+   C_ELM_LIST_FPL( t_11, l_methods, t_12 )
    t_8 = CALL_2ARGS( t_9, t_10, t_11 );
-   CHECK_FUNC_RESULT( t_8 );
-   CHECK_BOOL( t_8 );
+   CHECK_FUNC_RESULT( t_8 )
+   CHECK_BOOL( t_8 )
    t_7 = (Obj)(UInt)(t_8 != False);
    t_5 = t_7;
   }
@@ -1741,32 +1741,32 @@ and methods[8 * (i - 1) + 1]( type1![1], type2![1], type3![1], type4![1] ) then 
   if ( t_4 ) {
    t_8 = GF_IS__SUBSET__FLAGS;
    C_ELM_POSOBJ_NLE( t_9, a_type4, 2 );
-   C_DIFF_INTOBJS( t_13, l_i, INTOBJ_INT(1) );
-   C_PROD_FIA( t_12, INTOBJ_INT(8), t_13 );
-   C_SUM_FIA( t_11, t_12, INTOBJ_INT(5) );
-   CHECK_INT_POS( t_11 );
-   C_ELM_LIST_FPL( t_10, l_methods, t_11 );
+   C_DIFF_INTOBJS( t_13, l_i, INTOBJ_INT(1) )
+   C_PROD_FIA( t_12, INTOBJ_INT(8), t_13 )
+   C_SUM_FIA( t_11, t_12, INTOBJ_INT(5) )
+   CHECK_INT_POS( t_11 )
+   C_ELM_LIST_FPL( t_10, l_methods, t_11 )
    t_7 = CALL_2ARGS( t_8, t_9, t_10 );
-   CHECK_FUNC_RESULT( t_7 );
-   CHECK_BOOL( t_7 );
+   CHECK_FUNC_RESULT( t_7 )
+   CHECK_BOOL( t_7 )
    t_6 = (Obj)(UInt)(t_7 != False);
    t_4 = t_6;
   }
   t_3 = t_4;
   if ( t_3 ) {
-   C_DIFF_INTOBJS( t_10, l_i, INTOBJ_INT(1) );
-   C_PROD_FIA( t_9, INTOBJ_INT(8), t_10 );
-   C_SUM_FIA( t_8, t_9, INTOBJ_INT(1) );
-   CHECK_INT_POS( t_8 );
-   C_ELM_LIST_FPL( t_7, l_methods, t_8 );
-   CHECK_FUNC( t_7 );
+   C_DIFF_INTOBJS( t_10, l_i, INTOBJ_INT(1) )
+   C_PROD_FIA( t_9, INTOBJ_INT(8), t_10 )
+   C_SUM_FIA( t_8, t_9, INTOBJ_INT(1) )
+   CHECK_INT_POS( t_8 )
+   C_ELM_LIST_FPL( t_7, l_methods, t_8 )
+   CHECK_FUNC( t_7 )
    C_ELM_POSOBJ_NLE( t_8, a_type1, 1 );
    C_ELM_POSOBJ_NLE( t_9, a_type2, 1 );
    C_ELM_POSOBJ_NLE( t_10, a_type3, 1 );
    C_ELM_POSOBJ_NLE( t_11, a_type4, 1 );
    t_6 = CALL_4ARGS( t_7, t_8, t_9, t_10, t_11 );
-   CHECK_FUNC_RESULT( t_6 );
-   CHECK_BOOL( t_6 );
+   CHECK_FUNC_RESULT( t_6 )
+   CHECK_BOOL( t_6 )
    t_5 = (Obj)(UInt)(t_6 != False);
    t_3 = t_5;
   }
@@ -1777,11 +1777,11 @@ and methods[8 * (i - 1) + 1]( type1![1], type2![1], type3![1], type4![1] ) then 
    if ( t_3 ) {
     
     /* return methods[8 * (i - 1) + 6]; */
-    C_DIFF_INTOBJS( t_6, l_i, INTOBJ_INT(1) );
-    C_PROD_FIA( t_5, INTOBJ_INT(8), t_6 );
-    C_SUM_FIA( t_4, t_5, INTOBJ_INT(6) );
-    CHECK_INT_POS( t_4 );
-    C_ELM_LIST_FPL( t_3, l_methods, t_4 );
+    C_DIFF_INTOBJS( t_6, l_i, INTOBJ_INT(1) )
+    C_PROD_FIA( t_5, INTOBJ_INT(8), t_6 )
+    C_SUM_FIA( t_4, t_5, INTOBJ_INT(6) )
+    CHECK_INT_POS( t_4 )
+    C_ELM_LIST_FPL( t_3, l_methods, t_4 )
     RES_BRK_CURR_STAT();
     SWITCH_TO_OLD_FRAME(oldFrame);
     return t_3;
@@ -1792,7 +1792,7 @@ and methods[8 * (i - 1) + 1]( type1![1], type2![1], type3![1], type4![1] ) then 
    else {
     
     /* j := j + 1; */
-    C_SUM_FIA( t_3, l_j, INTOBJ_INT(1) );
+    C_SUM_FIA( t_3, l_j, INTOBJ_INT(1) )
     l_j = t_3;
     
    }
@@ -1806,7 +1806,7 @@ and methods[8 * (i - 1) + 1]( type1![1], type2![1], type3![1], type4![1] ) then 
  
  /* return fail; */
  t_1 = GC_fail;
- CHECK_BOUND( t_1, "fail" );
+ CHECK_BOUND( t_1, "fail" )
  RES_BRK_CURR_STAT();
  SWITCH_TO_OLD_FRAME(oldFrame);
  return t_1;
@@ -1850,7 +1850,7 @@ static Obj  HdlrFunc15 (
  Obj t_16 = 0;
  Bag oldFrame;
  OLD_BRK_CURR_STAT
- CHECK_NR_ARGS( 7, args );
+ CHECK_NR_ARGS( 7, args )
  a_operation = ELM_PLIST( args, 1 );
  a_k = ELM_PLIST( args, 2 );
  a_type1 = ELM_PLIST( args, 3 );
@@ -1867,7 +1867,7 @@ static Obj  HdlrFunc15 (
  /* methods := METHODS_OPERATION( operation, 5 ); */
  t_2 = GF_METHODS__OPERATION;
  t_1 = CALL_2ARGS( t_2, a_operation, INTOBJ_INT(5) );
- CHECK_FUNC_RESULT( t_1 );
+ CHECK_FUNC_RESULT( t_1 )
  l_methods = t_1;
  
  /* j := 0; */
@@ -1876,9 +1876,9 @@ static Obj  HdlrFunc15 (
  /* for i in [ 1 .. LEN_LIST( methods ) / 9 ] do */
  t_4 = GF_LEN__LIST;
  t_3 = CALL_1ARGS( t_4, l_methods );
- CHECK_FUNC_RESULT( t_3 );
+ CHECK_FUNC_RESULT( t_3 )
  t_2 = QUO( t_3, INTOBJ_INT(9) );
- CHECK_INT_SMALL( t_2 );
+ CHECK_INT_SMALL( t_2 )
  for ( t_1 = INTOBJ_INT(1);
        ((Int)t_1) <= ((Int)t_2);
        t_1 = (Obj)(((UInt)t_1)+4) ) {
@@ -1888,27 +1888,27 @@ static Obj  HdlrFunc15 (
   and IS_SUBSET_FLAGS( type5![2], methods[9 * (i - 1) + 6] ) and methods[9 * (i - 1) + 1]( type1![1], type2![1], type3![1], type4![1], type5![1] ) then */
   t_10 = GF_IS__SUBSET__FLAGS;
   C_ELM_POSOBJ_NLE( t_11, a_type1, 2 );
-  C_DIFF_INTOBJS( t_15, l_i, INTOBJ_INT(1) );
-  C_PROD_FIA( t_14, INTOBJ_INT(9), t_15 );
-  C_SUM_FIA( t_13, t_14, INTOBJ_INT(2) );
-  CHECK_INT_POS( t_13 );
-  C_ELM_LIST_FPL( t_12, l_methods, t_13 );
+  C_DIFF_INTOBJS( t_15, l_i, INTOBJ_INT(1) )
+  C_PROD_FIA( t_14, INTOBJ_INT(9), t_15 )
+  C_SUM_FIA( t_13, t_14, INTOBJ_INT(2) )
+  CHECK_INT_POS( t_13 )
+  C_ELM_LIST_FPL( t_12, l_methods, t_13 )
   t_9 = CALL_2ARGS( t_10, t_11, t_12 );
-  CHECK_FUNC_RESULT( t_9 );
-  CHECK_BOOL( t_9 );
+  CHECK_FUNC_RESULT( t_9 )
+  CHECK_BOOL( t_9 )
   t_8 = (Obj)(UInt)(t_9 != False);
   t_7 = t_8;
   if ( t_7 ) {
    t_11 = GF_IS__SUBSET__FLAGS;
    C_ELM_POSOBJ_NLE( t_12, a_type2, 2 );
-   C_DIFF_INTOBJS( t_16, l_i, INTOBJ_INT(1) );
-   C_PROD_FIA( t_15, INTOBJ_INT(9), t_16 );
-   C_SUM_FIA( t_14, t_15, INTOBJ_INT(3) );
-   CHECK_INT_POS( t_14 );
-   C_ELM_LIST_FPL( t_13, l_methods, t_14 );
+   C_DIFF_INTOBJS( t_16, l_i, INTOBJ_INT(1) )
+   C_PROD_FIA( t_15, INTOBJ_INT(9), t_16 )
+   C_SUM_FIA( t_14, t_15, INTOBJ_INT(3) )
+   CHECK_INT_POS( t_14 )
+   C_ELM_LIST_FPL( t_13, l_methods, t_14 )
    t_10 = CALL_2ARGS( t_11, t_12, t_13 );
-   CHECK_FUNC_RESULT( t_10 );
-   CHECK_BOOL( t_10 );
+   CHECK_FUNC_RESULT( t_10 )
+   CHECK_BOOL( t_10 )
    t_9 = (Obj)(UInt)(t_10 != False);
    t_7 = t_9;
   }
@@ -1916,14 +1916,14 @@ static Obj  HdlrFunc15 (
   if ( t_6 ) {
    t_10 = GF_IS__SUBSET__FLAGS;
    C_ELM_POSOBJ_NLE( t_11, a_type3, 2 );
-   C_DIFF_INTOBJS( t_15, l_i, INTOBJ_INT(1) );
-   C_PROD_FIA( t_14, INTOBJ_INT(9), t_15 );
-   C_SUM_FIA( t_13, t_14, INTOBJ_INT(4) );
-   CHECK_INT_POS( t_13 );
-   C_ELM_LIST_FPL( t_12, l_methods, t_13 );
+   C_DIFF_INTOBJS( t_15, l_i, INTOBJ_INT(1) )
+   C_PROD_FIA( t_14, INTOBJ_INT(9), t_15 )
+   C_SUM_FIA( t_13, t_14, INTOBJ_INT(4) )
+   CHECK_INT_POS( t_13 )
+   C_ELM_LIST_FPL( t_12, l_methods, t_13 )
    t_9 = CALL_2ARGS( t_10, t_11, t_12 );
-   CHECK_FUNC_RESULT( t_9 );
-   CHECK_BOOL( t_9 );
+   CHECK_FUNC_RESULT( t_9 )
+   CHECK_BOOL( t_9 )
    t_8 = (Obj)(UInt)(t_9 != False);
    t_6 = t_8;
   }
@@ -1931,14 +1931,14 @@ static Obj  HdlrFunc15 (
   if ( t_5 ) {
    t_9 = GF_IS__SUBSET__FLAGS;
    C_ELM_POSOBJ_NLE( t_10, a_type4, 2 );
-   C_DIFF_INTOBJS( t_14, l_i, INTOBJ_INT(1) );
-   C_PROD_FIA( t_13, INTOBJ_INT(9), t_14 );
-   C_SUM_FIA( t_12, t_13, INTOBJ_INT(5) );
-   CHECK_INT_POS( t_12 );
-   C_ELM_LIST_FPL( t_11, l_methods, t_12 );
+   C_DIFF_INTOBJS( t_14, l_i, INTOBJ_INT(1) )
+   C_PROD_FIA( t_13, INTOBJ_INT(9), t_14 )
+   C_SUM_FIA( t_12, t_13, INTOBJ_INT(5) )
+   CHECK_INT_POS( t_12 )
+   C_ELM_LIST_FPL( t_11, l_methods, t_12 )
    t_8 = CALL_2ARGS( t_9, t_10, t_11 );
-   CHECK_FUNC_RESULT( t_8 );
-   CHECK_BOOL( t_8 );
+   CHECK_FUNC_RESULT( t_8 )
+   CHECK_BOOL( t_8 )
    t_7 = (Obj)(UInt)(t_8 != False);
    t_5 = t_7;
   }
@@ -1946,33 +1946,33 @@ static Obj  HdlrFunc15 (
   if ( t_4 ) {
    t_8 = GF_IS__SUBSET__FLAGS;
    C_ELM_POSOBJ_NLE( t_9, a_type5, 2 );
-   C_DIFF_INTOBJS( t_13, l_i, INTOBJ_INT(1) );
-   C_PROD_FIA( t_12, INTOBJ_INT(9), t_13 );
-   C_SUM_FIA( t_11, t_12, INTOBJ_INT(6) );
-   CHECK_INT_POS( t_11 );
-   C_ELM_LIST_FPL( t_10, l_methods, t_11 );
+   C_DIFF_INTOBJS( t_13, l_i, INTOBJ_INT(1) )
+   C_PROD_FIA( t_12, INTOBJ_INT(9), t_13 )
+   C_SUM_FIA( t_11, t_12, INTOBJ_INT(6) )
+   CHECK_INT_POS( t_11 )
+   C_ELM_LIST_FPL( t_10, l_methods, t_11 )
    t_7 = CALL_2ARGS( t_8, t_9, t_10 );
-   CHECK_FUNC_RESULT( t_7 );
-   CHECK_BOOL( t_7 );
+   CHECK_FUNC_RESULT( t_7 )
+   CHECK_BOOL( t_7 )
    t_6 = (Obj)(UInt)(t_7 != False);
    t_4 = t_6;
   }
   t_3 = t_4;
   if ( t_3 ) {
-   C_DIFF_INTOBJS( t_10, l_i, INTOBJ_INT(1) );
-   C_PROD_FIA( t_9, INTOBJ_INT(9), t_10 );
-   C_SUM_FIA( t_8, t_9, INTOBJ_INT(1) );
-   CHECK_INT_POS( t_8 );
-   C_ELM_LIST_FPL( t_7, l_methods, t_8 );
-   CHECK_FUNC( t_7 );
+   C_DIFF_INTOBJS( t_10, l_i, INTOBJ_INT(1) )
+   C_PROD_FIA( t_9, INTOBJ_INT(9), t_10 )
+   C_SUM_FIA( t_8, t_9, INTOBJ_INT(1) )
+   CHECK_INT_POS( t_8 )
+   C_ELM_LIST_FPL( t_7, l_methods, t_8 )
+   CHECK_FUNC( t_7 )
    C_ELM_POSOBJ_NLE( t_8, a_type1, 1 );
    C_ELM_POSOBJ_NLE( t_9, a_type2, 1 );
    C_ELM_POSOBJ_NLE( t_10, a_type3, 1 );
    C_ELM_POSOBJ_NLE( t_11, a_type4, 1 );
    C_ELM_POSOBJ_NLE( t_12, a_type5, 1 );
    t_6 = CALL_5ARGS( t_7, t_8, t_9, t_10, t_11, t_12 );
-   CHECK_FUNC_RESULT( t_6 );
-   CHECK_BOOL( t_6 );
+   CHECK_FUNC_RESULT( t_6 )
+   CHECK_BOOL( t_6 )
    t_5 = (Obj)(UInt)(t_6 != False);
    t_3 = t_5;
   }
@@ -1983,11 +1983,11 @@ static Obj  HdlrFunc15 (
    if ( t_3 ) {
     
     /* return methods[9 * (i - 1) + 7]; */
-    C_DIFF_INTOBJS( t_6, l_i, INTOBJ_INT(1) );
-    C_PROD_FIA( t_5, INTOBJ_INT(9), t_6 );
-    C_SUM_FIA( t_4, t_5, INTOBJ_INT(7) );
-    CHECK_INT_POS( t_4 );
-    C_ELM_LIST_FPL( t_3, l_methods, t_4 );
+    C_DIFF_INTOBJS( t_6, l_i, INTOBJ_INT(1) )
+    C_PROD_FIA( t_5, INTOBJ_INT(9), t_6 )
+    C_SUM_FIA( t_4, t_5, INTOBJ_INT(7) )
+    CHECK_INT_POS( t_4 )
+    C_ELM_LIST_FPL( t_3, l_methods, t_4 )
     RES_BRK_CURR_STAT();
     SWITCH_TO_OLD_FRAME(oldFrame);
     return t_3;
@@ -1998,7 +1998,7 @@ static Obj  HdlrFunc15 (
    else {
     
     /* j := j + 1; */
-    C_SUM_FIA( t_3, l_j, INTOBJ_INT(1) );
+    C_SUM_FIA( t_3, l_j, INTOBJ_INT(1) )
     l_j = t_3;
     
    }
@@ -2012,7 +2012,7 @@ static Obj  HdlrFunc15 (
  
  /* return fail; */
  t_1 = GC_fail;
- CHECK_BOUND( t_1, "fail" );
+ CHECK_BOUND( t_1, "fail" )
  RES_BRK_CURR_STAT();
  SWITCH_TO_OLD_FRAME(oldFrame);
  return t_1;
@@ -2058,7 +2058,7 @@ static Obj  HdlrFunc16 (
  Obj t_17 = 0;
  Bag oldFrame;
  OLD_BRK_CURR_STAT
- CHECK_NR_ARGS( 8, args );
+ CHECK_NR_ARGS( 8, args )
  a_operation = ELM_PLIST( args, 1 );
  a_k = ELM_PLIST( args, 2 );
  a_type1 = ELM_PLIST( args, 3 );
@@ -2076,7 +2076,7 @@ static Obj  HdlrFunc16 (
  /* methods := METHODS_OPERATION( operation, 6 ); */
  t_2 = GF_METHODS__OPERATION;
  t_1 = CALL_2ARGS( t_2, a_operation, INTOBJ_INT(6) );
- CHECK_FUNC_RESULT( t_1 );
+ CHECK_FUNC_RESULT( t_1 )
  l_methods = t_1;
  
  /* j := 0; */
@@ -2085,9 +2085,9 @@ static Obj  HdlrFunc16 (
  /* for i in [ 1 .. LEN_LIST( methods ) / 10 ] do */
  t_4 = GF_LEN__LIST;
  t_3 = CALL_1ARGS( t_4, l_methods );
- CHECK_FUNC_RESULT( t_3 );
+ CHECK_FUNC_RESULT( t_3 )
  t_2 = QUO( t_3, INTOBJ_INT(10) );
- CHECK_INT_SMALL( t_2 );
+ CHECK_INT_SMALL( t_2 )
  for ( t_1 = INTOBJ_INT(1);
        ((Int)t_1) <= ((Int)t_2);
        t_1 = (Obj)(((UInt)t_1)+4) ) {
@@ -2097,27 +2097,27 @@ static Obj  HdlrFunc16 (
     and IS_SUBSET_FLAGS( type5![2], methods[10 * (i - 1) + 6] ) and IS_SUBSET_FLAGS( type6![2], methods[10 * (i - 1) + 7] ) and methods[10 * (i - 1) + 1]( type1![1], type2![1], type3![1], type4![1], type5![1], type6![1] ) then */
   t_11 = GF_IS__SUBSET__FLAGS;
   C_ELM_POSOBJ_NLE( t_12, a_type1, 2 );
-  C_DIFF_INTOBJS( t_16, l_i, INTOBJ_INT(1) );
-  C_PROD_FIA( t_15, INTOBJ_INT(10), t_16 );
-  C_SUM_FIA( t_14, t_15, INTOBJ_INT(2) );
-  CHECK_INT_POS( t_14 );
-  C_ELM_LIST_FPL( t_13, l_methods, t_14 );
+  C_DIFF_INTOBJS( t_16, l_i, INTOBJ_INT(1) )
+  C_PROD_FIA( t_15, INTOBJ_INT(10), t_16 )
+  C_SUM_FIA( t_14, t_15, INTOBJ_INT(2) )
+  CHECK_INT_POS( t_14 )
+  C_ELM_LIST_FPL( t_13, l_methods, t_14 )
   t_10 = CALL_2ARGS( t_11, t_12, t_13 );
-  CHECK_FUNC_RESULT( t_10 );
-  CHECK_BOOL( t_10 );
+  CHECK_FUNC_RESULT( t_10 )
+  CHECK_BOOL( t_10 )
   t_9 = (Obj)(UInt)(t_10 != False);
   t_8 = t_9;
   if ( t_8 ) {
    t_12 = GF_IS__SUBSET__FLAGS;
    C_ELM_POSOBJ_NLE( t_13, a_type2, 2 );
-   C_DIFF_INTOBJS( t_17, l_i, INTOBJ_INT(1) );
-   C_PROD_FIA( t_16, INTOBJ_INT(10), t_17 );
-   C_SUM_FIA( t_15, t_16, INTOBJ_INT(3) );
-   CHECK_INT_POS( t_15 );
-   C_ELM_LIST_FPL( t_14, l_methods, t_15 );
+   C_DIFF_INTOBJS( t_17, l_i, INTOBJ_INT(1) )
+   C_PROD_FIA( t_16, INTOBJ_INT(10), t_17 )
+   C_SUM_FIA( t_15, t_16, INTOBJ_INT(3) )
+   CHECK_INT_POS( t_15 )
+   C_ELM_LIST_FPL( t_14, l_methods, t_15 )
    t_11 = CALL_2ARGS( t_12, t_13, t_14 );
-   CHECK_FUNC_RESULT( t_11 );
-   CHECK_BOOL( t_11 );
+   CHECK_FUNC_RESULT( t_11 )
+   CHECK_BOOL( t_11 )
    t_10 = (Obj)(UInt)(t_11 != False);
    t_8 = t_10;
   }
@@ -2125,14 +2125,14 @@ static Obj  HdlrFunc16 (
   if ( t_7 ) {
    t_11 = GF_IS__SUBSET__FLAGS;
    C_ELM_POSOBJ_NLE( t_12, a_type3, 2 );
-   C_DIFF_INTOBJS( t_16, l_i, INTOBJ_INT(1) );
-   C_PROD_FIA( t_15, INTOBJ_INT(10), t_16 );
-   C_SUM_FIA( t_14, t_15, INTOBJ_INT(4) );
-   CHECK_INT_POS( t_14 );
-   C_ELM_LIST_FPL( t_13, l_methods, t_14 );
+   C_DIFF_INTOBJS( t_16, l_i, INTOBJ_INT(1) )
+   C_PROD_FIA( t_15, INTOBJ_INT(10), t_16 )
+   C_SUM_FIA( t_14, t_15, INTOBJ_INT(4) )
+   CHECK_INT_POS( t_14 )
+   C_ELM_LIST_FPL( t_13, l_methods, t_14 )
    t_10 = CALL_2ARGS( t_11, t_12, t_13 );
-   CHECK_FUNC_RESULT( t_10 );
-   CHECK_BOOL( t_10 );
+   CHECK_FUNC_RESULT( t_10 )
+   CHECK_BOOL( t_10 )
    t_9 = (Obj)(UInt)(t_10 != False);
    t_7 = t_9;
   }
@@ -2140,14 +2140,14 @@ static Obj  HdlrFunc16 (
   if ( t_6 ) {
    t_10 = GF_IS__SUBSET__FLAGS;
    C_ELM_POSOBJ_NLE( t_11, a_type4, 2 );
-   C_DIFF_INTOBJS( t_15, l_i, INTOBJ_INT(1) );
-   C_PROD_FIA( t_14, INTOBJ_INT(10), t_15 );
-   C_SUM_FIA( t_13, t_14, INTOBJ_INT(5) );
-   CHECK_INT_POS( t_13 );
-   C_ELM_LIST_FPL( t_12, l_methods, t_13 );
+   C_DIFF_INTOBJS( t_15, l_i, INTOBJ_INT(1) )
+   C_PROD_FIA( t_14, INTOBJ_INT(10), t_15 )
+   C_SUM_FIA( t_13, t_14, INTOBJ_INT(5) )
+   CHECK_INT_POS( t_13 )
+   C_ELM_LIST_FPL( t_12, l_methods, t_13 )
    t_9 = CALL_2ARGS( t_10, t_11, t_12 );
-   CHECK_FUNC_RESULT( t_9 );
-   CHECK_BOOL( t_9 );
+   CHECK_FUNC_RESULT( t_9 )
+   CHECK_BOOL( t_9 )
    t_8 = (Obj)(UInt)(t_9 != False);
    t_6 = t_8;
   }
@@ -2155,14 +2155,14 @@ static Obj  HdlrFunc16 (
   if ( t_5 ) {
    t_9 = GF_IS__SUBSET__FLAGS;
    C_ELM_POSOBJ_NLE( t_10, a_type5, 2 );
-   C_DIFF_INTOBJS( t_14, l_i, INTOBJ_INT(1) );
-   C_PROD_FIA( t_13, INTOBJ_INT(10), t_14 );
-   C_SUM_FIA( t_12, t_13, INTOBJ_INT(6) );
-   CHECK_INT_POS( t_12 );
-   C_ELM_LIST_FPL( t_11, l_methods, t_12 );
+   C_DIFF_INTOBJS( t_14, l_i, INTOBJ_INT(1) )
+   C_PROD_FIA( t_13, INTOBJ_INT(10), t_14 )
+   C_SUM_FIA( t_12, t_13, INTOBJ_INT(6) )
+   CHECK_INT_POS( t_12 )
+   C_ELM_LIST_FPL( t_11, l_methods, t_12 )
    t_8 = CALL_2ARGS( t_9, t_10, t_11 );
-   CHECK_FUNC_RESULT( t_8 );
-   CHECK_BOOL( t_8 );
+   CHECK_FUNC_RESULT( t_8 )
+   CHECK_BOOL( t_8 )
    t_7 = (Obj)(UInt)(t_8 != False);
    t_5 = t_7;
   }
@@ -2170,25 +2170,25 @@ static Obj  HdlrFunc16 (
   if ( t_4 ) {
    t_8 = GF_IS__SUBSET__FLAGS;
    C_ELM_POSOBJ_NLE( t_9, a_type6, 2 );
-   C_DIFF_INTOBJS( t_13, l_i, INTOBJ_INT(1) );
-   C_PROD_FIA( t_12, INTOBJ_INT(10), t_13 );
-   C_SUM_FIA( t_11, t_12, INTOBJ_INT(7) );
-   CHECK_INT_POS( t_11 );
-   C_ELM_LIST_FPL( t_10, l_methods, t_11 );
+   C_DIFF_INTOBJS( t_13, l_i, INTOBJ_INT(1) )
+   C_PROD_FIA( t_12, INTOBJ_INT(10), t_13 )
+   C_SUM_FIA( t_11, t_12, INTOBJ_INT(7) )
+   CHECK_INT_POS( t_11 )
+   C_ELM_LIST_FPL( t_10, l_methods, t_11 )
    t_7 = CALL_2ARGS( t_8, t_9, t_10 );
-   CHECK_FUNC_RESULT( t_7 );
-   CHECK_BOOL( t_7 );
+   CHECK_FUNC_RESULT( t_7 )
+   CHECK_BOOL( t_7 )
    t_6 = (Obj)(UInt)(t_7 != False);
    t_4 = t_6;
   }
   t_3 = t_4;
   if ( t_3 ) {
-   C_DIFF_INTOBJS( t_10, l_i, INTOBJ_INT(1) );
-   C_PROD_FIA( t_9, INTOBJ_INT(10), t_10 );
-   C_SUM_FIA( t_8, t_9, INTOBJ_INT(1) );
-   CHECK_INT_POS( t_8 );
-   C_ELM_LIST_FPL( t_7, l_methods, t_8 );
-   CHECK_FUNC( t_7 );
+   C_DIFF_INTOBJS( t_10, l_i, INTOBJ_INT(1) )
+   C_PROD_FIA( t_9, INTOBJ_INT(10), t_10 )
+   C_SUM_FIA( t_8, t_9, INTOBJ_INT(1) )
+   CHECK_INT_POS( t_8 )
+   C_ELM_LIST_FPL( t_7, l_methods, t_8 )
+   CHECK_FUNC( t_7 )
    C_ELM_POSOBJ_NLE( t_8, a_type1, 1 );
    C_ELM_POSOBJ_NLE( t_9, a_type2, 1 );
    C_ELM_POSOBJ_NLE( t_10, a_type3, 1 );
@@ -2196,8 +2196,8 @@ static Obj  HdlrFunc16 (
    C_ELM_POSOBJ_NLE( t_12, a_type5, 1 );
    C_ELM_POSOBJ_NLE( t_13, a_type6, 1 );
    t_6 = CALL_6ARGS( t_7, t_8, t_9, t_10, t_11, t_12, t_13 );
-   CHECK_FUNC_RESULT( t_6 );
-   CHECK_BOOL( t_6 );
+   CHECK_FUNC_RESULT( t_6 )
+   CHECK_BOOL( t_6 )
    t_5 = (Obj)(UInt)(t_6 != False);
    t_3 = t_5;
   }
@@ -2208,11 +2208,11 @@ static Obj  HdlrFunc16 (
    if ( t_3 ) {
     
     /* return methods[10 * (i - 1) + 8]; */
-    C_DIFF_INTOBJS( t_6, l_i, INTOBJ_INT(1) );
-    C_PROD_FIA( t_5, INTOBJ_INT(10), t_6 );
-    C_SUM_FIA( t_4, t_5, INTOBJ_INT(8) );
-    CHECK_INT_POS( t_4 );
-    C_ELM_LIST_FPL( t_3, l_methods, t_4 );
+    C_DIFF_INTOBJS( t_6, l_i, INTOBJ_INT(1) )
+    C_PROD_FIA( t_5, INTOBJ_INT(10), t_6 )
+    C_SUM_FIA( t_4, t_5, INTOBJ_INT(8) )
+    CHECK_INT_POS( t_4 )
+    C_ELM_LIST_FPL( t_3, l_methods, t_4 )
     RES_BRK_CURR_STAT();
     SWITCH_TO_OLD_FRAME(oldFrame);
     return t_3;
@@ -2223,7 +2223,7 @@ static Obj  HdlrFunc16 (
    else {
     
     /* j := j + 1; */
-    C_SUM_FIA( t_3, l_j, INTOBJ_INT(1) );
+    C_SUM_FIA( t_3, l_j, INTOBJ_INT(1) )
     l_j = t_3;
     
    }
@@ -2237,7 +2237,7 @@ static Obj  HdlrFunc16 (
  
  /* return fail; */
  t_1 = GC_fail;
- CHECK_BOUND( t_1, "fail" );
+ CHECK_BOUND( t_1, "fail" )
  RES_BRK_CURR_STAT();
  SWITCH_TO_OLD_FRAME(oldFrame);
  return t_1;
@@ -2313,27 +2313,27 @@ static Obj  HdlrFunc18 (
  /* type := TypeObj( obj ); */
  t_2 = GF_TypeObj;
  t_1 = CALL_1ARGS( t_2, a_obj );
- CHECK_FUNC_RESULT( t_1 );
+ CHECK_FUNC_RESULT( t_1 )
  l_type = t_1;
  
  /* fam := FamilyObj( obj ); */
  t_2 = GF_FamilyObj;
  t_1 = CALL_1ARGS( t_2, a_obj );
- CHECK_FUNC_RESULT( t_1 );
+ CHECK_FUNC_RESULT( t_1 )
  l_fam = t_1;
  
  /* methods := METHODS_OPERATION( attr, 1 ); */
  t_2 = GF_METHODS__OPERATION;
  t_1 = CALL_2ARGS( t_2, a_attr, INTOBJ_INT(1) );
- CHECK_FUNC_RESULT( t_1 );
+ CHECK_FUNC_RESULT( t_1 )
  l_methods = t_1;
  
  /* for i in [ 1 .. LEN_LIST( methods ) / 5 ] do */
  t_4 = GF_LEN__LIST;
  t_3 = CALL_1ARGS( t_4, l_methods );
- CHECK_FUNC_RESULT( t_3 );
+ CHECK_FUNC_RESULT( t_3 )
  t_2 = QUO( t_3, INTOBJ_INT(5) );
- CHECK_INT_SMALL( t_2 );
+ CHECK_INT_SMALL( t_2 )
  for ( t_1 = INTOBJ_INT(1);
        ((Int)t_1) <= ((Int)t_2);
        t_1 = (Obj)(((UInt)t_1)+4) ) {
@@ -2350,34 +2350,34 @@ static Obj  HdlrFunc18 (
   else if ( l_flag == True ) {
    t_5 = GF_IS__SUBSET__FLAGS;
    C_ELM_POSOBJ_NLE( t_6, l_type, 2 );
-   C_DIFF_INTOBJS( t_10, l_i, INTOBJ_INT(1) );
-   C_PROD_FIA( t_9, INTOBJ_INT(5), t_10 );
-   C_SUM_FIA( t_8, t_9, INTOBJ_INT(2) );
-   CHECK_INT_POS( t_8 );
-   C_ELM_LIST_FPL( t_7, l_methods, t_8 );
+   C_DIFF_INTOBJS( t_10, l_i, INTOBJ_INT(1) )
+   C_PROD_FIA( t_9, INTOBJ_INT(5), t_10 )
+   C_SUM_FIA( t_8, t_9, INTOBJ_INT(2) )
+   CHECK_INT_POS( t_8 )
+   C_ELM_LIST_FPL( t_7, l_methods, t_8 )
    t_4 = CALL_2ARGS( t_5, t_6, t_7 );
-   CHECK_FUNC_RESULT( t_4 );
-   CHECK_BOOL( t_4 );
+   CHECK_FUNC_RESULT( t_4 )
+   CHECK_BOOL( t_4 )
    t_3 = t_4;
   }
   else {
-   CHECK_FUNC( l_flag );
+   CHECK_FUNC( l_flag )
    t_6 = GF_IS__SUBSET__FLAGS;
    C_ELM_POSOBJ_NLE( t_7, l_type, 2 );
-   C_DIFF_INTOBJS( t_11, l_i, INTOBJ_INT(1) );
-   C_PROD_FIA( t_10, INTOBJ_INT(5), t_11 );
-   C_SUM_FIA( t_9, t_10, INTOBJ_INT(2) );
-   CHECK_INT_POS( t_9 );
-   C_ELM_LIST_FPL( t_8, l_methods, t_9 );
+   C_DIFF_INTOBJS( t_11, l_i, INTOBJ_INT(1) )
+   C_PROD_FIA( t_10, INTOBJ_INT(5), t_11 )
+   C_SUM_FIA( t_9, t_10, INTOBJ_INT(2) )
+   CHECK_INT_POS( t_9 )
+   C_ELM_LIST_FPL( t_8, l_methods, t_9 )
    t_5 = CALL_2ARGS( t_6, t_7, t_8 );
-   CHECK_FUNC_RESULT( t_5 );
-   CHECK_FUNC( t_5 );
+   CHECK_FUNC_RESULT( t_5 )
+   CHECK_FUNC( t_5 )
    t_3 = NewAndFilter( l_flag, t_5 );
   }
   l_flag = t_3;
   
   /* if flag then */
-  CHECK_BOOL( l_flag );
+  CHECK_BOOL( l_flag )
   t_3 = (Obj)(UInt)(l_flag != False);
   if ( t_3 ) {
    
@@ -2386,28 +2386,28 @@ static Obj  HdlrFunc18 (
     t_3 = l_flag;
    }
    else if ( l_flag == True ) {
-    C_DIFF_INTOBJS( t_8, l_i, INTOBJ_INT(1) );
-    C_PROD_FIA( t_7, INTOBJ_INT(5), t_8 );
-    C_SUM_FIA( t_6, t_7, INTOBJ_INT(1) );
-    CHECK_INT_POS( t_6 );
-    C_ELM_LIST_FPL( t_5, l_methods, t_6 );
-    CHECK_FUNC( t_5 );
+    C_DIFF_INTOBJS( t_8, l_i, INTOBJ_INT(1) )
+    C_PROD_FIA( t_7, INTOBJ_INT(5), t_8 )
+    C_SUM_FIA( t_6, t_7, INTOBJ_INT(1) )
+    CHECK_INT_POS( t_6 )
+    C_ELM_LIST_FPL( t_5, l_methods, t_6 )
+    CHECK_FUNC( t_5 )
     t_4 = CALL_1ARGS( t_5, l_fam );
-    CHECK_FUNC_RESULT( t_4 );
-    CHECK_BOOL( t_4 );
+    CHECK_FUNC_RESULT( t_4 )
+    CHECK_BOOL( t_4 )
     t_3 = t_4;
    }
    else {
-    CHECK_FUNC( l_flag );
-    C_DIFF_INTOBJS( t_9, l_i, INTOBJ_INT(1) );
-    C_PROD_FIA( t_8, INTOBJ_INT(5), t_9 );
-    C_SUM_FIA( t_7, t_8, INTOBJ_INT(1) );
-    CHECK_INT_POS( t_7 );
-    C_ELM_LIST_FPL( t_6, l_methods, t_7 );
-    CHECK_FUNC( t_6 );
+    CHECK_FUNC( l_flag )
+    C_DIFF_INTOBJS( t_9, l_i, INTOBJ_INT(1) )
+    C_PROD_FIA( t_8, INTOBJ_INT(5), t_9 )
+    C_SUM_FIA( t_7, t_8, INTOBJ_INT(1) )
+    CHECK_INT_POS( t_7 )
+    C_ELM_LIST_FPL( t_6, l_methods, t_7 )
+    CHECK_FUNC( t_6 )
     t_5 = CALL_1ARGS( t_6, l_fam );
-    CHECK_FUNC_RESULT( t_5 );
-    CHECK_FUNC( t_5 );
+    CHECK_FUNC_RESULT( t_5 )
+    CHECK_FUNC( t_5 )
     t_3 = NewAndFilter( l_flag, t_5 );
    }
    l_flag = t_3;
@@ -2416,31 +2416,31 @@ static Obj  HdlrFunc18 (
   /* fi */
   
   /* if flag then */
-  CHECK_BOOL( l_flag );
+  CHECK_BOOL( l_flag )
   t_3 = (Obj)(UInt)(l_flag != False);
   if ( t_3 ) {
    
    /* attr := methods[5 * (i - 1) + 3]; */
-   C_DIFF_INTOBJS( t_6, l_i, INTOBJ_INT(1) );
-   C_PROD_FIA( t_5, INTOBJ_INT(5), t_6 );
-   C_SUM_FIA( t_4, t_5, INTOBJ_INT(3) );
-   CHECK_INT_POS( t_4 );
-   C_ELM_LIST_FPL( t_3, l_methods, t_4 );
+   C_DIFF_INTOBJS( t_6, l_i, INTOBJ_INT(1) )
+   C_PROD_FIA( t_5, INTOBJ_INT(5), t_6 )
+   C_SUM_FIA( t_4, t_5, INTOBJ_INT(3) )
+   CHECK_INT_POS( t_4 )
+   C_ELM_LIST_FPL( t_3, l_methods, t_4 )
    a_attr = t_3;
    
    /* erg := attr( obj ); */
-   CHECK_FUNC( a_attr );
+   CHECK_FUNC( a_attr )
    t_3 = CALL_1ARGS( a_attr, a_obj );
-   CHECK_FUNC_RESULT( t_3 );
+   CHECK_FUNC_RESULT( t_3 )
    l_erg = t_3;
    
    /* if not IS_IDENTICAL_OBJ( erg, TRY_NEXT_METHOD ) then */
    t_6 = GF_IS__IDENTICAL__OBJ;
    t_7 = GC_TRY__NEXT__METHOD;
-   CHECK_BOUND( t_7, "TRY_NEXT_METHOD" );
+   CHECK_BOUND( t_7, "TRY_NEXT_METHOD" )
    t_5 = CALL_2ARGS( t_6, l_erg, t_7 );
-   CHECK_FUNC_RESULT( t_5 );
-   CHECK_BOOL( t_5 );
+   CHECK_FUNC_RESULT( t_5 )
+   CHECK_BOOL( t_5 )
    t_4 = (Obj)(UInt)(t_5 != False);
    t_3 = (Obj)(UInt)( ! ((Int)t_4) );
    if ( t_3 ) {
@@ -2501,39 +2501,39 @@ static Obj  HdlrFunc19 (
  /* methods := METHODS_OPERATION( operation, 0 ); */
  t_2 = GF_METHODS__OPERATION;
  t_1 = CALL_2ARGS( t_2, a_operation, INTOBJ_INT(0) );
- CHECK_FUNC_RESULT( t_1 );
+ CHECK_FUNC_RESULT( t_1 )
  l_methods = t_1;
  
  /* for i in [ 1 .. LEN_LIST( methods ) / 4 ] do */
  t_4 = GF_LEN__LIST;
  t_3 = CALL_1ARGS( t_4, l_methods );
- CHECK_FUNC_RESULT( t_3 );
+ CHECK_FUNC_RESULT( t_3 )
  t_2 = QUO( t_3, INTOBJ_INT(4) );
- CHECK_INT_SMALL( t_2 );
+ CHECK_INT_SMALL( t_2 )
  for ( t_1 = INTOBJ_INT(1);
        ((Int)t_1) <= ((Int)t_2);
        t_1 = (Obj)(((UInt)t_1)+4) ) {
   l_i = t_1;
   
   /* if methods[4 * (i - 1) + 1](  ) then */
-  C_DIFF_INTOBJS( t_8, l_i, INTOBJ_INT(1) );
-  C_PROD_FIA( t_7, INTOBJ_INT(4), t_8 );
-  C_SUM_FIA( t_6, t_7, INTOBJ_INT(1) );
-  CHECK_INT_POS( t_6 );
-  C_ELM_LIST_FPL( t_5, l_methods, t_6 );
-  CHECK_FUNC( t_5 );
+  C_DIFF_INTOBJS( t_8, l_i, INTOBJ_INT(1) )
+  C_PROD_FIA( t_7, INTOBJ_INT(4), t_8 )
+  C_SUM_FIA( t_6, t_7, INTOBJ_INT(1) )
+  CHECK_INT_POS( t_6 )
+  C_ELM_LIST_FPL( t_5, l_methods, t_6 )
+  CHECK_FUNC( t_5 )
   t_4 = CALL_0ARGS( t_5 );
-  CHECK_FUNC_RESULT( t_4 );
-  CHECK_BOOL( t_4 );
+  CHECK_FUNC_RESULT( t_4 )
+  CHECK_BOOL( t_4 )
   t_3 = (Obj)(UInt)(t_4 != False);
   if ( t_3 ) {
    
    /* return methods[4 * (i - 1) + 2]; */
-   C_DIFF_INTOBJS( t_6, l_i, INTOBJ_INT(1) );
-   C_PROD_FIA( t_5, INTOBJ_INT(4), t_6 );
-   C_SUM_FIA( t_4, t_5, INTOBJ_INT(2) );
-   CHECK_INT_POS( t_4 );
-   C_ELM_LIST_FPL( t_3, l_methods, t_4 );
+   C_DIFF_INTOBJS( t_6, l_i, INTOBJ_INT(1) )
+   C_PROD_FIA( t_5, INTOBJ_INT(4), t_6 )
+   C_SUM_FIA( t_4, t_5, INTOBJ_INT(2) )
+   CHECK_INT_POS( t_4 )
+   C_ELM_LIST_FPL( t_3, l_methods, t_4 )
    RES_BRK_CURR_STAT();
    SWITCH_TO_OLD_FRAME(oldFrame);
    return t_3;
@@ -2546,7 +2546,7 @@ static Obj  HdlrFunc19 (
  
  /* return fail; */
  t_1 = GC_fail;
- CHECK_BOUND( t_1, "fail" );
+ CHECK_BOUND( t_1, "fail" )
  RES_BRK_CURR_STAT();
  SWITCH_TO_OLD_FRAME(oldFrame);
  return t_1;
@@ -2586,15 +2586,15 @@ static Obj  HdlrFunc20 (
  /* methods := METHODS_OPERATION( operation, 1 ); */
  t_2 = GF_METHODS__OPERATION;
  t_1 = CALL_2ARGS( t_2, a_operation, INTOBJ_INT(1) );
- CHECK_FUNC_RESULT( t_1 );
+ CHECK_FUNC_RESULT( t_1 )
  l_methods = t_1;
  
  /* for i in [ 1 .. LEN_LIST( methods ) / 5 ] do */
  t_4 = GF_LEN__LIST;
  t_3 = CALL_1ARGS( t_4, l_methods );
- CHECK_FUNC_RESULT( t_3 );
+ CHECK_FUNC_RESULT( t_3 )
  t_2 = QUO( t_3, INTOBJ_INT(5) );
- CHECK_INT_SMALL( t_2 );
+ CHECK_INT_SMALL( t_2 )
  for ( t_1 = INTOBJ_INT(1);
        ((Int)t_1) <= ((Int)t_2);
        t_1 = (Obj)(((UInt)t_1)+4) ) {
@@ -2602,37 +2602,37 @@ static Obj  HdlrFunc20 (
   
   /* if IS_SUBSET_FLAGS( methods[5 * (i - 1) + 2], flags1 ) and methods[5 * (i - 1) + 1]( flags1 ) then */
   t_6 = GF_IS__SUBSET__FLAGS;
-  C_DIFF_INTOBJS( t_10, l_i, INTOBJ_INT(1) );
-  C_PROD_FIA( t_9, INTOBJ_INT(5), t_10 );
-  C_SUM_FIA( t_8, t_9, INTOBJ_INT(2) );
-  CHECK_INT_POS( t_8 );
-  C_ELM_LIST_FPL( t_7, l_methods, t_8 );
+  C_DIFF_INTOBJS( t_10, l_i, INTOBJ_INT(1) )
+  C_PROD_FIA( t_9, INTOBJ_INT(5), t_10 )
+  C_SUM_FIA( t_8, t_9, INTOBJ_INT(2) )
+  CHECK_INT_POS( t_8 )
+  C_ELM_LIST_FPL( t_7, l_methods, t_8 )
   t_5 = CALL_2ARGS( t_6, t_7, a_flags1 );
-  CHECK_FUNC_RESULT( t_5 );
-  CHECK_BOOL( t_5 );
+  CHECK_FUNC_RESULT( t_5 )
+  CHECK_BOOL( t_5 )
   t_4 = (Obj)(UInt)(t_5 != False);
   t_3 = t_4;
   if ( t_3 ) {
-   C_DIFF_INTOBJS( t_10, l_i, INTOBJ_INT(1) );
-   C_PROD_FIA( t_9, INTOBJ_INT(5), t_10 );
-   C_SUM_FIA( t_8, t_9, INTOBJ_INT(1) );
-   CHECK_INT_POS( t_8 );
-   C_ELM_LIST_FPL( t_7, l_methods, t_8 );
-   CHECK_FUNC( t_7 );
+   C_DIFF_INTOBJS( t_10, l_i, INTOBJ_INT(1) )
+   C_PROD_FIA( t_9, INTOBJ_INT(5), t_10 )
+   C_SUM_FIA( t_8, t_9, INTOBJ_INT(1) )
+   CHECK_INT_POS( t_8 )
+   C_ELM_LIST_FPL( t_7, l_methods, t_8 )
+   CHECK_FUNC( t_7 )
    t_6 = CALL_1ARGS( t_7, a_flags1 );
-   CHECK_FUNC_RESULT( t_6 );
-   CHECK_BOOL( t_6 );
+   CHECK_FUNC_RESULT( t_6 )
+   CHECK_BOOL( t_6 )
    t_5 = (Obj)(UInt)(t_6 != False);
    t_3 = t_5;
   }
   if ( t_3 ) {
    
    /* return methods[5 * (i - 1) + 3]; */
-   C_DIFF_INTOBJS( t_6, l_i, INTOBJ_INT(1) );
-   C_PROD_FIA( t_5, INTOBJ_INT(5), t_6 );
-   C_SUM_FIA( t_4, t_5, INTOBJ_INT(3) );
-   CHECK_INT_POS( t_4 );
-   C_ELM_LIST_FPL( t_3, l_methods, t_4 );
+   C_DIFF_INTOBJS( t_6, l_i, INTOBJ_INT(1) )
+   C_PROD_FIA( t_5, INTOBJ_INT(5), t_6 )
+   C_SUM_FIA( t_4, t_5, INTOBJ_INT(3) )
+   CHECK_INT_POS( t_4 )
+   C_ELM_LIST_FPL( t_3, l_methods, t_4 )
    RES_BRK_CURR_STAT();
    SWITCH_TO_OLD_FRAME(oldFrame);
    return t_3;
@@ -2645,7 +2645,7 @@ static Obj  HdlrFunc20 (
  
  /* return fail; */
  t_1 = GC_fail;
- CHECK_BOUND( t_1, "fail" );
+ CHECK_BOUND( t_1, "fail" )
  RES_BRK_CURR_STAT();
  SWITCH_TO_OLD_FRAME(oldFrame);
  return t_1;
@@ -2689,15 +2689,15 @@ static Obj  HdlrFunc21 (
  /* methods := METHODS_OPERATION( operation, 2 ); */
  t_2 = GF_METHODS__OPERATION;
  t_1 = CALL_2ARGS( t_2, a_operation, INTOBJ_INT(2) );
- CHECK_FUNC_RESULT( t_1 );
+ CHECK_FUNC_RESULT( t_1 )
  l_methods = t_1;
  
  /* for i in [ 1 .. LEN_LIST( methods ) / 6 ] do */
  t_4 = GF_LEN__LIST;
  t_3 = CALL_1ARGS( t_4, l_methods );
- CHECK_FUNC_RESULT( t_3 );
+ CHECK_FUNC_RESULT( t_3 )
  t_2 = QUO( t_3, INTOBJ_INT(6) );
- CHECK_INT_SMALL( t_2 );
+ CHECK_INT_SMALL( t_2 )
  for ( t_1 = INTOBJ_INT(1);
        ((Int)t_1) <= ((Int)t_2);
        t_1 = (Obj)(((UInt)t_1)+4) ) {
@@ -2705,53 +2705,53 @@ static Obj  HdlrFunc21 (
   
   /* if IS_SUBSET_FLAGS( methods[6 * (i - 1) + 2], flags1 ) and IS_SUBSET_FLAGS( type2![2], methods[6 * (i - 1) + 3] ) and methods[6 * (i - 1) + 1]( flags1, type2![1] ) then */
   t_7 = GF_IS__SUBSET__FLAGS;
-  C_DIFF_INTOBJS( t_11, l_i, INTOBJ_INT(1) );
-  C_PROD_FIA( t_10, INTOBJ_INT(6), t_11 );
-  C_SUM_FIA( t_9, t_10, INTOBJ_INT(2) );
-  CHECK_INT_POS( t_9 );
-  C_ELM_LIST_FPL( t_8, l_methods, t_9 );
+  C_DIFF_INTOBJS( t_11, l_i, INTOBJ_INT(1) )
+  C_PROD_FIA( t_10, INTOBJ_INT(6), t_11 )
+  C_SUM_FIA( t_9, t_10, INTOBJ_INT(2) )
+  CHECK_INT_POS( t_9 )
+  C_ELM_LIST_FPL( t_8, l_methods, t_9 )
   t_6 = CALL_2ARGS( t_7, t_8, a_flags1 );
-  CHECK_FUNC_RESULT( t_6 );
-  CHECK_BOOL( t_6 );
+  CHECK_FUNC_RESULT( t_6 )
+  CHECK_BOOL( t_6 )
   t_5 = (Obj)(UInt)(t_6 != False);
   t_4 = t_5;
   if ( t_4 ) {
    t_8 = GF_IS__SUBSET__FLAGS;
    C_ELM_POSOBJ_NLE( t_9, a_type2, 2 );
-   C_DIFF_INTOBJS( t_13, l_i, INTOBJ_INT(1) );
-   C_PROD_FIA( t_12, INTOBJ_INT(6), t_13 );
-   C_SUM_FIA( t_11, t_12, INTOBJ_INT(3) );
-   CHECK_INT_POS( t_11 );
-   C_ELM_LIST_FPL( t_10, l_methods, t_11 );
+   C_DIFF_INTOBJS( t_13, l_i, INTOBJ_INT(1) )
+   C_PROD_FIA( t_12, INTOBJ_INT(6), t_13 )
+   C_SUM_FIA( t_11, t_12, INTOBJ_INT(3) )
+   CHECK_INT_POS( t_11 )
+   C_ELM_LIST_FPL( t_10, l_methods, t_11 )
    t_7 = CALL_2ARGS( t_8, t_9, t_10 );
-   CHECK_FUNC_RESULT( t_7 );
-   CHECK_BOOL( t_7 );
+   CHECK_FUNC_RESULT( t_7 )
+   CHECK_BOOL( t_7 )
    t_6 = (Obj)(UInt)(t_7 != False);
    t_4 = t_6;
   }
   t_3 = t_4;
   if ( t_3 ) {
-   C_DIFF_INTOBJS( t_10, l_i, INTOBJ_INT(1) );
-   C_PROD_FIA( t_9, INTOBJ_INT(6), t_10 );
-   C_SUM_FIA( t_8, t_9, INTOBJ_INT(1) );
-   CHECK_INT_POS( t_8 );
-   C_ELM_LIST_FPL( t_7, l_methods, t_8 );
-   CHECK_FUNC( t_7 );
+   C_DIFF_INTOBJS( t_10, l_i, INTOBJ_INT(1) )
+   C_PROD_FIA( t_9, INTOBJ_INT(6), t_10 )
+   C_SUM_FIA( t_8, t_9, INTOBJ_INT(1) )
+   CHECK_INT_POS( t_8 )
+   C_ELM_LIST_FPL( t_7, l_methods, t_8 )
+   CHECK_FUNC( t_7 )
    C_ELM_POSOBJ_NLE( t_8, a_type2, 1 );
    t_6 = CALL_2ARGS( t_7, a_flags1, t_8 );
-   CHECK_FUNC_RESULT( t_6 );
-   CHECK_BOOL( t_6 );
+   CHECK_FUNC_RESULT( t_6 )
+   CHECK_BOOL( t_6 )
    t_5 = (Obj)(UInt)(t_6 != False);
    t_3 = t_5;
   }
   if ( t_3 ) {
    
    /* return methods[6 * (i - 1) + 4]; */
-   C_DIFF_INTOBJS( t_6, l_i, INTOBJ_INT(1) );
-   C_PROD_FIA( t_5, INTOBJ_INT(6), t_6 );
-   C_SUM_FIA( t_4, t_5, INTOBJ_INT(4) );
-   CHECK_INT_POS( t_4 );
-   C_ELM_LIST_FPL( t_3, l_methods, t_4 );
+   C_DIFF_INTOBJS( t_6, l_i, INTOBJ_INT(1) )
+   C_PROD_FIA( t_5, INTOBJ_INT(6), t_6 )
+   C_SUM_FIA( t_4, t_5, INTOBJ_INT(4) )
+   CHECK_INT_POS( t_4 )
+   C_ELM_LIST_FPL( t_3, l_methods, t_4 )
    RES_BRK_CURR_STAT();
    SWITCH_TO_OLD_FRAME(oldFrame);
    return t_3;
@@ -2764,7 +2764,7 @@ static Obj  HdlrFunc21 (
  
  /* return fail; */
  t_1 = GC_fail;
- CHECK_BOUND( t_1, "fail" );
+ CHECK_BOUND( t_1, "fail" )
  RES_BRK_CURR_STAT();
  SWITCH_TO_OLD_FRAME(oldFrame);
  return t_1;
@@ -2810,15 +2810,15 @@ static Obj  HdlrFunc22 (
  /* methods := METHODS_OPERATION( operation, 3 ); */
  t_2 = GF_METHODS__OPERATION;
  t_1 = CALL_2ARGS( t_2, a_operation, INTOBJ_INT(3) );
- CHECK_FUNC_RESULT( t_1 );
+ CHECK_FUNC_RESULT( t_1 )
  l_methods = t_1;
  
  /* for i in [ 1 .. LEN_LIST( methods ) / 7 ] do */
  t_4 = GF_LEN__LIST;
  t_3 = CALL_1ARGS( t_4, l_methods );
- CHECK_FUNC_RESULT( t_3 );
+ CHECK_FUNC_RESULT( t_3 )
  t_2 = QUO( t_3, INTOBJ_INT(7) );
- CHECK_INT_SMALL( t_2 );
+ CHECK_INT_SMALL( t_2 )
  for ( t_1 = INTOBJ_INT(1);
        ((Int)t_1) <= ((Int)t_2);
        t_1 = (Obj)(((UInt)t_1)+4) ) {
@@ -2826,27 +2826,27 @@ static Obj  HdlrFunc22 (
   
   /* if IS_SUBSET_FLAGS( methods[7 * (i - 1) + 2], flags1 ) and IS_SUBSET_FLAGS( type2![2], methods[7 * (i - 1) + 3] ) and IS_SUBSET_FLAGS( type3![2], methods[7 * (i - 1) + 4] ) and methods[7 * (i - 1) + 1]( flags1, type2![1], type3![1] ) then */
   t_8 = GF_IS__SUBSET__FLAGS;
-  C_DIFF_INTOBJS( t_12, l_i, INTOBJ_INT(1) );
-  C_PROD_FIA( t_11, INTOBJ_INT(7), t_12 );
-  C_SUM_FIA( t_10, t_11, INTOBJ_INT(2) );
-  CHECK_INT_POS( t_10 );
-  C_ELM_LIST_FPL( t_9, l_methods, t_10 );
+  C_DIFF_INTOBJS( t_12, l_i, INTOBJ_INT(1) )
+  C_PROD_FIA( t_11, INTOBJ_INT(7), t_12 )
+  C_SUM_FIA( t_10, t_11, INTOBJ_INT(2) )
+  CHECK_INT_POS( t_10 )
+  C_ELM_LIST_FPL( t_9, l_methods, t_10 )
   t_7 = CALL_2ARGS( t_8, t_9, a_flags1 );
-  CHECK_FUNC_RESULT( t_7 );
-  CHECK_BOOL( t_7 );
+  CHECK_FUNC_RESULT( t_7 )
+  CHECK_BOOL( t_7 )
   t_6 = (Obj)(UInt)(t_7 != False);
   t_5 = t_6;
   if ( t_5 ) {
    t_9 = GF_IS__SUBSET__FLAGS;
    C_ELM_POSOBJ_NLE( t_10, a_type2, 2 );
-   C_DIFF_INTOBJS( t_14, l_i, INTOBJ_INT(1) );
-   C_PROD_FIA( t_13, INTOBJ_INT(7), t_14 );
-   C_SUM_FIA( t_12, t_13, INTOBJ_INT(3) );
-   CHECK_INT_POS( t_12 );
-   C_ELM_LIST_FPL( t_11, l_methods, t_12 );
+   C_DIFF_INTOBJS( t_14, l_i, INTOBJ_INT(1) )
+   C_PROD_FIA( t_13, INTOBJ_INT(7), t_14 )
+   C_SUM_FIA( t_12, t_13, INTOBJ_INT(3) )
+   CHECK_INT_POS( t_12 )
+   C_ELM_LIST_FPL( t_11, l_methods, t_12 )
    t_8 = CALL_2ARGS( t_9, t_10, t_11 );
-   CHECK_FUNC_RESULT( t_8 );
-   CHECK_BOOL( t_8 );
+   CHECK_FUNC_RESULT( t_8 )
+   CHECK_BOOL( t_8 )
    t_7 = (Obj)(UInt)(t_8 != False);
    t_5 = t_7;
   }
@@ -2854,41 +2854,41 @@ static Obj  HdlrFunc22 (
   if ( t_4 ) {
    t_8 = GF_IS__SUBSET__FLAGS;
    C_ELM_POSOBJ_NLE( t_9, a_type3, 2 );
-   C_DIFF_INTOBJS( t_13, l_i, INTOBJ_INT(1) );
-   C_PROD_FIA( t_12, INTOBJ_INT(7), t_13 );
-   C_SUM_FIA( t_11, t_12, INTOBJ_INT(4) );
-   CHECK_INT_POS( t_11 );
-   C_ELM_LIST_FPL( t_10, l_methods, t_11 );
+   C_DIFF_INTOBJS( t_13, l_i, INTOBJ_INT(1) )
+   C_PROD_FIA( t_12, INTOBJ_INT(7), t_13 )
+   C_SUM_FIA( t_11, t_12, INTOBJ_INT(4) )
+   CHECK_INT_POS( t_11 )
+   C_ELM_LIST_FPL( t_10, l_methods, t_11 )
    t_7 = CALL_2ARGS( t_8, t_9, t_10 );
-   CHECK_FUNC_RESULT( t_7 );
-   CHECK_BOOL( t_7 );
+   CHECK_FUNC_RESULT( t_7 )
+   CHECK_BOOL( t_7 )
    t_6 = (Obj)(UInt)(t_7 != False);
    t_4 = t_6;
   }
   t_3 = t_4;
   if ( t_3 ) {
-   C_DIFF_INTOBJS( t_10, l_i, INTOBJ_INT(1) );
-   C_PROD_FIA( t_9, INTOBJ_INT(7), t_10 );
-   C_SUM_FIA( t_8, t_9, INTOBJ_INT(1) );
-   CHECK_INT_POS( t_8 );
-   C_ELM_LIST_FPL( t_7, l_methods, t_8 );
-   CHECK_FUNC( t_7 );
+   C_DIFF_INTOBJS( t_10, l_i, INTOBJ_INT(1) )
+   C_PROD_FIA( t_9, INTOBJ_INT(7), t_10 )
+   C_SUM_FIA( t_8, t_9, INTOBJ_INT(1) )
+   CHECK_INT_POS( t_8 )
+   C_ELM_LIST_FPL( t_7, l_methods, t_8 )
+   CHECK_FUNC( t_7 )
    C_ELM_POSOBJ_NLE( t_8, a_type2, 1 );
    C_ELM_POSOBJ_NLE( t_9, a_type3, 1 );
    t_6 = CALL_3ARGS( t_7, a_flags1, t_8, t_9 );
-   CHECK_FUNC_RESULT( t_6 );
-   CHECK_BOOL( t_6 );
+   CHECK_FUNC_RESULT( t_6 )
+   CHECK_BOOL( t_6 )
    t_5 = (Obj)(UInt)(t_6 != False);
    t_3 = t_5;
   }
   if ( t_3 ) {
    
    /* return methods[7 * (i - 1) + 5]; */
-   C_DIFF_INTOBJS( t_6, l_i, INTOBJ_INT(1) );
-   C_PROD_FIA( t_5, INTOBJ_INT(7), t_6 );
-   C_SUM_FIA( t_4, t_5, INTOBJ_INT(5) );
-   CHECK_INT_POS( t_4 );
-   C_ELM_LIST_FPL( t_3, l_methods, t_4 );
+   C_DIFF_INTOBJS( t_6, l_i, INTOBJ_INT(1) )
+   C_PROD_FIA( t_5, INTOBJ_INT(7), t_6 )
+   C_SUM_FIA( t_4, t_5, INTOBJ_INT(5) )
+   CHECK_INT_POS( t_4 )
+   C_ELM_LIST_FPL( t_3, l_methods, t_4 )
    RES_BRK_CURR_STAT();
    SWITCH_TO_OLD_FRAME(oldFrame);
    return t_3;
@@ -2901,7 +2901,7 @@ static Obj  HdlrFunc22 (
  
  /* return fail; */
  t_1 = GC_fail;
- CHECK_BOUND( t_1, "fail" );
+ CHECK_BOUND( t_1, "fail" )
  RES_BRK_CURR_STAT();
  SWITCH_TO_OLD_FRAME(oldFrame);
  return t_1;
@@ -2949,15 +2949,15 @@ static Obj  HdlrFunc23 (
  /* methods := METHODS_OPERATION( operation, 4 ); */
  t_2 = GF_METHODS__OPERATION;
  t_1 = CALL_2ARGS( t_2, a_operation, INTOBJ_INT(4) );
- CHECK_FUNC_RESULT( t_1 );
+ CHECK_FUNC_RESULT( t_1 )
  l_methods = t_1;
  
  /* for i in [ 1 .. LEN_LIST( methods ) / 8 ] do */
  t_4 = GF_LEN__LIST;
  t_3 = CALL_1ARGS( t_4, l_methods );
- CHECK_FUNC_RESULT( t_3 );
+ CHECK_FUNC_RESULT( t_3 )
  t_2 = QUO( t_3, INTOBJ_INT(8) );
- CHECK_INT_SMALL( t_2 );
+ CHECK_INT_SMALL( t_2 )
  for ( t_1 = INTOBJ_INT(1);
        ((Int)t_1) <= ((Int)t_2);
        t_1 = (Obj)(((UInt)t_1)+4) ) {
@@ -2966,27 +2966,27 @@ static Obj  HdlrFunc23 (
   /* if IS_SUBSET_FLAGS( methods[8 * (i - 1) + 2], flags1 ) and IS_SUBSET_FLAGS( type2![2], methods[8 * (i - 1) + 3] ) and IS_SUBSET_FLAGS( type3![2], methods[8 * (i - 1) + 4] ) and IS_SUBSET_FLAGS( type4![2], methods[8 * (i - 1) + 5] ) 
 and methods[8 * (i - 1) + 1]( flags1, type2![1], type3![1], type4![1] ) then */
   t_9 = GF_IS__SUBSET__FLAGS;
-  C_DIFF_INTOBJS( t_13, l_i, INTOBJ_INT(1) );
-  C_PROD_FIA( t_12, INTOBJ_INT(8), t_13 );
-  C_SUM_FIA( t_11, t_12, INTOBJ_INT(2) );
-  CHECK_INT_POS( t_11 );
-  C_ELM_LIST_FPL( t_10, l_methods, t_11 );
+  C_DIFF_INTOBJS( t_13, l_i, INTOBJ_INT(1) )
+  C_PROD_FIA( t_12, INTOBJ_INT(8), t_13 )
+  C_SUM_FIA( t_11, t_12, INTOBJ_INT(2) )
+  CHECK_INT_POS( t_11 )
+  C_ELM_LIST_FPL( t_10, l_methods, t_11 )
   t_8 = CALL_2ARGS( t_9, t_10, a_flags1 );
-  CHECK_FUNC_RESULT( t_8 );
-  CHECK_BOOL( t_8 );
+  CHECK_FUNC_RESULT( t_8 )
+  CHECK_BOOL( t_8 )
   t_7 = (Obj)(UInt)(t_8 != False);
   t_6 = t_7;
   if ( t_6 ) {
    t_10 = GF_IS__SUBSET__FLAGS;
    C_ELM_POSOBJ_NLE( t_11, a_type2, 2 );
-   C_DIFF_INTOBJS( t_15, l_i, INTOBJ_INT(1) );
-   C_PROD_FIA( t_14, INTOBJ_INT(8), t_15 );
-   C_SUM_FIA( t_13, t_14, INTOBJ_INT(3) );
-   CHECK_INT_POS( t_13 );
-   C_ELM_LIST_FPL( t_12, l_methods, t_13 );
+   C_DIFF_INTOBJS( t_15, l_i, INTOBJ_INT(1) )
+   C_PROD_FIA( t_14, INTOBJ_INT(8), t_15 )
+   C_SUM_FIA( t_13, t_14, INTOBJ_INT(3) )
+   CHECK_INT_POS( t_13 )
+   C_ELM_LIST_FPL( t_12, l_methods, t_13 )
    t_9 = CALL_2ARGS( t_10, t_11, t_12 );
-   CHECK_FUNC_RESULT( t_9 );
-   CHECK_BOOL( t_9 );
+   CHECK_FUNC_RESULT( t_9 )
+   CHECK_BOOL( t_9 )
    t_8 = (Obj)(UInt)(t_9 != False);
    t_6 = t_8;
   }
@@ -2994,14 +2994,14 @@ and methods[8 * (i - 1) + 1]( flags1, type2![1], type3![1], type4![1] ) then */
   if ( t_5 ) {
    t_9 = GF_IS__SUBSET__FLAGS;
    C_ELM_POSOBJ_NLE( t_10, a_type3, 2 );
-   C_DIFF_INTOBJS( t_14, l_i, INTOBJ_INT(1) );
-   C_PROD_FIA( t_13, INTOBJ_INT(8), t_14 );
-   C_SUM_FIA( t_12, t_13, INTOBJ_INT(4) );
-   CHECK_INT_POS( t_12 );
-   C_ELM_LIST_FPL( t_11, l_methods, t_12 );
+   C_DIFF_INTOBJS( t_14, l_i, INTOBJ_INT(1) )
+   C_PROD_FIA( t_13, INTOBJ_INT(8), t_14 )
+   C_SUM_FIA( t_12, t_13, INTOBJ_INT(4) )
+   CHECK_INT_POS( t_12 )
+   C_ELM_LIST_FPL( t_11, l_methods, t_12 )
    t_8 = CALL_2ARGS( t_9, t_10, t_11 );
-   CHECK_FUNC_RESULT( t_8 );
-   CHECK_BOOL( t_8 );
+   CHECK_FUNC_RESULT( t_8 )
+   CHECK_BOOL( t_8 )
    t_7 = (Obj)(UInt)(t_8 != False);
    t_5 = t_7;
   }
@@ -3009,42 +3009,42 @@ and methods[8 * (i - 1) + 1]( flags1, type2![1], type3![1], type4![1] ) then */
   if ( t_4 ) {
    t_8 = GF_IS__SUBSET__FLAGS;
    C_ELM_POSOBJ_NLE( t_9, a_type4, 2 );
-   C_DIFF_INTOBJS( t_13, l_i, INTOBJ_INT(1) );
-   C_PROD_FIA( t_12, INTOBJ_INT(8), t_13 );
-   C_SUM_FIA( t_11, t_12, INTOBJ_INT(5) );
-   CHECK_INT_POS( t_11 );
-   C_ELM_LIST_FPL( t_10, l_methods, t_11 );
+   C_DIFF_INTOBJS( t_13, l_i, INTOBJ_INT(1) )
+   C_PROD_FIA( t_12, INTOBJ_INT(8), t_13 )
+   C_SUM_FIA( t_11, t_12, INTOBJ_INT(5) )
+   CHECK_INT_POS( t_11 )
+   C_ELM_LIST_FPL( t_10, l_methods, t_11 )
    t_7 = CALL_2ARGS( t_8, t_9, t_10 );
-   CHECK_FUNC_RESULT( t_7 );
-   CHECK_BOOL( t_7 );
+   CHECK_FUNC_RESULT( t_7 )
+   CHECK_BOOL( t_7 )
    t_6 = (Obj)(UInt)(t_7 != False);
    t_4 = t_6;
   }
   t_3 = t_4;
   if ( t_3 ) {
-   C_DIFF_INTOBJS( t_10, l_i, INTOBJ_INT(1) );
-   C_PROD_FIA( t_9, INTOBJ_INT(8), t_10 );
-   C_SUM_FIA( t_8, t_9, INTOBJ_INT(1) );
-   CHECK_INT_POS( t_8 );
-   C_ELM_LIST_FPL( t_7, l_methods, t_8 );
-   CHECK_FUNC( t_7 );
+   C_DIFF_INTOBJS( t_10, l_i, INTOBJ_INT(1) )
+   C_PROD_FIA( t_9, INTOBJ_INT(8), t_10 )
+   C_SUM_FIA( t_8, t_9, INTOBJ_INT(1) )
+   CHECK_INT_POS( t_8 )
+   C_ELM_LIST_FPL( t_7, l_methods, t_8 )
+   CHECK_FUNC( t_7 )
    C_ELM_POSOBJ_NLE( t_8, a_type2, 1 );
    C_ELM_POSOBJ_NLE( t_9, a_type3, 1 );
    C_ELM_POSOBJ_NLE( t_10, a_type4, 1 );
    t_6 = CALL_4ARGS( t_7, a_flags1, t_8, t_9, t_10 );
-   CHECK_FUNC_RESULT( t_6 );
-   CHECK_BOOL( t_6 );
+   CHECK_FUNC_RESULT( t_6 )
+   CHECK_BOOL( t_6 )
    t_5 = (Obj)(UInt)(t_6 != False);
    t_3 = t_5;
   }
   if ( t_3 ) {
    
    /* return methods[8 * (i - 1) + 6]; */
-   C_DIFF_INTOBJS( t_6, l_i, INTOBJ_INT(1) );
-   C_PROD_FIA( t_5, INTOBJ_INT(8), t_6 );
-   C_SUM_FIA( t_4, t_5, INTOBJ_INT(6) );
-   CHECK_INT_POS( t_4 );
-   C_ELM_LIST_FPL( t_3, l_methods, t_4 );
+   C_DIFF_INTOBJS( t_6, l_i, INTOBJ_INT(1) )
+   C_PROD_FIA( t_5, INTOBJ_INT(8), t_6 )
+   C_SUM_FIA( t_4, t_5, INTOBJ_INT(6) )
+   CHECK_INT_POS( t_4 )
+   C_ELM_LIST_FPL( t_3, l_methods, t_4 )
    RES_BRK_CURR_STAT();
    SWITCH_TO_OLD_FRAME(oldFrame);
    return t_3;
@@ -3057,7 +3057,7 @@ and methods[8 * (i - 1) + 1]( flags1, type2![1], type3![1], type4![1] ) then */
  
  /* return fail; */
  t_1 = GC_fail;
- CHECK_BOUND( t_1, "fail" );
+ CHECK_BOUND( t_1, "fail" )
  RES_BRK_CURR_STAT();
  SWITCH_TO_OLD_FRAME(oldFrame);
  return t_1;
@@ -3107,15 +3107,15 @@ static Obj  HdlrFunc24 (
  /* methods := METHODS_OPERATION( operation, 5 ); */
  t_2 = GF_METHODS__OPERATION;
  t_1 = CALL_2ARGS( t_2, a_operation, INTOBJ_INT(5) );
- CHECK_FUNC_RESULT( t_1 );
+ CHECK_FUNC_RESULT( t_1 )
  l_methods = t_1;
  
  /* for i in [ 1 .. LEN_LIST( methods ) / 9 ] do */
  t_4 = GF_LEN__LIST;
  t_3 = CALL_1ARGS( t_4, l_methods );
- CHECK_FUNC_RESULT( t_3 );
+ CHECK_FUNC_RESULT( t_3 )
  t_2 = QUO( t_3, INTOBJ_INT(9) );
- CHECK_INT_SMALL( t_2 );
+ CHECK_INT_SMALL( t_2 )
  for ( t_1 = INTOBJ_INT(1);
        ((Int)t_1) <= ((Int)t_2);
        t_1 = (Obj)(((UInt)t_1)+4) ) {
@@ -3124,27 +3124,27 @@ static Obj  HdlrFunc24 (
   /* if IS_SUBSET_FLAGS( methods[9 * (i - 1) + 2], flags1 ) and IS_SUBSET_FLAGS( type2![2], methods[9 * (i - 1) + 3] ) and IS_SUBSET_FLAGS( type3![2], methods[9 * (i - 1) + 4] ) and IS_SUBSET_FLAGS( type4![2], methods[9 * (i - 1) + 5] ) 
   and IS_SUBSET_FLAGS( type5![2], methods[9 * (i - 1) + 6] ) and methods[9 * (i - 1) + 1]( flags1, type2![1], type3![1], type4![1], type5![1] ) then */
   t_10 = GF_IS__SUBSET__FLAGS;
-  C_DIFF_INTOBJS( t_14, l_i, INTOBJ_INT(1) );
-  C_PROD_FIA( t_13, INTOBJ_INT(9), t_14 );
-  C_SUM_FIA( t_12, t_13, INTOBJ_INT(2) );
-  CHECK_INT_POS( t_12 );
-  C_ELM_LIST_FPL( t_11, l_methods, t_12 );
+  C_DIFF_INTOBJS( t_14, l_i, INTOBJ_INT(1) )
+  C_PROD_FIA( t_13, INTOBJ_INT(9), t_14 )
+  C_SUM_FIA( t_12, t_13, INTOBJ_INT(2) )
+  CHECK_INT_POS( t_12 )
+  C_ELM_LIST_FPL( t_11, l_methods, t_12 )
   t_9 = CALL_2ARGS( t_10, t_11, a_flags1 );
-  CHECK_FUNC_RESULT( t_9 );
-  CHECK_BOOL( t_9 );
+  CHECK_FUNC_RESULT( t_9 )
+  CHECK_BOOL( t_9 )
   t_8 = (Obj)(UInt)(t_9 != False);
   t_7 = t_8;
   if ( t_7 ) {
    t_11 = GF_IS__SUBSET__FLAGS;
    C_ELM_POSOBJ_NLE( t_12, a_type2, 2 );
-   C_DIFF_INTOBJS( t_16, l_i, INTOBJ_INT(1) );
-   C_PROD_FIA( t_15, INTOBJ_INT(9), t_16 );
-   C_SUM_FIA( t_14, t_15, INTOBJ_INT(3) );
-   CHECK_INT_POS( t_14 );
-   C_ELM_LIST_FPL( t_13, l_methods, t_14 );
+   C_DIFF_INTOBJS( t_16, l_i, INTOBJ_INT(1) )
+   C_PROD_FIA( t_15, INTOBJ_INT(9), t_16 )
+   C_SUM_FIA( t_14, t_15, INTOBJ_INT(3) )
+   CHECK_INT_POS( t_14 )
+   C_ELM_LIST_FPL( t_13, l_methods, t_14 )
    t_10 = CALL_2ARGS( t_11, t_12, t_13 );
-   CHECK_FUNC_RESULT( t_10 );
-   CHECK_BOOL( t_10 );
+   CHECK_FUNC_RESULT( t_10 )
+   CHECK_BOOL( t_10 )
    t_9 = (Obj)(UInt)(t_10 != False);
    t_7 = t_9;
   }
@@ -3152,14 +3152,14 @@ static Obj  HdlrFunc24 (
   if ( t_6 ) {
    t_10 = GF_IS__SUBSET__FLAGS;
    C_ELM_POSOBJ_NLE( t_11, a_type3, 2 );
-   C_DIFF_INTOBJS( t_15, l_i, INTOBJ_INT(1) );
-   C_PROD_FIA( t_14, INTOBJ_INT(9), t_15 );
-   C_SUM_FIA( t_13, t_14, INTOBJ_INT(4) );
-   CHECK_INT_POS( t_13 );
-   C_ELM_LIST_FPL( t_12, l_methods, t_13 );
+   C_DIFF_INTOBJS( t_15, l_i, INTOBJ_INT(1) )
+   C_PROD_FIA( t_14, INTOBJ_INT(9), t_15 )
+   C_SUM_FIA( t_13, t_14, INTOBJ_INT(4) )
+   CHECK_INT_POS( t_13 )
+   C_ELM_LIST_FPL( t_12, l_methods, t_13 )
    t_9 = CALL_2ARGS( t_10, t_11, t_12 );
-   CHECK_FUNC_RESULT( t_9 );
-   CHECK_BOOL( t_9 );
+   CHECK_FUNC_RESULT( t_9 )
+   CHECK_BOOL( t_9 )
    t_8 = (Obj)(UInt)(t_9 != False);
    t_6 = t_8;
   }
@@ -3167,14 +3167,14 @@ static Obj  HdlrFunc24 (
   if ( t_5 ) {
    t_9 = GF_IS__SUBSET__FLAGS;
    C_ELM_POSOBJ_NLE( t_10, a_type4, 2 );
-   C_DIFF_INTOBJS( t_14, l_i, INTOBJ_INT(1) );
-   C_PROD_FIA( t_13, INTOBJ_INT(9), t_14 );
-   C_SUM_FIA( t_12, t_13, INTOBJ_INT(5) );
-   CHECK_INT_POS( t_12 );
-   C_ELM_LIST_FPL( t_11, l_methods, t_12 );
+   C_DIFF_INTOBJS( t_14, l_i, INTOBJ_INT(1) )
+   C_PROD_FIA( t_13, INTOBJ_INT(9), t_14 )
+   C_SUM_FIA( t_12, t_13, INTOBJ_INT(5) )
+   CHECK_INT_POS( t_12 )
+   C_ELM_LIST_FPL( t_11, l_methods, t_12 )
    t_8 = CALL_2ARGS( t_9, t_10, t_11 );
-   CHECK_FUNC_RESULT( t_8 );
-   CHECK_BOOL( t_8 );
+   CHECK_FUNC_RESULT( t_8 )
+   CHECK_BOOL( t_8 )
    t_7 = (Obj)(UInt)(t_8 != False);
    t_5 = t_7;
   }
@@ -3182,43 +3182,43 @@ static Obj  HdlrFunc24 (
   if ( t_4 ) {
    t_8 = GF_IS__SUBSET__FLAGS;
    C_ELM_POSOBJ_NLE( t_9, a_type5, 2 );
-   C_DIFF_INTOBJS( t_13, l_i, INTOBJ_INT(1) );
-   C_PROD_FIA( t_12, INTOBJ_INT(9), t_13 );
-   C_SUM_FIA( t_11, t_12, INTOBJ_INT(6) );
-   CHECK_INT_POS( t_11 );
-   C_ELM_LIST_FPL( t_10, l_methods, t_11 );
+   C_DIFF_INTOBJS( t_13, l_i, INTOBJ_INT(1) )
+   C_PROD_FIA( t_12, INTOBJ_INT(9), t_13 )
+   C_SUM_FIA( t_11, t_12, INTOBJ_INT(6) )
+   CHECK_INT_POS( t_11 )
+   C_ELM_LIST_FPL( t_10, l_methods, t_11 )
    t_7 = CALL_2ARGS( t_8, t_9, t_10 );
-   CHECK_FUNC_RESULT( t_7 );
-   CHECK_BOOL( t_7 );
+   CHECK_FUNC_RESULT( t_7 )
+   CHECK_BOOL( t_7 )
    t_6 = (Obj)(UInt)(t_7 != False);
    t_4 = t_6;
   }
   t_3 = t_4;
   if ( t_3 ) {
-   C_DIFF_INTOBJS( t_10, l_i, INTOBJ_INT(1) );
-   C_PROD_FIA( t_9, INTOBJ_INT(9), t_10 );
-   C_SUM_FIA( t_8, t_9, INTOBJ_INT(1) );
-   CHECK_INT_POS( t_8 );
-   C_ELM_LIST_FPL( t_7, l_methods, t_8 );
-   CHECK_FUNC( t_7 );
+   C_DIFF_INTOBJS( t_10, l_i, INTOBJ_INT(1) )
+   C_PROD_FIA( t_9, INTOBJ_INT(9), t_10 )
+   C_SUM_FIA( t_8, t_9, INTOBJ_INT(1) )
+   CHECK_INT_POS( t_8 )
+   C_ELM_LIST_FPL( t_7, l_methods, t_8 )
+   CHECK_FUNC( t_7 )
    C_ELM_POSOBJ_NLE( t_8, a_type2, 1 );
    C_ELM_POSOBJ_NLE( t_9, a_type3, 1 );
    C_ELM_POSOBJ_NLE( t_10, a_type4, 1 );
    C_ELM_POSOBJ_NLE( t_11, a_type5, 1 );
    t_6 = CALL_5ARGS( t_7, a_flags1, t_8, t_9, t_10, t_11 );
-   CHECK_FUNC_RESULT( t_6 );
-   CHECK_BOOL( t_6 );
+   CHECK_FUNC_RESULT( t_6 )
+   CHECK_BOOL( t_6 )
    t_5 = (Obj)(UInt)(t_6 != False);
    t_3 = t_5;
   }
   if ( t_3 ) {
    
    /* return methods[9 * (i - 1) + 7]; */
-   C_DIFF_INTOBJS( t_6, l_i, INTOBJ_INT(1) );
-   C_PROD_FIA( t_5, INTOBJ_INT(9), t_6 );
-   C_SUM_FIA( t_4, t_5, INTOBJ_INT(7) );
-   CHECK_INT_POS( t_4 );
-   C_ELM_LIST_FPL( t_3, l_methods, t_4 );
+   C_DIFF_INTOBJS( t_6, l_i, INTOBJ_INT(1) )
+   C_PROD_FIA( t_5, INTOBJ_INT(9), t_6 )
+   C_SUM_FIA( t_4, t_5, INTOBJ_INT(7) )
+   CHECK_INT_POS( t_4 )
+   C_ELM_LIST_FPL( t_3, l_methods, t_4 )
    RES_BRK_CURR_STAT();
    SWITCH_TO_OLD_FRAME(oldFrame);
    return t_3;
@@ -3231,7 +3231,7 @@ static Obj  HdlrFunc24 (
  
  /* return fail; */
  t_1 = GC_fail;
- CHECK_BOUND( t_1, "fail" );
+ CHECK_BOUND( t_1, "fail" )
  RES_BRK_CURR_STAT();
  SWITCH_TO_OLD_FRAME(oldFrame);
  return t_1;
@@ -3275,7 +3275,7 @@ static Obj  HdlrFunc25 (
  Obj t_17 = 0;
  Bag oldFrame;
  OLD_BRK_CURR_STAT
- CHECK_NR_ARGS( 7, args );
+ CHECK_NR_ARGS( 7, args )
  a_operation = ELM_PLIST( args, 1 );
  a_flags1 = ELM_PLIST( args, 2 );
  a_type2 = ELM_PLIST( args, 3 );
@@ -3292,15 +3292,15 @@ static Obj  HdlrFunc25 (
  /* methods := METHODS_OPERATION( operation, 6 ); */
  t_2 = GF_METHODS__OPERATION;
  t_1 = CALL_2ARGS( t_2, a_operation, INTOBJ_INT(6) );
- CHECK_FUNC_RESULT( t_1 );
+ CHECK_FUNC_RESULT( t_1 )
  l_methods = t_1;
  
  /* for i in [ 1 .. LEN_LIST( methods ) / 10 ] do */
  t_4 = GF_LEN__LIST;
  t_3 = CALL_1ARGS( t_4, l_methods );
- CHECK_FUNC_RESULT( t_3 );
+ CHECK_FUNC_RESULT( t_3 )
  t_2 = QUO( t_3, INTOBJ_INT(10) );
- CHECK_INT_SMALL( t_2 );
+ CHECK_INT_SMALL( t_2 )
  for ( t_1 = INTOBJ_INT(1);
        ((Int)t_1) <= ((Int)t_2);
        t_1 = (Obj)(((UInt)t_1)+4) ) {
@@ -3309,27 +3309,27 @@ static Obj  HdlrFunc25 (
   /* if IS_SUBSET_FLAGS( methods[10 * (i - 1) + 2], flags1 ) and IS_SUBSET_FLAGS( type2![2], methods[10 * (i - 1) + 3] ) and IS_SUBSET_FLAGS( type3![2], methods[10 * (i - 1) + 4] ) and IS_SUBSET_FLAGS( type4![2], methods[10 * (i - 1) + 5] ) 
     and IS_SUBSET_FLAGS( type5![2], methods[10 * (i - 1) + 6] ) and IS_SUBSET_FLAGS( type6![2], methods[10 * (i - 1) + 7] ) and methods[10 * (i - 1) + 1]( flags1, type2![1], type3![1], type4![1], type5![1], type6![1] ) then */
   t_11 = GF_IS__SUBSET__FLAGS;
-  C_DIFF_INTOBJS( t_15, l_i, INTOBJ_INT(1) );
-  C_PROD_FIA( t_14, INTOBJ_INT(10), t_15 );
-  C_SUM_FIA( t_13, t_14, INTOBJ_INT(2) );
-  CHECK_INT_POS( t_13 );
-  C_ELM_LIST_FPL( t_12, l_methods, t_13 );
+  C_DIFF_INTOBJS( t_15, l_i, INTOBJ_INT(1) )
+  C_PROD_FIA( t_14, INTOBJ_INT(10), t_15 )
+  C_SUM_FIA( t_13, t_14, INTOBJ_INT(2) )
+  CHECK_INT_POS( t_13 )
+  C_ELM_LIST_FPL( t_12, l_methods, t_13 )
   t_10 = CALL_2ARGS( t_11, t_12, a_flags1 );
-  CHECK_FUNC_RESULT( t_10 );
-  CHECK_BOOL( t_10 );
+  CHECK_FUNC_RESULT( t_10 )
+  CHECK_BOOL( t_10 )
   t_9 = (Obj)(UInt)(t_10 != False);
   t_8 = t_9;
   if ( t_8 ) {
    t_12 = GF_IS__SUBSET__FLAGS;
    C_ELM_POSOBJ_NLE( t_13, a_type2, 2 );
-   C_DIFF_INTOBJS( t_17, l_i, INTOBJ_INT(1) );
-   C_PROD_FIA( t_16, INTOBJ_INT(10), t_17 );
-   C_SUM_FIA( t_15, t_16, INTOBJ_INT(3) );
-   CHECK_INT_POS( t_15 );
-   C_ELM_LIST_FPL( t_14, l_methods, t_15 );
+   C_DIFF_INTOBJS( t_17, l_i, INTOBJ_INT(1) )
+   C_PROD_FIA( t_16, INTOBJ_INT(10), t_17 )
+   C_SUM_FIA( t_15, t_16, INTOBJ_INT(3) )
+   CHECK_INT_POS( t_15 )
+   C_ELM_LIST_FPL( t_14, l_methods, t_15 )
    t_11 = CALL_2ARGS( t_12, t_13, t_14 );
-   CHECK_FUNC_RESULT( t_11 );
-   CHECK_BOOL( t_11 );
+   CHECK_FUNC_RESULT( t_11 )
+   CHECK_BOOL( t_11 )
    t_10 = (Obj)(UInt)(t_11 != False);
    t_8 = t_10;
   }
@@ -3337,14 +3337,14 @@ static Obj  HdlrFunc25 (
   if ( t_7 ) {
    t_11 = GF_IS__SUBSET__FLAGS;
    C_ELM_POSOBJ_NLE( t_12, a_type3, 2 );
-   C_DIFF_INTOBJS( t_16, l_i, INTOBJ_INT(1) );
-   C_PROD_FIA( t_15, INTOBJ_INT(10), t_16 );
-   C_SUM_FIA( t_14, t_15, INTOBJ_INT(4) );
-   CHECK_INT_POS( t_14 );
-   C_ELM_LIST_FPL( t_13, l_methods, t_14 );
+   C_DIFF_INTOBJS( t_16, l_i, INTOBJ_INT(1) )
+   C_PROD_FIA( t_15, INTOBJ_INT(10), t_16 )
+   C_SUM_FIA( t_14, t_15, INTOBJ_INT(4) )
+   CHECK_INT_POS( t_14 )
+   C_ELM_LIST_FPL( t_13, l_methods, t_14 )
    t_10 = CALL_2ARGS( t_11, t_12, t_13 );
-   CHECK_FUNC_RESULT( t_10 );
-   CHECK_BOOL( t_10 );
+   CHECK_FUNC_RESULT( t_10 )
+   CHECK_BOOL( t_10 )
    t_9 = (Obj)(UInt)(t_10 != False);
    t_7 = t_9;
   }
@@ -3352,14 +3352,14 @@ static Obj  HdlrFunc25 (
   if ( t_6 ) {
    t_10 = GF_IS__SUBSET__FLAGS;
    C_ELM_POSOBJ_NLE( t_11, a_type4, 2 );
-   C_DIFF_INTOBJS( t_15, l_i, INTOBJ_INT(1) );
-   C_PROD_FIA( t_14, INTOBJ_INT(10), t_15 );
-   C_SUM_FIA( t_13, t_14, INTOBJ_INT(5) );
-   CHECK_INT_POS( t_13 );
-   C_ELM_LIST_FPL( t_12, l_methods, t_13 );
+   C_DIFF_INTOBJS( t_15, l_i, INTOBJ_INT(1) )
+   C_PROD_FIA( t_14, INTOBJ_INT(10), t_15 )
+   C_SUM_FIA( t_13, t_14, INTOBJ_INT(5) )
+   CHECK_INT_POS( t_13 )
+   C_ELM_LIST_FPL( t_12, l_methods, t_13 )
    t_9 = CALL_2ARGS( t_10, t_11, t_12 );
-   CHECK_FUNC_RESULT( t_9 );
-   CHECK_BOOL( t_9 );
+   CHECK_FUNC_RESULT( t_9 )
+   CHECK_BOOL( t_9 )
    t_8 = (Obj)(UInt)(t_9 != False);
    t_6 = t_8;
   }
@@ -3367,14 +3367,14 @@ static Obj  HdlrFunc25 (
   if ( t_5 ) {
    t_9 = GF_IS__SUBSET__FLAGS;
    C_ELM_POSOBJ_NLE( t_10, a_type5, 2 );
-   C_DIFF_INTOBJS( t_14, l_i, INTOBJ_INT(1) );
-   C_PROD_FIA( t_13, INTOBJ_INT(10), t_14 );
-   C_SUM_FIA( t_12, t_13, INTOBJ_INT(6) );
-   CHECK_INT_POS( t_12 );
-   C_ELM_LIST_FPL( t_11, l_methods, t_12 );
+   C_DIFF_INTOBJS( t_14, l_i, INTOBJ_INT(1) )
+   C_PROD_FIA( t_13, INTOBJ_INT(10), t_14 )
+   C_SUM_FIA( t_12, t_13, INTOBJ_INT(6) )
+   CHECK_INT_POS( t_12 )
+   C_ELM_LIST_FPL( t_11, l_methods, t_12 )
    t_8 = CALL_2ARGS( t_9, t_10, t_11 );
-   CHECK_FUNC_RESULT( t_8 );
-   CHECK_BOOL( t_8 );
+   CHECK_FUNC_RESULT( t_8 )
+   CHECK_BOOL( t_8 )
    t_7 = (Obj)(UInt)(t_8 != False);
    t_5 = t_7;
   }
@@ -3382,44 +3382,44 @@ static Obj  HdlrFunc25 (
   if ( t_4 ) {
    t_8 = GF_IS__SUBSET__FLAGS;
    C_ELM_POSOBJ_NLE( t_9, a_type6, 2 );
-   C_DIFF_INTOBJS( t_13, l_i, INTOBJ_INT(1) );
-   C_PROD_FIA( t_12, INTOBJ_INT(10), t_13 );
-   C_SUM_FIA( t_11, t_12, INTOBJ_INT(7) );
-   CHECK_INT_POS( t_11 );
-   C_ELM_LIST_FPL( t_10, l_methods, t_11 );
+   C_DIFF_INTOBJS( t_13, l_i, INTOBJ_INT(1) )
+   C_PROD_FIA( t_12, INTOBJ_INT(10), t_13 )
+   C_SUM_FIA( t_11, t_12, INTOBJ_INT(7) )
+   CHECK_INT_POS( t_11 )
+   C_ELM_LIST_FPL( t_10, l_methods, t_11 )
    t_7 = CALL_2ARGS( t_8, t_9, t_10 );
-   CHECK_FUNC_RESULT( t_7 );
-   CHECK_BOOL( t_7 );
+   CHECK_FUNC_RESULT( t_7 )
+   CHECK_BOOL( t_7 )
    t_6 = (Obj)(UInt)(t_7 != False);
    t_4 = t_6;
   }
   t_3 = t_4;
   if ( t_3 ) {
-   C_DIFF_INTOBJS( t_10, l_i, INTOBJ_INT(1) );
-   C_PROD_FIA( t_9, INTOBJ_INT(10), t_10 );
-   C_SUM_FIA( t_8, t_9, INTOBJ_INT(1) );
-   CHECK_INT_POS( t_8 );
-   C_ELM_LIST_FPL( t_7, l_methods, t_8 );
-   CHECK_FUNC( t_7 );
+   C_DIFF_INTOBJS( t_10, l_i, INTOBJ_INT(1) )
+   C_PROD_FIA( t_9, INTOBJ_INT(10), t_10 )
+   C_SUM_FIA( t_8, t_9, INTOBJ_INT(1) )
+   CHECK_INT_POS( t_8 )
+   C_ELM_LIST_FPL( t_7, l_methods, t_8 )
+   CHECK_FUNC( t_7 )
    C_ELM_POSOBJ_NLE( t_8, a_type2, 1 );
    C_ELM_POSOBJ_NLE( t_9, a_type3, 1 );
    C_ELM_POSOBJ_NLE( t_10, a_type4, 1 );
    C_ELM_POSOBJ_NLE( t_11, a_type5, 1 );
    C_ELM_POSOBJ_NLE( t_12, a_type6, 1 );
    t_6 = CALL_6ARGS( t_7, a_flags1, t_8, t_9, t_10, t_11, t_12 );
-   CHECK_FUNC_RESULT( t_6 );
-   CHECK_BOOL( t_6 );
+   CHECK_FUNC_RESULT( t_6 )
+   CHECK_BOOL( t_6 )
    t_5 = (Obj)(UInt)(t_6 != False);
    t_3 = t_5;
   }
   if ( t_3 ) {
    
    /* return methods[10 * (i - 1) + 8]; */
-   C_DIFF_INTOBJS( t_6, l_i, INTOBJ_INT(1) );
-   C_PROD_FIA( t_5, INTOBJ_INT(10), t_6 );
-   C_SUM_FIA( t_4, t_5, INTOBJ_INT(8) );
-   CHECK_INT_POS( t_4 );
-   C_ELM_LIST_FPL( t_3, l_methods, t_4 );
+   C_DIFF_INTOBJS( t_6, l_i, INTOBJ_INT(1) )
+   C_PROD_FIA( t_5, INTOBJ_INT(10), t_6 )
+   C_SUM_FIA( t_4, t_5, INTOBJ_INT(8) )
+   CHECK_INT_POS( t_4 )
+   C_ELM_LIST_FPL( t_3, l_methods, t_4 )
    RES_BRK_CURR_STAT();
    SWITCH_TO_OLD_FRAME(oldFrame);
    return t_3;
@@ -3432,7 +3432,7 @@ static Obj  HdlrFunc25 (
  
  /* return fail; */
  t_1 = GC_fail;
- CHECK_BOUND( t_1, "fail" );
+ CHECK_BOUND( t_1, "fail" )
  RES_BRK_CURR_STAT();
  SWITCH_TO_OLD_FRAME(oldFrame);
  return t_1;
@@ -3502,7 +3502,7 @@ static Obj  HdlrFunc27 (
  /* methods := METHODS_OPERATION( operation, 0 ); */
  t_2 = GF_METHODS__OPERATION;
  t_1 = CALL_2ARGS( t_2, a_operation, INTOBJ_INT(0) );
- CHECK_FUNC_RESULT( t_1 );
+ CHECK_FUNC_RESULT( t_1 )
  l_methods = t_1;
  
  /* j := 0; */
@@ -3511,24 +3511,24 @@ static Obj  HdlrFunc27 (
  /* for i in [ 1 .. LEN_LIST( methods ) / 4 ] do */
  t_4 = GF_LEN__LIST;
  t_3 = CALL_1ARGS( t_4, l_methods );
- CHECK_FUNC_RESULT( t_3 );
+ CHECK_FUNC_RESULT( t_3 )
  t_2 = QUO( t_3, INTOBJ_INT(4) );
- CHECK_INT_SMALL( t_2 );
+ CHECK_INT_SMALL( t_2 )
  for ( t_1 = INTOBJ_INT(1);
        ((Int)t_1) <= ((Int)t_2);
        t_1 = (Obj)(((UInt)t_1)+4) ) {
   l_i = t_1;
   
   /* if methods[4 * (i - 1) + 1](  ) then */
-  C_DIFF_INTOBJS( t_8, l_i, INTOBJ_INT(1) );
-  C_PROD_FIA( t_7, INTOBJ_INT(4), t_8 );
-  C_SUM_FIA( t_6, t_7, INTOBJ_INT(1) );
-  CHECK_INT_POS( t_6 );
-  C_ELM_LIST_FPL( t_5, l_methods, t_6 );
-  CHECK_FUNC( t_5 );
+  C_DIFF_INTOBJS( t_8, l_i, INTOBJ_INT(1) )
+  C_PROD_FIA( t_7, INTOBJ_INT(4), t_8 )
+  C_SUM_FIA( t_6, t_7, INTOBJ_INT(1) )
+  CHECK_INT_POS( t_6 )
+  C_ELM_LIST_FPL( t_5, l_methods, t_6 )
+  CHECK_FUNC( t_5 )
   t_4 = CALL_0ARGS( t_5 );
-  CHECK_FUNC_RESULT( t_4 );
-  CHECK_BOOL( t_4 );
+  CHECK_FUNC_RESULT( t_4 )
+  CHECK_BOOL( t_4 )
   t_3 = (Obj)(UInt)(t_4 != False);
   if ( t_3 ) {
    
@@ -3537,11 +3537,11 @@ static Obj  HdlrFunc27 (
    if ( t_3 ) {
     
     /* return methods[4 * (i - 1) + 2]; */
-    C_DIFF_INTOBJS( t_6, l_i, INTOBJ_INT(1) );
-    C_PROD_FIA( t_5, INTOBJ_INT(4), t_6 );
-    C_SUM_FIA( t_4, t_5, INTOBJ_INT(2) );
-    CHECK_INT_POS( t_4 );
-    C_ELM_LIST_FPL( t_3, l_methods, t_4 );
+    C_DIFF_INTOBJS( t_6, l_i, INTOBJ_INT(1) )
+    C_PROD_FIA( t_5, INTOBJ_INT(4), t_6 )
+    C_SUM_FIA( t_4, t_5, INTOBJ_INT(2) )
+    CHECK_INT_POS( t_4 )
+    C_ELM_LIST_FPL( t_3, l_methods, t_4 )
     RES_BRK_CURR_STAT();
     SWITCH_TO_OLD_FRAME(oldFrame);
     return t_3;
@@ -3552,7 +3552,7 @@ static Obj  HdlrFunc27 (
    else {
     
     /* j := j + 1; */
-    C_SUM_FIA( t_3, l_j, INTOBJ_INT(1) );
+    C_SUM_FIA( t_3, l_j, INTOBJ_INT(1) )
     l_j = t_3;
     
    }
@@ -3566,7 +3566,7 @@ static Obj  HdlrFunc27 (
  
  /* return fail; */
  t_1 = GC_fail;
- CHECK_BOUND( t_1, "fail" );
+ CHECK_BOUND( t_1, "fail" )
  RES_BRK_CURR_STAT();
  SWITCH_TO_OLD_FRAME(oldFrame);
  return t_1;
@@ -3608,7 +3608,7 @@ static Obj  HdlrFunc28 (
  /* methods := METHODS_OPERATION( operation, 1 ); */
  t_2 = GF_METHODS__OPERATION;
  t_1 = CALL_2ARGS( t_2, a_operation, INTOBJ_INT(1) );
- CHECK_FUNC_RESULT( t_1 );
+ CHECK_FUNC_RESULT( t_1 )
  l_methods = t_1;
  
  /* j := 0; */
@@ -3617,9 +3617,9 @@ static Obj  HdlrFunc28 (
  /* for i in [ 1 .. LEN_LIST( methods ) / 5 ] do */
  t_4 = GF_LEN__LIST;
  t_3 = CALL_1ARGS( t_4, l_methods );
- CHECK_FUNC_RESULT( t_3 );
+ CHECK_FUNC_RESULT( t_3 )
  t_2 = QUO( t_3, INTOBJ_INT(5) );
- CHECK_INT_SMALL( t_2 );
+ CHECK_INT_SMALL( t_2 )
  for ( t_1 = INTOBJ_INT(1);
        ((Int)t_1) <= ((Int)t_2);
        t_1 = (Obj)(((UInt)t_1)+4) ) {
@@ -3627,26 +3627,26 @@ static Obj  HdlrFunc28 (
   
   /* if IS_SUBSET_FLAGS( methods[5 * (i - 1) + 2], flags1 ) and methods[5 * (i - 1) + 1]( flags1 ) then */
   t_6 = GF_IS__SUBSET__FLAGS;
-  C_DIFF_INTOBJS( t_10, l_i, INTOBJ_INT(1) );
-  C_PROD_FIA( t_9, INTOBJ_INT(5), t_10 );
-  C_SUM_FIA( t_8, t_9, INTOBJ_INT(2) );
-  CHECK_INT_POS( t_8 );
-  C_ELM_LIST_FPL( t_7, l_methods, t_8 );
+  C_DIFF_INTOBJS( t_10, l_i, INTOBJ_INT(1) )
+  C_PROD_FIA( t_9, INTOBJ_INT(5), t_10 )
+  C_SUM_FIA( t_8, t_9, INTOBJ_INT(2) )
+  CHECK_INT_POS( t_8 )
+  C_ELM_LIST_FPL( t_7, l_methods, t_8 )
   t_5 = CALL_2ARGS( t_6, t_7, a_flags1 );
-  CHECK_FUNC_RESULT( t_5 );
-  CHECK_BOOL( t_5 );
+  CHECK_FUNC_RESULT( t_5 )
+  CHECK_BOOL( t_5 )
   t_4 = (Obj)(UInt)(t_5 != False);
   t_3 = t_4;
   if ( t_3 ) {
-   C_DIFF_INTOBJS( t_10, l_i, INTOBJ_INT(1) );
-   C_PROD_FIA( t_9, INTOBJ_INT(5), t_10 );
-   C_SUM_FIA( t_8, t_9, INTOBJ_INT(1) );
-   CHECK_INT_POS( t_8 );
-   C_ELM_LIST_FPL( t_7, l_methods, t_8 );
-   CHECK_FUNC( t_7 );
+   C_DIFF_INTOBJS( t_10, l_i, INTOBJ_INT(1) )
+   C_PROD_FIA( t_9, INTOBJ_INT(5), t_10 )
+   C_SUM_FIA( t_8, t_9, INTOBJ_INT(1) )
+   CHECK_INT_POS( t_8 )
+   C_ELM_LIST_FPL( t_7, l_methods, t_8 )
+   CHECK_FUNC( t_7 )
    t_6 = CALL_1ARGS( t_7, a_flags1 );
-   CHECK_FUNC_RESULT( t_6 );
-   CHECK_BOOL( t_6 );
+   CHECK_FUNC_RESULT( t_6 )
+   CHECK_BOOL( t_6 )
    t_5 = (Obj)(UInt)(t_6 != False);
    t_3 = t_5;
   }
@@ -3657,11 +3657,11 @@ static Obj  HdlrFunc28 (
    if ( t_3 ) {
     
     /* return methods[5 * (i - 1) + 3]; */
-    C_DIFF_INTOBJS( t_6, l_i, INTOBJ_INT(1) );
-    C_PROD_FIA( t_5, INTOBJ_INT(5), t_6 );
-    C_SUM_FIA( t_4, t_5, INTOBJ_INT(3) );
-    CHECK_INT_POS( t_4 );
-    C_ELM_LIST_FPL( t_3, l_methods, t_4 );
+    C_DIFF_INTOBJS( t_6, l_i, INTOBJ_INT(1) )
+    C_PROD_FIA( t_5, INTOBJ_INT(5), t_6 )
+    C_SUM_FIA( t_4, t_5, INTOBJ_INT(3) )
+    CHECK_INT_POS( t_4 )
+    C_ELM_LIST_FPL( t_3, l_methods, t_4 )
     RES_BRK_CURR_STAT();
     SWITCH_TO_OLD_FRAME(oldFrame);
     return t_3;
@@ -3672,7 +3672,7 @@ static Obj  HdlrFunc28 (
    else {
     
     /* j := j + 1; */
-    C_SUM_FIA( t_3, l_j, INTOBJ_INT(1) );
+    C_SUM_FIA( t_3, l_j, INTOBJ_INT(1) )
     l_j = t_3;
     
    }
@@ -3686,7 +3686,7 @@ static Obj  HdlrFunc28 (
  
  /* return fail; */
  t_1 = GC_fail;
- CHECK_BOUND( t_1, "fail" );
+ CHECK_BOUND( t_1, "fail" )
  RES_BRK_CURR_STAT();
  SWITCH_TO_OLD_FRAME(oldFrame);
  return t_1;
@@ -3732,7 +3732,7 @@ static Obj  HdlrFunc29 (
  /* methods := METHODS_OPERATION( operation, 2 ); */
  t_2 = GF_METHODS__OPERATION;
  t_1 = CALL_2ARGS( t_2, a_operation, INTOBJ_INT(2) );
- CHECK_FUNC_RESULT( t_1 );
+ CHECK_FUNC_RESULT( t_1 )
  l_methods = t_1;
  
  /* j := 0; */
@@ -3741,9 +3741,9 @@ static Obj  HdlrFunc29 (
  /* for i in [ 1 .. LEN_LIST( methods ) / 6 ] do */
  t_4 = GF_LEN__LIST;
  t_3 = CALL_1ARGS( t_4, l_methods );
- CHECK_FUNC_RESULT( t_3 );
+ CHECK_FUNC_RESULT( t_3 )
  t_2 = QUO( t_3, INTOBJ_INT(6) );
- CHECK_INT_SMALL( t_2 );
+ CHECK_INT_SMALL( t_2 )
  for ( t_1 = INTOBJ_INT(1);
        ((Int)t_1) <= ((Int)t_2);
        t_1 = (Obj)(((UInt)t_1)+4) ) {
@@ -3751,42 +3751,42 @@ static Obj  HdlrFunc29 (
   
   /* if IS_SUBSET_FLAGS( methods[6 * (i - 1) + 2], flags1 ) and IS_SUBSET_FLAGS( type2![2], methods[6 * (i - 1) + 3] ) and methods[6 * (i - 1) + 1]( flags1, type2![1] ) then */
   t_7 = GF_IS__SUBSET__FLAGS;
-  C_DIFF_INTOBJS( t_11, l_i, INTOBJ_INT(1) );
-  C_PROD_FIA( t_10, INTOBJ_INT(6), t_11 );
-  C_SUM_FIA( t_9, t_10, INTOBJ_INT(2) );
-  CHECK_INT_POS( t_9 );
-  C_ELM_LIST_FPL( t_8, l_methods, t_9 );
+  C_DIFF_INTOBJS( t_11, l_i, INTOBJ_INT(1) )
+  C_PROD_FIA( t_10, INTOBJ_INT(6), t_11 )
+  C_SUM_FIA( t_9, t_10, INTOBJ_INT(2) )
+  CHECK_INT_POS( t_9 )
+  C_ELM_LIST_FPL( t_8, l_methods, t_9 )
   t_6 = CALL_2ARGS( t_7, t_8, a_flags1 );
-  CHECK_FUNC_RESULT( t_6 );
-  CHECK_BOOL( t_6 );
+  CHECK_FUNC_RESULT( t_6 )
+  CHECK_BOOL( t_6 )
   t_5 = (Obj)(UInt)(t_6 != False);
   t_4 = t_5;
   if ( t_4 ) {
    t_8 = GF_IS__SUBSET__FLAGS;
    C_ELM_POSOBJ_NLE( t_9, a_type2, 2 );
-   C_DIFF_INTOBJS( t_13, l_i, INTOBJ_INT(1) );
-   C_PROD_FIA( t_12, INTOBJ_INT(6), t_13 );
-   C_SUM_FIA( t_11, t_12, INTOBJ_INT(3) );
-   CHECK_INT_POS( t_11 );
-   C_ELM_LIST_FPL( t_10, l_methods, t_11 );
+   C_DIFF_INTOBJS( t_13, l_i, INTOBJ_INT(1) )
+   C_PROD_FIA( t_12, INTOBJ_INT(6), t_13 )
+   C_SUM_FIA( t_11, t_12, INTOBJ_INT(3) )
+   CHECK_INT_POS( t_11 )
+   C_ELM_LIST_FPL( t_10, l_methods, t_11 )
    t_7 = CALL_2ARGS( t_8, t_9, t_10 );
-   CHECK_FUNC_RESULT( t_7 );
-   CHECK_BOOL( t_7 );
+   CHECK_FUNC_RESULT( t_7 )
+   CHECK_BOOL( t_7 )
    t_6 = (Obj)(UInt)(t_7 != False);
    t_4 = t_6;
   }
   t_3 = t_4;
   if ( t_3 ) {
-   C_DIFF_INTOBJS( t_10, l_i, INTOBJ_INT(1) );
-   C_PROD_FIA( t_9, INTOBJ_INT(6), t_10 );
-   C_SUM_FIA( t_8, t_9, INTOBJ_INT(1) );
-   CHECK_INT_POS( t_8 );
-   C_ELM_LIST_FPL( t_7, l_methods, t_8 );
-   CHECK_FUNC( t_7 );
+   C_DIFF_INTOBJS( t_10, l_i, INTOBJ_INT(1) )
+   C_PROD_FIA( t_9, INTOBJ_INT(6), t_10 )
+   C_SUM_FIA( t_8, t_9, INTOBJ_INT(1) )
+   CHECK_INT_POS( t_8 )
+   C_ELM_LIST_FPL( t_7, l_methods, t_8 )
+   CHECK_FUNC( t_7 )
    C_ELM_POSOBJ_NLE( t_8, a_type2, 1 );
    t_6 = CALL_2ARGS( t_7, a_flags1, t_8 );
-   CHECK_FUNC_RESULT( t_6 );
-   CHECK_BOOL( t_6 );
+   CHECK_FUNC_RESULT( t_6 )
+   CHECK_BOOL( t_6 )
    t_5 = (Obj)(UInt)(t_6 != False);
    t_3 = t_5;
   }
@@ -3797,11 +3797,11 @@ static Obj  HdlrFunc29 (
    if ( t_3 ) {
     
     /* return methods[6 * (i - 1) + 4]; */
-    C_DIFF_INTOBJS( t_6, l_i, INTOBJ_INT(1) );
-    C_PROD_FIA( t_5, INTOBJ_INT(6), t_6 );
-    C_SUM_FIA( t_4, t_5, INTOBJ_INT(4) );
-    CHECK_INT_POS( t_4 );
-    C_ELM_LIST_FPL( t_3, l_methods, t_4 );
+    C_DIFF_INTOBJS( t_6, l_i, INTOBJ_INT(1) )
+    C_PROD_FIA( t_5, INTOBJ_INT(6), t_6 )
+    C_SUM_FIA( t_4, t_5, INTOBJ_INT(4) )
+    CHECK_INT_POS( t_4 )
+    C_ELM_LIST_FPL( t_3, l_methods, t_4 )
     RES_BRK_CURR_STAT();
     SWITCH_TO_OLD_FRAME(oldFrame);
     return t_3;
@@ -3812,7 +3812,7 @@ static Obj  HdlrFunc29 (
    else {
     
     /* j := j + 1; */
-    C_SUM_FIA( t_3, l_j, INTOBJ_INT(1) );
+    C_SUM_FIA( t_3, l_j, INTOBJ_INT(1) )
     l_j = t_3;
     
    }
@@ -3826,7 +3826,7 @@ static Obj  HdlrFunc29 (
  
  /* return fail; */
  t_1 = GC_fail;
- CHECK_BOUND( t_1, "fail" );
+ CHECK_BOUND( t_1, "fail" )
  RES_BRK_CURR_STAT();
  SWITCH_TO_OLD_FRAME(oldFrame);
  return t_1;
@@ -3874,7 +3874,7 @@ static Obj  HdlrFunc30 (
  /* methods := METHODS_OPERATION( operation, 3 ); */
  t_2 = GF_METHODS__OPERATION;
  t_1 = CALL_2ARGS( t_2, a_operation, INTOBJ_INT(3) );
- CHECK_FUNC_RESULT( t_1 );
+ CHECK_FUNC_RESULT( t_1 )
  l_methods = t_1;
  
  /* j := 0; */
@@ -3883,9 +3883,9 @@ static Obj  HdlrFunc30 (
  /* for i in [ 1 .. LEN_LIST( methods ) / 7 ] do */
  t_4 = GF_LEN__LIST;
  t_3 = CALL_1ARGS( t_4, l_methods );
- CHECK_FUNC_RESULT( t_3 );
+ CHECK_FUNC_RESULT( t_3 )
  t_2 = QUO( t_3, INTOBJ_INT(7) );
- CHECK_INT_SMALL( t_2 );
+ CHECK_INT_SMALL( t_2 )
  for ( t_1 = INTOBJ_INT(1);
        ((Int)t_1) <= ((Int)t_2);
        t_1 = (Obj)(((UInt)t_1)+4) ) {
@@ -3893,27 +3893,27 @@ static Obj  HdlrFunc30 (
   
   /* if IS_SUBSET_FLAGS( methods[7 * (i - 1) + 2], flags1 ) and IS_SUBSET_FLAGS( type2![2], methods[7 * (i - 1) + 3] ) and IS_SUBSET_FLAGS( type3![2], methods[7 * (i - 1) + 4] ) and methods[7 * (i - 1) + 1]( flags1, type2![1], type3![1] ) then */
   t_8 = GF_IS__SUBSET__FLAGS;
-  C_DIFF_INTOBJS( t_12, l_i, INTOBJ_INT(1) );
-  C_PROD_FIA( t_11, INTOBJ_INT(7), t_12 );
-  C_SUM_FIA( t_10, t_11, INTOBJ_INT(2) );
-  CHECK_INT_POS( t_10 );
-  C_ELM_LIST_FPL( t_9, l_methods, t_10 );
+  C_DIFF_INTOBJS( t_12, l_i, INTOBJ_INT(1) )
+  C_PROD_FIA( t_11, INTOBJ_INT(7), t_12 )
+  C_SUM_FIA( t_10, t_11, INTOBJ_INT(2) )
+  CHECK_INT_POS( t_10 )
+  C_ELM_LIST_FPL( t_9, l_methods, t_10 )
   t_7 = CALL_2ARGS( t_8, t_9, a_flags1 );
-  CHECK_FUNC_RESULT( t_7 );
-  CHECK_BOOL( t_7 );
+  CHECK_FUNC_RESULT( t_7 )
+  CHECK_BOOL( t_7 )
   t_6 = (Obj)(UInt)(t_7 != False);
   t_5 = t_6;
   if ( t_5 ) {
    t_9 = GF_IS__SUBSET__FLAGS;
    C_ELM_POSOBJ_NLE( t_10, a_type2, 2 );
-   C_DIFF_INTOBJS( t_14, l_i, INTOBJ_INT(1) );
-   C_PROD_FIA( t_13, INTOBJ_INT(7), t_14 );
-   C_SUM_FIA( t_12, t_13, INTOBJ_INT(3) );
-   CHECK_INT_POS( t_12 );
-   C_ELM_LIST_FPL( t_11, l_methods, t_12 );
+   C_DIFF_INTOBJS( t_14, l_i, INTOBJ_INT(1) )
+   C_PROD_FIA( t_13, INTOBJ_INT(7), t_14 )
+   C_SUM_FIA( t_12, t_13, INTOBJ_INT(3) )
+   CHECK_INT_POS( t_12 )
+   C_ELM_LIST_FPL( t_11, l_methods, t_12 )
    t_8 = CALL_2ARGS( t_9, t_10, t_11 );
-   CHECK_FUNC_RESULT( t_8 );
-   CHECK_BOOL( t_8 );
+   CHECK_FUNC_RESULT( t_8 )
+   CHECK_BOOL( t_8 )
    t_7 = (Obj)(UInt)(t_8 != False);
    t_5 = t_7;
   }
@@ -3921,30 +3921,30 @@ static Obj  HdlrFunc30 (
   if ( t_4 ) {
    t_8 = GF_IS__SUBSET__FLAGS;
    C_ELM_POSOBJ_NLE( t_9, a_type3, 2 );
-   C_DIFF_INTOBJS( t_13, l_i, INTOBJ_INT(1) );
-   C_PROD_FIA( t_12, INTOBJ_INT(7), t_13 );
-   C_SUM_FIA( t_11, t_12, INTOBJ_INT(4) );
-   CHECK_INT_POS( t_11 );
-   C_ELM_LIST_FPL( t_10, l_methods, t_11 );
+   C_DIFF_INTOBJS( t_13, l_i, INTOBJ_INT(1) )
+   C_PROD_FIA( t_12, INTOBJ_INT(7), t_13 )
+   C_SUM_FIA( t_11, t_12, INTOBJ_INT(4) )
+   CHECK_INT_POS( t_11 )
+   C_ELM_LIST_FPL( t_10, l_methods, t_11 )
    t_7 = CALL_2ARGS( t_8, t_9, t_10 );
-   CHECK_FUNC_RESULT( t_7 );
-   CHECK_BOOL( t_7 );
+   CHECK_FUNC_RESULT( t_7 )
+   CHECK_BOOL( t_7 )
    t_6 = (Obj)(UInt)(t_7 != False);
    t_4 = t_6;
   }
   t_3 = t_4;
   if ( t_3 ) {
-   C_DIFF_INTOBJS( t_10, l_i, INTOBJ_INT(1) );
-   C_PROD_FIA( t_9, INTOBJ_INT(7), t_10 );
-   C_SUM_FIA( t_8, t_9, INTOBJ_INT(1) );
-   CHECK_INT_POS( t_8 );
-   C_ELM_LIST_FPL( t_7, l_methods, t_8 );
-   CHECK_FUNC( t_7 );
+   C_DIFF_INTOBJS( t_10, l_i, INTOBJ_INT(1) )
+   C_PROD_FIA( t_9, INTOBJ_INT(7), t_10 )
+   C_SUM_FIA( t_8, t_9, INTOBJ_INT(1) )
+   CHECK_INT_POS( t_8 )
+   C_ELM_LIST_FPL( t_7, l_methods, t_8 )
+   CHECK_FUNC( t_7 )
    C_ELM_POSOBJ_NLE( t_8, a_type2, 1 );
    C_ELM_POSOBJ_NLE( t_9, a_type3, 1 );
    t_6 = CALL_3ARGS( t_7, a_flags1, t_8, t_9 );
-   CHECK_FUNC_RESULT( t_6 );
-   CHECK_BOOL( t_6 );
+   CHECK_FUNC_RESULT( t_6 )
+   CHECK_BOOL( t_6 )
    t_5 = (Obj)(UInt)(t_6 != False);
    t_3 = t_5;
   }
@@ -3955,11 +3955,11 @@ static Obj  HdlrFunc30 (
    if ( t_3 ) {
     
     /* return methods[7 * (i - 1) + 5]; */
-    C_DIFF_INTOBJS( t_6, l_i, INTOBJ_INT(1) );
-    C_PROD_FIA( t_5, INTOBJ_INT(7), t_6 );
-    C_SUM_FIA( t_4, t_5, INTOBJ_INT(5) );
-    CHECK_INT_POS( t_4 );
-    C_ELM_LIST_FPL( t_3, l_methods, t_4 );
+    C_DIFF_INTOBJS( t_6, l_i, INTOBJ_INT(1) )
+    C_PROD_FIA( t_5, INTOBJ_INT(7), t_6 )
+    C_SUM_FIA( t_4, t_5, INTOBJ_INT(5) )
+    CHECK_INT_POS( t_4 )
+    C_ELM_LIST_FPL( t_3, l_methods, t_4 )
     RES_BRK_CURR_STAT();
     SWITCH_TO_OLD_FRAME(oldFrame);
     return t_3;
@@ -3970,7 +3970,7 @@ static Obj  HdlrFunc30 (
    else {
     
     /* j := j + 1; */
-    C_SUM_FIA( t_3, l_j, INTOBJ_INT(1) );
+    C_SUM_FIA( t_3, l_j, INTOBJ_INT(1) )
     l_j = t_3;
     
    }
@@ -3984,7 +3984,7 @@ static Obj  HdlrFunc30 (
  
  /* return fail; */
  t_1 = GC_fail;
- CHECK_BOUND( t_1, "fail" );
+ CHECK_BOUND( t_1, "fail" )
  RES_BRK_CURR_STAT();
  SWITCH_TO_OLD_FRAME(oldFrame);
  return t_1;
@@ -4034,7 +4034,7 @@ static Obj  HdlrFunc31 (
  /* methods := METHODS_OPERATION( operation, 4 ); */
  t_2 = GF_METHODS__OPERATION;
  t_1 = CALL_2ARGS( t_2, a_operation, INTOBJ_INT(4) );
- CHECK_FUNC_RESULT( t_1 );
+ CHECK_FUNC_RESULT( t_1 )
  l_methods = t_1;
  
  /* j := 0; */
@@ -4043,9 +4043,9 @@ static Obj  HdlrFunc31 (
  /* for i in [ 1 .. LEN_LIST( methods ) / 8 ] do */
  t_4 = GF_LEN__LIST;
  t_3 = CALL_1ARGS( t_4, l_methods );
- CHECK_FUNC_RESULT( t_3 );
+ CHECK_FUNC_RESULT( t_3 )
  t_2 = QUO( t_3, INTOBJ_INT(8) );
- CHECK_INT_SMALL( t_2 );
+ CHECK_INT_SMALL( t_2 )
  for ( t_1 = INTOBJ_INT(1);
        ((Int)t_1) <= ((Int)t_2);
        t_1 = (Obj)(((UInt)t_1)+4) ) {
@@ -4054,27 +4054,27 @@ static Obj  HdlrFunc31 (
   /* if IS_SUBSET_FLAGS( methods[8 * (i - 1) + 2], flags1 ) and IS_SUBSET_FLAGS( type2![2], methods[8 * (i - 1) + 3] ) and IS_SUBSET_FLAGS( type3![2], methods[8 * (i - 1) + 4] ) and IS_SUBSET_FLAGS( type4![2], methods[8 * (i - 1) + 5] ) 
 and methods[8 * (i - 1) + 1]( flags1, type2![1], type3![1], type4![1] ) then */
   t_9 = GF_IS__SUBSET__FLAGS;
-  C_DIFF_INTOBJS( t_13, l_i, INTOBJ_INT(1) );
-  C_PROD_FIA( t_12, INTOBJ_INT(8), t_13 );
-  C_SUM_FIA( t_11, t_12, INTOBJ_INT(2) );
-  CHECK_INT_POS( t_11 );
-  C_ELM_LIST_FPL( t_10, l_methods, t_11 );
+  C_DIFF_INTOBJS( t_13, l_i, INTOBJ_INT(1) )
+  C_PROD_FIA( t_12, INTOBJ_INT(8), t_13 )
+  C_SUM_FIA( t_11, t_12, INTOBJ_INT(2) )
+  CHECK_INT_POS( t_11 )
+  C_ELM_LIST_FPL( t_10, l_methods, t_11 )
   t_8 = CALL_2ARGS( t_9, t_10, a_flags1 );
-  CHECK_FUNC_RESULT( t_8 );
-  CHECK_BOOL( t_8 );
+  CHECK_FUNC_RESULT( t_8 )
+  CHECK_BOOL( t_8 )
   t_7 = (Obj)(UInt)(t_8 != False);
   t_6 = t_7;
   if ( t_6 ) {
    t_10 = GF_IS__SUBSET__FLAGS;
    C_ELM_POSOBJ_NLE( t_11, a_type2, 2 );
-   C_DIFF_INTOBJS( t_15, l_i, INTOBJ_INT(1) );
-   C_PROD_FIA( t_14, INTOBJ_INT(8), t_15 );
-   C_SUM_FIA( t_13, t_14, INTOBJ_INT(3) );
-   CHECK_INT_POS( t_13 );
-   C_ELM_LIST_FPL( t_12, l_methods, t_13 );
+   C_DIFF_INTOBJS( t_15, l_i, INTOBJ_INT(1) )
+   C_PROD_FIA( t_14, INTOBJ_INT(8), t_15 )
+   C_SUM_FIA( t_13, t_14, INTOBJ_INT(3) )
+   CHECK_INT_POS( t_13 )
+   C_ELM_LIST_FPL( t_12, l_methods, t_13 )
    t_9 = CALL_2ARGS( t_10, t_11, t_12 );
-   CHECK_FUNC_RESULT( t_9 );
-   CHECK_BOOL( t_9 );
+   CHECK_FUNC_RESULT( t_9 )
+   CHECK_BOOL( t_9 )
    t_8 = (Obj)(UInt)(t_9 != False);
    t_6 = t_8;
   }
@@ -4082,14 +4082,14 @@ and methods[8 * (i - 1) + 1]( flags1, type2![1], type3![1], type4![1] ) then */
   if ( t_5 ) {
    t_9 = GF_IS__SUBSET__FLAGS;
    C_ELM_POSOBJ_NLE( t_10, a_type3, 2 );
-   C_DIFF_INTOBJS( t_14, l_i, INTOBJ_INT(1) );
-   C_PROD_FIA( t_13, INTOBJ_INT(8), t_14 );
-   C_SUM_FIA( t_12, t_13, INTOBJ_INT(4) );
-   CHECK_INT_POS( t_12 );
-   C_ELM_LIST_FPL( t_11, l_methods, t_12 );
+   C_DIFF_INTOBJS( t_14, l_i, INTOBJ_INT(1) )
+   C_PROD_FIA( t_13, INTOBJ_INT(8), t_14 )
+   C_SUM_FIA( t_12, t_13, INTOBJ_INT(4) )
+   CHECK_INT_POS( t_12 )
+   C_ELM_LIST_FPL( t_11, l_methods, t_12 )
    t_8 = CALL_2ARGS( t_9, t_10, t_11 );
-   CHECK_FUNC_RESULT( t_8 );
-   CHECK_BOOL( t_8 );
+   CHECK_FUNC_RESULT( t_8 )
+   CHECK_BOOL( t_8 )
    t_7 = (Obj)(UInt)(t_8 != False);
    t_5 = t_7;
   }
@@ -4097,31 +4097,31 @@ and methods[8 * (i - 1) + 1]( flags1, type2![1], type3![1], type4![1] ) then */
   if ( t_4 ) {
    t_8 = GF_IS__SUBSET__FLAGS;
    C_ELM_POSOBJ_NLE( t_9, a_type4, 2 );
-   C_DIFF_INTOBJS( t_13, l_i, INTOBJ_INT(1) );
-   C_PROD_FIA( t_12, INTOBJ_INT(8), t_13 );
-   C_SUM_FIA( t_11, t_12, INTOBJ_INT(5) );
-   CHECK_INT_POS( t_11 );
-   C_ELM_LIST_FPL( t_10, l_methods, t_11 );
+   C_DIFF_INTOBJS( t_13, l_i, INTOBJ_INT(1) )
+   C_PROD_FIA( t_12, INTOBJ_INT(8), t_13 )
+   C_SUM_FIA( t_11, t_12, INTOBJ_INT(5) )
+   CHECK_INT_POS( t_11 )
+   C_ELM_LIST_FPL( t_10, l_methods, t_11 )
    t_7 = CALL_2ARGS( t_8, t_9, t_10 );
-   CHECK_FUNC_RESULT( t_7 );
-   CHECK_BOOL( t_7 );
+   CHECK_FUNC_RESULT( t_7 )
+   CHECK_BOOL( t_7 )
    t_6 = (Obj)(UInt)(t_7 != False);
    t_4 = t_6;
   }
   t_3 = t_4;
   if ( t_3 ) {
-   C_DIFF_INTOBJS( t_10, l_i, INTOBJ_INT(1) );
-   C_PROD_FIA( t_9, INTOBJ_INT(8), t_10 );
-   C_SUM_FIA( t_8, t_9, INTOBJ_INT(1) );
-   CHECK_INT_POS( t_8 );
-   C_ELM_LIST_FPL( t_7, l_methods, t_8 );
-   CHECK_FUNC( t_7 );
+   C_DIFF_INTOBJS( t_10, l_i, INTOBJ_INT(1) )
+   C_PROD_FIA( t_9, INTOBJ_INT(8), t_10 )
+   C_SUM_FIA( t_8, t_9, INTOBJ_INT(1) )
+   CHECK_INT_POS( t_8 )
+   C_ELM_LIST_FPL( t_7, l_methods, t_8 )
+   CHECK_FUNC( t_7 )
    C_ELM_POSOBJ_NLE( t_8, a_type2, 1 );
    C_ELM_POSOBJ_NLE( t_9, a_type3, 1 );
    C_ELM_POSOBJ_NLE( t_10, a_type4, 1 );
    t_6 = CALL_4ARGS( t_7, a_flags1, t_8, t_9, t_10 );
-   CHECK_FUNC_RESULT( t_6 );
-   CHECK_BOOL( t_6 );
+   CHECK_FUNC_RESULT( t_6 )
+   CHECK_BOOL( t_6 )
    t_5 = (Obj)(UInt)(t_6 != False);
    t_3 = t_5;
   }
@@ -4132,11 +4132,11 @@ and methods[8 * (i - 1) + 1]( flags1, type2![1], type3![1], type4![1] ) then */
    if ( t_3 ) {
     
     /* return methods[8 * (i - 1) + 6]; */
-    C_DIFF_INTOBJS( t_6, l_i, INTOBJ_INT(1) );
-    C_PROD_FIA( t_5, INTOBJ_INT(8), t_6 );
-    C_SUM_FIA( t_4, t_5, INTOBJ_INT(6) );
-    CHECK_INT_POS( t_4 );
-    C_ELM_LIST_FPL( t_3, l_methods, t_4 );
+    C_DIFF_INTOBJS( t_6, l_i, INTOBJ_INT(1) )
+    C_PROD_FIA( t_5, INTOBJ_INT(8), t_6 )
+    C_SUM_FIA( t_4, t_5, INTOBJ_INT(6) )
+    CHECK_INT_POS( t_4 )
+    C_ELM_LIST_FPL( t_3, l_methods, t_4 )
     RES_BRK_CURR_STAT();
     SWITCH_TO_OLD_FRAME(oldFrame);
     return t_3;
@@ -4147,7 +4147,7 @@ and methods[8 * (i - 1) + 1]( flags1, type2![1], type3![1], type4![1] ) then */
    else {
     
     /* j := j + 1; */
-    C_SUM_FIA( t_3, l_j, INTOBJ_INT(1) );
+    C_SUM_FIA( t_3, l_j, INTOBJ_INT(1) )
     l_j = t_3;
     
    }
@@ -4161,7 +4161,7 @@ and methods[8 * (i - 1) + 1]( flags1, type2![1], type3![1], type4![1] ) then */
  
  /* return fail; */
  t_1 = GC_fail;
- CHECK_BOUND( t_1, "fail" );
+ CHECK_BOUND( t_1, "fail" )
  RES_BRK_CURR_STAT();
  SWITCH_TO_OLD_FRAME(oldFrame);
  return t_1;
@@ -4205,7 +4205,7 @@ static Obj  HdlrFunc32 (
  Obj t_16 = 0;
  Bag oldFrame;
  OLD_BRK_CURR_STAT
- CHECK_NR_ARGS( 7, args );
+ CHECK_NR_ARGS( 7, args )
  a_operation = ELM_PLIST( args, 1 );
  a_k = ELM_PLIST( args, 2 );
  a_flags1 = ELM_PLIST( args, 3 );
@@ -4222,7 +4222,7 @@ static Obj  HdlrFunc32 (
  /* methods := METHODS_OPERATION( operation, 5 ); */
  t_2 = GF_METHODS__OPERATION;
  t_1 = CALL_2ARGS( t_2, a_operation, INTOBJ_INT(5) );
- CHECK_FUNC_RESULT( t_1 );
+ CHECK_FUNC_RESULT( t_1 )
  l_methods = t_1;
  
  /* j := 0; */
@@ -4231,9 +4231,9 @@ static Obj  HdlrFunc32 (
  /* for i in [ 1 .. LEN_LIST( methods ) / 9 ] do */
  t_4 = GF_LEN__LIST;
  t_3 = CALL_1ARGS( t_4, l_methods );
- CHECK_FUNC_RESULT( t_3 );
+ CHECK_FUNC_RESULT( t_3 )
  t_2 = QUO( t_3, INTOBJ_INT(9) );
- CHECK_INT_SMALL( t_2 );
+ CHECK_INT_SMALL( t_2 )
  for ( t_1 = INTOBJ_INT(1);
        ((Int)t_1) <= ((Int)t_2);
        t_1 = (Obj)(((UInt)t_1)+4) ) {
@@ -4242,27 +4242,27 @@ static Obj  HdlrFunc32 (
   /* if IS_SUBSET_FLAGS( methods[9 * (i - 1) + 2], flags1 ) and IS_SUBSET_FLAGS( type2![2], methods[9 * (i - 1) + 3] ) and IS_SUBSET_FLAGS( type3![2], methods[9 * (i - 1) + 4] ) and IS_SUBSET_FLAGS( type4![2], methods[9 * (i - 1) + 5] ) 
   and IS_SUBSET_FLAGS( type5![2], methods[9 * (i - 1) + 6] ) and methods[9 * (i - 1) + 1]( flags1, type2![1], type3![1], type4![1], type5![1] ) then */
   t_10 = GF_IS__SUBSET__FLAGS;
-  C_DIFF_INTOBJS( t_14, l_i, INTOBJ_INT(1) );
-  C_PROD_FIA( t_13, INTOBJ_INT(9), t_14 );
-  C_SUM_FIA( t_12, t_13, INTOBJ_INT(2) );
-  CHECK_INT_POS( t_12 );
-  C_ELM_LIST_FPL( t_11, l_methods, t_12 );
+  C_DIFF_INTOBJS( t_14, l_i, INTOBJ_INT(1) )
+  C_PROD_FIA( t_13, INTOBJ_INT(9), t_14 )
+  C_SUM_FIA( t_12, t_13, INTOBJ_INT(2) )
+  CHECK_INT_POS( t_12 )
+  C_ELM_LIST_FPL( t_11, l_methods, t_12 )
   t_9 = CALL_2ARGS( t_10, t_11, a_flags1 );
-  CHECK_FUNC_RESULT( t_9 );
-  CHECK_BOOL( t_9 );
+  CHECK_FUNC_RESULT( t_9 )
+  CHECK_BOOL( t_9 )
   t_8 = (Obj)(UInt)(t_9 != False);
   t_7 = t_8;
   if ( t_7 ) {
    t_11 = GF_IS__SUBSET__FLAGS;
    C_ELM_POSOBJ_NLE( t_12, a_type2, 2 );
-   C_DIFF_INTOBJS( t_16, l_i, INTOBJ_INT(1) );
-   C_PROD_FIA( t_15, INTOBJ_INT(9), t_16 );
-   C_SUM_FIA( t_14, t_15, INTOBJ_INT(3) );
-   CHECK_INT_POS( t_14 );
-   C_ELM_LIST_FPL( t_13, l_methods, t_14 );
+   C_DIFF_INTOBJS( t_16, l_i, INTOBJ_INT(1) )
+   C_PROD_FIA( t_15, INTOBJ_INT(9), t_16 )
+   C_SUM_FIA( t_14, t_15, INTOBJ_INT(3) )
+   CHECK_INT_POS( t_14 )
+   C_ELM_LIST_FPL( t_13, l_methods, t_14 )
    t_10 = CALL_2ARGS( t_11, t_12, t_13 );
-   CHECK_FUNC_RESULT( t_10 );
-   CHECK_BOOL( t_10 );
+   CHECK_FUNC_RESULT( t_10 )
+   CHECK_BOOL( t_10 )
    t_9 = (Obj)(UInt)(t_10 != False);
    t_7 = t_9;
   }
@@ -4270,14 +4270,14 @@ static Obj  HdlrFunc32 (
   if ( t_6 ) {
    t_10 = GF_IS__SUBSET__FLAGS;
    C_ELM_POSOBJ_NLE( t_11, a_type3, 2 );
-   C_DIFF_INTOBJS( t_15, l_i, INTOBJ_INT(1) );
-   C_PROD_FIA( t_14, INTOBJ_INT(9), t_15 );
-   C_SUM_FIA( t_13, t_14, INTOBJ_INT(4) );
-   CHECK_INT_POS( t_13 );
-   C_ELM_LIST_FPL( t_12, l_methods, t_13 );
+   C_DIFF_INTOBJS( t_15, l_i, INTOBJ_INT(1) )
+   C_PROD_FIA( t_14, INTOBJ_INT(9), t_15 )
+   C_SUM_FIA( t_13, t_14, INTOBJ_INT(4) )
+   CHECK_INT_POS( t_13 )
+   C_ELM_LIST_FPL( t_12, l_methods, t_13 )
    t_9 = CALL_2ARGS( t_10, t_11, t_12 );
-   CHECK_FUNC_RESULT( t_9 );
-   CHECK_BOOL( t_9 );
+   CHECK_FUNC_RESULT( t_9 )
+   CHECK_BOOL( t_9 )
    t_8 = (Obj)(UInt)(t_9 != False);
    t_6 = t_8;
   }
@@ -4285,14 +4285,14 @@ static Obj  HdlrFunc32 (
   if ( t_5 ) {
    t_9 = GF_IS__SUBSET__FLAGS;
    C_ELM_POSOBJ_NLE( t_10, a_type4, 2 );
-   C_DIFF_INTOBJS( t_14, l_i, INTOBJ_INT(1) );
-   C_PROD_FIA( t_13, INTOBJ_INT(9), t_14 );
-   C_SUM_FIA( t_12, t_13, INTOBJ_INT(5) );
-   CHECK_INT_POS( t_12 );
-   C_ELM_LIST_FPL( t_11, l_methods, t_12 );
+   C_DIFF_INTOBJS( t_14, l_i, INTOBJ_INT(1) )
+   C_PROD_FIA( t_13, INTOBJ_INT(9), t_14 )
+   C_SUM_FIA( t_12, t_13, INTOBJ_INT(5) )
+   CHECK_INT_POS( t_12 )
+   C_ELM_LIST_FPL( t_11, l_methods, t_12 )
    t_8 = CALL_2ARGS( t_9, t_10, t_11 );
-   CHECK_FUNC_RESULT( t_8 );
-   CHECK_BOOL( t_8 );
+   CHECK_FUNC_RESULT( t_8 )
+   CHECK_BOOL( t_8 )
    t_7 = (Obj)(UInt)(t_8 != False);
    t_5 = t_7;
   }
@@ -4300,32 +4300,32 @@ static Obj  HdlrFunc32 (
   if ( t_4 ) {
    t_8 = GF_IS__SUBSET__FLAGS;
    C_ELM_POSOBJ_NLE( t_9, a_type5, 2 );
-   C_DIFF_INTOBJS( t_13, l_i, INTOBJ_INT(1) );
-   C_PROD_FIA( t_12, INTOBJ_INT(9), t_13 );
-   C_SUM_FIA( t_11, t_12, INTOBJ_INT(6) );
-   CHECK_INT_POS( t_11 );
-   C_ELM_LIST_FPL( t_10, l_methods, t_11 );
+   C_DIFF_INTOBJS( t_13, l_i, INTOBJ_INT(1) )
+   C_PROD_FIA( t_12, INTOBJ_INT(9), t_13 )
+   C_SUM_FIA( t_11, t_12, INTOBJ_INT(6) )
+   CHECK_INT_POS( t_11 )
+   C_ELM_LIST_FPL( t_10, l_methods, t_11 )
    t_7 = CALL_2ARGS( t_8, t_9, t_10 );
-   CHECK_FUNC_RESULT( t_7 );
-   CHECK_BOOL( t_7 );
+   CHECK_FUNC_RESULT( t_7 )
+   CHECK_BOOL( t_7 )
    t_6 = (Obj)(UInt)(t_7 != False);
    t_4 = t_6;
   }
   t_3 = t_4;
   if ( t_3 ) {
-   C_DIFF_INTOBJS( t_10, l_i, INTOBJ_INT(1) );
-   C_PROD_FIA( t_9, INTOBJ_INT(9), t_10 );
-   C_SUM_FIA( t_8, t_9, INTOBJ_INT(1) );
-   CHECK_INT_POS( t_8 );
-   C_ELM_LIST_FPL( t_7, l_methods, t_8 );
-   CHECK_FUNC( t_7 );
+   C_DIFF_INTOBJS( t_10, l_i, INTOBJ_INT(1) )
+   C_PROD_FIA( t_9, INTOBJ_INT(9), t_10 )
+   C_SUM_FIA( t_8, t_9, INTOBJ_INT(1) )
+   CHECK_INT_POS( t_8 )
+   C_ELM_LIST_FPL( t_7, l_methods, t_8 )
+   CHECK_FUNC( t_7 )
    C_ELM_POSOBJ_NLE( t_8, a_type2, 1 );
    C_ELM_POSOBJ_NLE( t_9, a_type3, 1 );
    C_ELM_POSOBJ_NLE( t_10, a_type4, 1 );
    C_ELM_POSOBJ_NLE( t_11, a_type5, 1 );
    t_6 = CALL_5ARGS( t_7, a_flags1, t_8, t_9, t_10, t_11 );
-   CHECK_FUNC_RESULT( t_6 );
-   CHECK_BOOL( t_6 );
+   CHECK_FUNC_RESULT( t_6 )
+   CHECK_BOOL( t_6 )
    t_5 = (Obj)(UInt)(t_6 != False);
    t_3 = t_5;
   }
@@ -4336,11 +4336,11 @@ static Obj  HdlrFunc32 (
    if ( t_3 ) {
     
     /* return methods[9 * (i - 1) + 7]; */
-    C_DIFF_INTOBJS( t_6, l_i, INTOBJ_INT(1) );
-    C_PROD_FIA( t_5, INTOBJ_INT(9), t_6 );
-    C_SUM_FIA( t_4, t_5, INTOBJ_INT(7) );
-    CHECK_INT_POS( t_4 );
-    C_ELM_LIST_FPL( t_3, l_methods, t_4 );
+    C_DIFF_INTOBJS( t_6, l_i, INTOBJ_INT(1) )
+    C_PROD_FIA( t_5, INTOBJ_INT(9), t_6 )
+    C_SUM_FIA( t_4, t_5, INTOBJ_INT(7) )
+    CHECK_INT_POS( t_4 )
+    C_ELM_LIST_FPL( t_3, l_methods, t_4 )
     RES_BRK_CURR_STAT();
     SWITCH_TO_OLD_FRAME(oldFrame);
     return t_3;
@@ -4351,7 +4351,7 @@ static Obj  HdlrFunc32 (
    else {
     
     /* j := j + 1; */
-    C_SUM_FIA( t_3, l_j, INTOBJ_INT(1) );
+    C_SUM_FIA( t_3, l_j, INTOBJ_INT(1) )
     l_j = t_3;
     
    }
@@ -4365,7 +4365,7 @@ static Obj  HdlrFunc32 (
  
  /* return fail; */
  t_1 = GC_fail;
- CHECK_BOUND( t_1, "fail" );
+ CHECK_BOUND( t_1, "fail" )
  RES_BRK_CURR_STAT();
  SWITCH_TO_OLD_FRAME(oldFrame);
  return t_1;
@@ -4411,7 +4411,7 @@ static Obj  HdlrFunc33 (
  Obj t_17 = 0;
  Bag oldFrame;
  OLD_BRK_CURR_STAT
- CHECK_NR_ARGS( 8, args );
+ CHECK_NR_ARGS( 8, args )
  a_operation = ELM_PLIST( args, 1 );
  a_k = ELM_PLIST( args, 2 );
  a_flags1 = ELM_PLIST( args, 3 );
@@ -4429,7 +4429,7 @@ static Obj  HdlrFunc33 (
  /* methods := METHODS_OPERATION( operation, 6 ); */
  t_2 = GF_METHODS__OPERATION;
  t_1 = CALL_2ARGS( t_2, a_operation, INTOBJ_INT(6) );
- CHECK_FUNC_RESULT( t_1 );
+ CHECK_FUNC_RESULT( t_1 )
  l_methods = t_1;
  
  /* j := 0; */
@@ -4438,9 +4438,9 @@ static Obj  HdlrFunc33 (
  /* for i in [ 1 .. LEN_LIST( methods ) / 10 ] do */
  t_4 = GF_LEN__LIST;
  t_3 = CALL_1ARGS( t_4, l_methods );
- CHECK_FUNC_RESULT( t_3 );
+ CHECK_FUNC_RESULT( t_3 )
  t_2 = QUO( t_3, INTOBJ_INT(10) );
- CHECK_INT_SMALL( t_2 );
+ CHECK_INT_SMALL( t_2 )
  for ( t_1 = INTOBJ_INT(1);
        ((Int)t_1) <= ((Int)t_2);
        t_1 = (Obj)(((UInt)t_1)+4) ) {
@@ -4449,27 +4449,27 @@ static Obj  HdlrFunc33 (
   /* if IS_SUBSET_FLAGS( methods[10 * (i - 1) + 2], flags1 ) and IS_SUBSET_FLAGS( type2![2], methods[10 * (i - 1) + 3] ) and IS_SUBSET_FLAGS( type3![2], methods[10 * (i - 1) + 4] ) and IS_SUBSET_FLAGS( type4![2], methods[10 * (i - 1) + 5] ) 
     and IS_SUBSET_FLAGS( type5![2], methods[10 * (i - 1) + 6] ) and IS_SUBSET_FLAGS( type6![2], methods[10 * (i - 1) + 7] ) and methods[10 * (i - 1) + 1]( flags1, type2![1], type3![1], type4![1], type5![1], type6![1] ) then */
   t_11 = GF_IS__SUBSET__FLAGS;
-  C_DIFF_INTOBJS( t_15, l_i, INTOBJ_INT(1) );
-  C_PROD_FIA( t_14, INTOBJ_INT(10), t_15 );
-  C_SUM_FIA( t_13, t_14, INTOBJ_INT(2) );
-  CHECK_INT_POS( t_13 );
-  C_ELM_LIST_FPL( t_12, l_methods, t_13 );
+  C_DIFF_INTOBJS( t_15, l_i, INTOBJ_INT(1) )
+  C_PROD_FIA( t_14, INTOBJ_INT(10), t_15 )
+  C_SUM_FIA( t_13, t_14, INTOBJ_INT(2) )
+  CHECK_INT_POS( t_13 )
+  C_ELM_LIST_FPL( t_12, l_methods, t_13 )
   t_10 = CALL_2ARGS( t_11, t_12, a_flags1 );
-  CHECK_FUNC_RESULT( t_10 );
-  CHECK_BOOL( t_10 );
+  CHECK_FUNC_RESULT( t_10 )
+  CHECK_BOOL( t_10 )
   t_9 = (Obj)(UInt)(t_10 != False);
   t_8 = t_9;
   if ( t_8 ) {
    t_12 = GF_IS__SUBSET__FLAGS;
    C_ELM_POSOBJ_NLE( t_13, a_type2, 2 );
-   C_DIFF_INTOBJS( t_17, l_i, INTOBJ_INT(1) );
-   C_PROD_FIA( t_16, INTOBJ_INT(10), t_17 );
-   C_SUM_FIA( t_15, t_16, INTOBJ_INT(3) );
-   CHECK_INT_POS( t_15 );
-   C_ELM_LIST_FPL( t_14, l_methods, t_15 );
+   C_DIFF_INTOBJS( t_17, l_i, INTOBJ_INT(1) )
+   C_PROD_FIA( t_16, INTOBJ_INT(10), t_17 )
+   C_SUM_FIA( t_15, t_16, INTOBJ_INT(3) )
+   CHECK_INT_POS( t_15 )
+   C_ELM_LIST_FPL( t_14, l_methods, t_15 )
    t_11 = CALL_2ARGS( t_12, t_13, t_14 );
-   CHECK_FUNC_RESULT( t_11 );
-   CHECK_BOOL( t_11 );
+   CHECK_FUNC_RESULT( t_11 )
+   CHECK_BOOL( t_11 )
    t_10 = (Obj)(UInt)(t_11 != False);
    t_8 = t_10;
   }
@@ -4477,14 +4477,14 @@ static Obj  HdlrFunc33 (
   if ( t_7 ) {
    t_11 = GF_IS__SUBSET__FLAGS;
    C_ELM_POSOBJ_NLE( t_12, a_type3, 2 );
-   C_DIFF_INTOBJS( t_16, l_i, INTOBJ_INT(1) );
-   C_PROD_FIA( t_15, INTOBJ_INT(10), t_16 );
-   C_SUM_FIA( t_14, t_15, INTOBJ_INT(4) );
-   CHECK_INT_POS( t_14 );
-   C_ELM_LIST_FPL( t_13, l_methods, t_14 );
+   C_DIFF_INTOBJS( t_16, l_i, INTOBJ_INT(1) )
+   C_PROD_FIA( t_15, INTOBJ_INT(10), t_16 )
+   C_SUM_FIA( t_14, t_15, INTOBJ_INT(4) )
+   CHECK_INT_POS( t_14 )
+   C_ELM_LIST_FPL( t_13, l_methods, t_14 )
    t_10 = CALL_2ARGS( t_11, t_12, t_13 );
-   CHECK_FUNC_RESULT( t_10 );
-   CHECK_BOOL( t_10 );
+   CHECK_FUNC_RESULT( t_10 )
+   CHECK_BOOL( t_10 )
    t_9 = (Obj)(UInt)(t_10 != False);
    t_7 = t_9;
   }
@@ -4492,14 +4492,14 @@ static Obj  HdlrFunc33 (
   if ( t_6 ) {
    t_10 = GF_IS__SUBSET__FLAGS;
    C_ELM_POSOBJ_NLE( t_11, a_type4, 2 );
-   C_DIFF_INTOBJS( t_15, l_i, INTOBJ_INT(1) );
-   C_PROD_FIA( t_14, INTOBJ_INT(10), t_15 );
-   C_SUM_FIA( t_13, t_14, INTOBJ_INT(5) );
-   CHECK_INT_POS( t_13 );
-   C_ELM_LIST_FPL( t_12, l_methods, t_13 );
+   C_DIFF_INTOBJS( t_15, l_i, INTOBJ_INT(1) )
+   C_PROD_FIA( t_14, INTOBJ_INT(10), t_15 )
+   C_SUM_FIA( t_13, t_14, INTOBJ_INT(5) )
+   CHECK_INT_POS( t_13 )
+   C_ELM_LIST_FPL( t_12, l_methods, t_13 )
    t_9 = CALL_2ARGS( t_10, t_11, t_12 );
-   CHECK_FUNC_RESULT( t_9 );
-   CHECK_BOOL( t_9 );
+   CHECK_FUNC_RESULT( t_9 )
+   CHECK_BOOL( t_9 )
    t_8 = (Obj)(UInt)(t_9 != False);
    t_6 = t_8;
   }
@@ -4507,14 +4507,14 @@ static Obj  HdlrFunc33 (
   if ( t_5 ) {
    t_9 = GF_IS__SUBSET__FLAGS;
    C_ELM_POSOBJ_NLE( t_10, a_type5, 2 );
-   C_DIFF_INTOBJS( t_14, l_i, INTOBJ_INT(1) );
-   C_PROD_FIA( t_13, INTOBJ_INT(10), t_14 );
-   C_SUM_FIA( t_12, t_13, INTOBJ_INT(6) );
-   CHECK_INT_POS( t_12 );
-   C_ELM_LIST_FPL( t_11, l_methods, t_12 );
+   C_DIFF_INTOBJS( t_14, l_i, INTOBJ_INT(1) )
+   C_PROD_FIA( t_13, INTOBJ_INT(10), t_14 )
+   C_SUM_FIA( t_12, t_13, INTOBJ_INT(6) )
+   CHECK_INT_POS( t_12 )
+   C_ELM_LIST_FPL( t_11, l_methods, t_12 )
    t_8 = CALL_2ARGS( t_9, t_10, t_11 );
-   CHECK_FUNC_RESULT( t_8 );
-   CHECK_BOOL( t_8 );
+   CHECK_FUNC_RESULT( t_8 )
+   CHECK_BOOL( t_8 )
    t_7 = (Obj)(UInt)(t_8 != False);
    t_5 = t_7;
   }
@@ -4522,33 +4522,33 @@ static Obj  HdlrFunc33 (
   if ( t_4 ) {
    t_8 = GF_IS__SUBSET__FLAGS;
    C_ELM_POSOBJ_NLE( t_9, a_type6, 2 );
-   C_DIFF_INTOBJS( t_13, l_i, INTOBJ_INT(1) );
-   C_PROD_FIA( t_12, INTOBJ_INT(10), t_13 );
-   C_SUM_FIA( t_11, t_12, INTOBJ_INT(7) );
-   CHECK_INT_POS( t_11 );
-   C_ELM_LIST_FPL( t_10, l_methods, t_11 );
+   C_DIFF_INTOBJS( t_13, l_i, INTOBJ_INT(1) )
+   C_PROD_FIA( t_12, INTOBJ_INT(10), t_13 )
+   C_SUM_FIA( t_11, t_12, INTOBJ_INT(7) )
+   CHECK_INT_POS( t_11 )
+   C_ELM_LIST_FPL( t_10, l_methods, t_11 )
    t_7 = CALL_2ARGS( t_8, t_9, t_10 );
-   CHECK_FUNC_RESULT( t_7 );
-   CHECK_BOOL( t_7 );
+   CHECK_FUNC_RESULT( t_7 )
+   CHECK_BOOL( t_7 )
    t_6 = (Obj)(UInt)(t_7 != False);
    t_4 = t_6;
   }
   t_3 = t_4;
   if ( t_3 ) {
-   C_DIFF_INTOBJS( t_10, l_i, INTOBJ_INT(1) );
-   C_PROD_FIA( t_9, INTOBJ_INT(10), t_10 );
-   C_SUM_FIA( t_8, t_9, INTOBJ_INT(1) );
-   CHECK_INT_POS( t_8 );
-   C_ELM_LIST_FPL( t_7, l_methods, t_8 );
-   CHECK_FUNC( t_7 );
+   C_DIFF_INTOBJS( t_10, l_i, INTOBJ_INT(1) )
+   C_PROD_FIA( t_9, INTOBJ_INT(10), t_10 )
+   C_SUM_FIA( t_8, t_9, INTOBJ_INT(1) )
+   CHECK_INT_POS( t_8 )
+   C_ELM_LIST_FPL( t_7, l_methods, t_8 )
+   CHECK_FUNC( t_7 )
    C_ELM_POSOBJ_NLE( t_8, a_type2, 1 );
    C_ELM_POSOBJ_NLE( t_9, a_type3, 1 );
    C_ELM_POSOBJ_NLE( t_10, a_type4, 1 );
    C_ELM_POSOBJ_NLE( t_11, a_type5, 1 );
    C_ELM_POSOBJ_NLE( t_12, a_type6, 1 );
    t_6 = CALL_6ARGS( t_7, a_flags1, t_8, t_9, t_10, t_11, t_12 );
-   CHECK_FUNC_RESULT( t_6 );
-   CHECK_BOOL( t_6 );
+   CHECK_FUNC_RESULT( t_6 )
+   CHECK_BOOL( t_6 )
    t_5 = (Obj)(UInt)(t_6 != False);
    t_3 = t_5;
   }
@@ -4559,11 +4559,11 @@ static Obj  HdlrFunc33 (
    if ( t_3 ) {
     
     /* return methods[10 * (i - 1) + 8]; */
-    C_DIFF_INTOBJS( t_6, l_i, INTOBJ_INT(1) );
-    C_PROD_FIA( t_5, INTOBJ_INT(10), t_6 );
-    C_SUM_FIA( t_4, t_5, INTOBJ_INT(8) );
-    CHECK_INT_POS( t_4 );
-    C_ELM_LIST_FPL( t_3, l_methods, t_4 );
+    C_DIFF_INTOBJS( t_6, l_i, INTOBJ_INT(1) )
+    C_PROD_FIA( t_5, INTOBJ_INT(10), t_6 )
+    C_SUM_FIA( t_4, t_5, INTOBJ_INT(8) )
+    CHECK_INT_POS( t_4 )
+    C_ELM_LIST_FPL( t_3, l_methods, t_4 )
     RES_BRK_CURR_STAT();
     SWITCH_TO_OLD_FRAME(oldFrame);
     return t_3;
@@ -4574,7 +4574,7 @@ static Obj  HdlrFunc33 (
    else {
     
     /* j := j + 1; */
-    C_SUM_FIA( t_3, l_j, INTOBJ_INT(1) );
+    C_SUM_FIA( t_3, l_j, INTOBJ_INT(1) )
     l_j = t_3;
     
    }
@@ -4588,7 +4588,7 @@ static Obj  HdlrFunc33 (
  
  /* return fail; */
  t_1 = GC_fail;
- CHECK_BOUND( t_1, "fail" );
+ CHECK_BOUND( t_1, "fail" )
  RES_BRK_CURR_STAT();
  SWITCH_TO_OLD_FRAME(oldFrame);
  return t_1;
