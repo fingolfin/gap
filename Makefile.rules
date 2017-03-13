@@ -545,8 +545,8 @@ endif
 manuals: doc
 
 GAPARGS=
-TESTGAP = ./gap$(EXEEXT) -b -m 100m -o 1g -A -q -x 80 -r $(GAPARGS)
-TESTGAPauto = ./gap$(EXEEXT) -b -m 100m -o 1g -q -x 80 -r $(GAPARGS)
+TESTGAP = $(abs_top_builddir)/gap$(EXEEXT) -b -m 100m -o 1g -A -q -x 80 -r $(GAPARGS)
+TESTGAPauto = $(abs_top_builddir)/gap$(EXEEXT) -b -m 100m -o 1g -q -x 80 -r $(GAPARGS)
 
 # TODO: when in HPCGAP mode, we should perhaps instead
 # compile the documentation in the hpcgap dir?
