@@ -8,11 +8,14 @@
 
 set -ex
 
+GAPROOT=${GAPROOT:-$PWD}
+BUILDDIR=${BUILDDIR:-.}
+
 if [[ "${TEST_SUITE}" == makemanuals ]]
 then
     make manuals
-    cat doc/*/make_manuals.out
-    if [[ $(cat doc/*/make_manuals.out | grep -c "manual.lab written") != '3' ]]
+    cat  $GAPROOT/doc/*/make_manuals.out
+    if [[ $(cat  $GAPROOT/doc/*/make_manuals.out | grep -c "manual.lab written") != '3' ]]
     then
         echo "Build failed"
         exit 1
@@ -27,10 +30,10 @@ fi
 
 # We need to compile the profiling package in order to generate coverage
 # reports; and also the IO package, as the profiling package depends on it.
-pushd pkg
+pushd $GAPROOT/pkg
 
 cd io*
-./configure $CONFIGFLAGS
+./configure $CONFIGFLAGS --with-gaproot=$GAPROOT/$BUILDDIR
 make
 cd ..
 
@@ -40,7 +43,7 @@ rm -rf profiling*
 git clone https://github.com/gap-packages/profiling
 cd profiling
 ./autogen.sh
-./configure $CONFIGFLAGS
+./configure $CONFIGFLAGS --with-gaproot=$GAPROOT/$BUILDDIR
 make
 
 # return to base directory
@@ -53,15 +56,15 @@ mkdir -p $COVDIR
 
 case ${TEST_SUITE} in
 testmanuals)
-    bin/gap.sh -q tst/extractmanuals.g
+    bin/gap.sh -q $GAPROOT/tst/extractmanuals.g
 
     bin/gap.sh -q <<GAPInput
-        Read("tst/testmanuals.g");
+        Read("$GAPROOT/tst/testmanuals.g");
         SaveWorkspace("testmanuals.wsp");
         QUIT_GAP(0);
 GAPInput
 
-    for ch in tst/testmanuals/*.tst
+    for ch in $GAPROOT/tst/testmanuals/*.tst
     do
         bin/gap.sh -q -L testmanuals.wsp --cover $COVDIR/$(basename $ch).coverage <<GAPInput
         TestManualChapter("$ch");
@@ -77,20 +80,20 @@ GAPInput
 
     # run gap compiler to verify the src/c_*.c files are up-todate,
     # and also get coverage on the compiler
-    etc/docomp
+    make docomp
 
     # detect if there are any diffs
     git diff --exit-code
 
     ;;
 *)
-    if [[ ! -f  tst/${TEST_SUITE}.g ]]
+    if [[ ! -f  $GAPROOT/tst/${TEST_SUITE}.g ]]
     then
-        echo "Could not read test suite tst/${TEST_SUITE}.g"
+        echo "Could not read test suite $GAPROOT/tst/${TEST_SUITE}.g"
         exit 1
     fi
 
-    bin/gap.sh --cover $COVDIR/${TEST_SUITE}.coverage tst/${TEST_SUITE}.g
+    bin/gap.sh --cover $COVDIR/${TEST_SUITE}.coverage $GAPROOT/tst/${TEST_SUITE}.g
 esac;
 
 # generate library coverage reports
