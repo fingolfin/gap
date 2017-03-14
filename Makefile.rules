@@ -491,7 +491,10 @@ EXTERN_FILES += $(BOEHM_GC_FILES)
 boehm: gc # alias
 gc: $(BOEHM_GC_FILES)
 $(BOEHM_GC_FILES):
-	MAKE=$(MAKE) $(srcdir)/cnf/build-extern.sh gc "$(abs_top_srcdir)/hpcgap/extern/gc" ABI=$(ABI)
+	MAKE=$(MAKE) \
+	ATOMIC_OPS_CFLAGS=$(LIBATOMIC_OPS_CPPFLAGS) \
+	ATOMIC_OPS_LIBS=$(LIBATOMIC_OPS_LDFLAGS) \
+	$(srcdir)/cnf/build-extern.sh gc "$(abs_top_srcdir)/hpcgap/extern/gc" ABI=$(ABI)
 
 ifeq ($(BUILD_LIBATOMIC_OPS),yes)
 $(BOEHM_GC_FILES): $(LIBATOMIC_OPS_FILES)
