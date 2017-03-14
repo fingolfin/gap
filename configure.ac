@@ -310,6 +310,9 @@ AS_IF([test "x$use_readline" = xyes],[
 ],[
   AS_IF([test "x$with_readline" != xcheck],[
     AC_MSG_FAILURE([--with-readline was given, but test for readline failed])
+  ],[
+    READLINE_CPPFLAGS=
+    READLINE_LDFLAGS=
   ])
 ])
 AC_SUBST([READLINE_CPPFLAGS])
