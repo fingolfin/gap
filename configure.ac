@@ -272,29 +272,47 @@ AC_ARG_WITH([readline],
   [],
   [with_readline=check])
 
+
+dnl Now check if we can find readline; we go to some
+dnl extra efforts to ensure it is GNU readline, and not
+dnl e.g. BSD editline wrappers for readline, which do not
+dnl suffice for GAP.
+READLINE_CPPFLAGS=
 READLINE_LDFLAGS=
 use_readline=no
-AS_IF([test "x$with_readline" != xno],
-  [AC_CHECK_LIB([readline], [rl_ding],
-    [
+AS_IF([test "x$with_readline" != xno],[
+  AS_IF([test "x$with_readline" != xcheck],[
+    READLINE_CPPFLAGS="-I$with_readline/include"
+    READLINE_LDFLAGS="-L$with_readline/lib -lreadline -lncurses"
+  ],[
+    READLINE_CPPFLAGS=""
+    READLINE_LDFLAGS="-lreadline -lncurses"
+  ])
+  save_CPPFLAGS="$CPPFLAGS"
+  save_LDFLAGS="$LDFLAGS"
+  CPPFLAGS="$CPPFLAGS $READLINE_CPPFLAGS"
+  LDFLAGS="$LDFLAGS $READLINE_LDFLAGS"
+  AC_CHECK_LIB([readline], [rl_ding], [
       AC_CHECK_HEADER(readline/readline.h,
         [AC_CHECK_HEADER(readline/history.h, use_readline=yes)]
       )
     ],
-    [], -lncurses)
-  ]
-)
-AS_IF([test "x$use_readline" = xyes],
-    [READLINE_LDFLAGS="-lreadline -lncurses"
-     AC_DEFINE([HAVE_LIBREADLINE], [1],
-               [Define if you have libreadline])
-    ],
-    [AS_IF([test "x$with_readline" != xcheck],[
-       AC_MSG_FAILURE(
-         [--with-readline was given, but test for readline failed])
-     ])
-    ]
-)
+    [], [-lncurses]
+  )
+  CPPFLAGS="$save_CPPFLAGS"
+  LDFLAGS="$save_LDFLAGS"
+])
+
+dnl At this point, use_readline is "yes" if readline was found
+dnl and no otherwise.
+AS_IF([test "x$use_readline" = xyes],[
+  AC_DEFINE([HAVE_LIBREADLINE], [1], [Define if you have libreadline])
+],[
+  AS_IF([test "x$with_readline" != xcheck],[
+    AC_MSG_FAILURE([--with-readline was given, but test for readline failed])
+  ])
+])
+AC_SUBST([READLINE_CPPFLAGS])
 AC_SUBST([READLINE_LDFLAGS])
 
 

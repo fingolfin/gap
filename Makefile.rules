@@ -139,13 +139,11 @@ GAP_CPPFLAGS += -I$(srcdir)
 # Add DEFS (from autoconf, contains -D flags)
 GAP_CPPFLAGS += $(DEFS)
 
-# Add flags for GMP
+# Add flags for dependencies
 GAP_CPPFLAGS += $(GMP_CPPFLAGS)
-
-# Add HPC-GAP specific flacks if necessary
-ifeq ($(HPCGAP),yes)
-GAP_CPPFLAGS += $(BOEHM_GC_CPPFLAGS) $(LIBATOMIC_OPS_CPPFLAGS)
-endif
+GAP_CPPFLAGS += $(READLINE_CPPFLAGS)
+GAP_CPPFLAGS += $(BOEHM_GC_CPPFLAGS)
+GAP_CPPFLAGS += $(LIBATOMIC_OPS_CPPFLAGS)
 
 # HACK: teach GAP how to "find itself". For a proper solution,
 # we should ensure that this value is treated dynamically by the build system,
@@ -157,7 +155,7 @@ else
 GAP_CPPFLAGS += "-DSYS_DEFAULT_PATHS=\"$(abs_top_srcdir)\""
 endif
 
-# Finally add user provided CPPFLAGS
+# Finally add user provided flags
 GAP_CPPFLAGS += $(CPPFLAGS)
 
 
@@ -177,14 +175,19 @@ GAP_CFLAGS += $(CFLAGS)
 ########################################################################
 # Linker flags
 ########################################################################
-GAP_LDFLAGS = $(GMP_LDFLAGS) $(READLINE_LDFLAGS)
+GAP_LDFLAGS =
+
+# Add flags for dependencies
+GAP_LDFLAGS += $(GMP_LDFLAGS)
+GAP_LDFLAGS += $(READLINE_LDFLAGS)
+GAP_LDFLAGS += $(BOEHM_LDFLAGS)
+GAP_LDFLAGS += $(LIBATOMIC_OPS_LDFLAGS)
 
 ifeq ($(HPCGAP),yes)
-GAP_LDFLAGS += $(BOEHM_LDFLAGS) $(LIBATOMIC_OPS_LDFLAGS)
 GAP_LDFLAGS += $(PTHREAD_CFLAGS) $(PTHREAD_LIBS)
 endif
 
-# Finally add user provided LDFLAGS
+# Finally add user provided flags
 GAP_LDFLAGS += $(LDFLAGS)
 
 
