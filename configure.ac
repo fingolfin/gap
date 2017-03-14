@@ -249,8 +249,8 @@ AS_IF([test x$with_gmp = xbuiltin],
 
 AS_IF([test x$BUILD_GMP = xyes],[
   BUILD_GMP=yes
-  GMP_CPPFLAGS='-I${builddir}/extern/install/gmp/include'
-  GMP_LDFLAGS='${builddir}/extern/install/gmp/lib/libgmp.la'
+  GMP_CPPFLAGS='-I${abs_top_builddir}/extern/install/gmp/include'
+  GMP_LDFLAGS='${abs_top_builddir}/extern/install/gmp/lib/libgmp.la'
 ])
 
 AC_SUBST([BUILD_GMP])
@@ -349,8 +349,8 @@ AS_IF([test "x$enable_hpcgap" = xyes],
   # As a side benefit, users do not have to worry about installing dependencies.
 
   BUILD_LIBATOMIC_OPS=yes
-  LIBATOMIC_OPS_CPPFLAGS='-I${builddir}/extern/install/libatomic_ops/include'
-  LIBATOMIC_OPS_LDFLAGS='${builddir}/extern/install/libatomic_ops/lib/libatomic_ops.la'
+  LIBATOMIC_OPS_CPPFLAGS='-I${abs_top_builddir}/extern/install/libatomic_ops/include'
+  LIBATOMIC_OPS_LDFLAGS='${abs_top_builddir}/extern/install/libatomic_ops/lib/libatomic_ops.la'
   AC_SUBST([BUILD_LIBATOMIC_OPS])
   AC_SUBST([LIBATOMIC_OPS_CPPFLAGS])
   AC_SUBST([LIBATOMIC_OPS_LDFLAGS])
@@ -360,8 +360,8 @@ AS_IF([test "x$enable_hpcgap" = xyes],
 
   AC_DEFINE([BOEHM_GC], [1], [Use Boehm garbage collector])
   BUILD_BOEHM_GC=yes
-  BOEHM_GC_CPPFLAGS='-I${builddir}/extern/install/gc/include'
-  BOEHM_LDFLAGS='${builddir}/extern/install/gc/lib/libgc.la'
+  BOEHM_GC_CPPFLAGS='-I${abs_top_builddir}/extern/install/gc/include'
+  BOEHM_LDFLAGS='${abs_top_builddir}/extern/install/gc/lib/libgc.la'
   AC_SUBST([BUILD_BOEHM_GC])
   AC_SUBST([BOEHM_GC_CPPFLAGS])
   AC_SUBST([BOEHM_LDFLAGS])
