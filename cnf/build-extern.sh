@@ -16,7 +16,10 @@ prefix=$PWD/extern/install/$pkg
 
 mkdir -p "$builddir"
 
-if [[ ! "$builddir/config.status" -nt "$src/configure" ]] ; then
+# If the subproject's configure was modified, or if GAP's configure was
+# run more recently, we re-run the subproject configure.
+if [[ ( ! "$builddir/config.status" -nt "$src/configure" )
+    || ( "config.status" -nt "$builddir/config.status" ) ]] ; then
   pushd "$builddir"
   "$src/configure" --prefix=$prefix "$@"
   popd
