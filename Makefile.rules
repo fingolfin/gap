@@ -171,7 +171,7 @@ GAP_CFLAGS += $(CFLAGS)
 ########################################################################
 # Linker flags
 ########################################################################
-GAP_LDFLAGS =
+GAP_LDFLAGS = $(ABI_CFLAGS)
 
 # Add flags for dependencies
 GAP_LDFLAGS += $(GMP_LDFLAGS)
