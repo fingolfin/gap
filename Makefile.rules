@@ -358,7 +358,7 @@ LINK=$(LIBTOOL) --mode=link $(CC) -export-dynamic
 
 ifeq ($(SYS_IS_CYGWIN32),yes)
 
-GAP_CPPFLAGS += " -DCOMPILECYGWINDLL"
+GAP_CPPFLAGS += "-DCOMPILECYGWINDLL"
 
 # Special build rules for CYGWIN / Windows: In order to allow kernel
 # extensions, we employ a trick: GAP itself is compiled into DLL, in which 
