@@ -42,7 +42,6 @@ AC_ARG_VAR(ABI, [Set this equal to 32 or 64 to build GAP (and GMP provided you
      a value of 64 or 32 depending of the pointer size of the host.])
 
 AC_MSG_CHECKING([ABI flags])
-AC_MSG_CHECKING([ABI bit size])
 if test "x$ABI" = "x" ;  then
   ABI_CFLAGS=""
 elif test "$ABI" = "64"; then
@@ -50,7 +49,7 @@ elif test "$ABI" = "64"; then
 elif test "$ABI" = "32"; then
   ABI_CFLAGS="-m32"
 else
-  AC_MSG_WARN([ $ABI is not a supported value for ABI. The supported values are ABI=64
+  AC_MSG_ERROR([ $ABI is not a supported value for ABI. The supported values are ABI=64
                  or 32.])
 fi
 AC_MSG_RESULT([$ABI_CFLAGS])
@@ -58,8 +57,17 @@ AC_SUBST(ABI_CFLAGS)
 
 dnl Add ABI_CFLAGS to CFLAGS *now*, so that all config tests we
 dnl run from here on use it.
-CFLAGS="$CFLAGS $ABI_CFLAGS"
-LDFLAGS="$LDFLAGS $ABI_CFLAGS"
+AS_IF([test -n $ABI_CFLAGS],[
+  CFLAGS="$CFLAGS $ABI_CFLAGS"
+  LDFLAGS="$LDFLAGS $ABI_CFLAGS"
+
+  dnl Verify that the ABI_CFLAGS didn't break anything
+    AC_LINK_IFELSE(
+        [AC_LANG_PROGRAM([[]],[])],
+        [],
+        [AC_MSG_ERROR([ABI_CFLAGS="$ABI_CFLAGS" not supported])]
+        )
+])
 
 dnl determine pointer sizes to distinguish 32 and 64 bit systems.
 AC_CHECK_SIZEOF([void *])
