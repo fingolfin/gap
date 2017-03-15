@@ -17,6 +17,14 @@ env:
     - TEST_SUITE=testinstall ABI=32 BUILDDIR=build CONFIGFLAGS=--with-gmp=builtin
     - TEST_SUITE=testinstall ABI=64 BUILDDIR=build
     - TEST_SUITE=testinstall ABI=64 BUILDDIR=build CONFIGFLAGS=--with-gmp=builtin
+      # all from above with --enable-hpcgap
+    - TEST_SUITE=testinstall ABI=32 HPCGAP=yes CONFIGFLAGS=--with-gmp=builtin
+    - TEST_SUITE=testinstall ABI=64 HPCGAP=yes
+    - TEST_SUITE=testinstall ABI=64 HPCGAP=yes CONFIGFLAGS=--with-gmp=builtin
+      # out of three builds
+    - TEST_SUITE=testinstall ABI=32 HPCGAP=yes BUILDDIR=build CONFIGFLAGS=--with-gmp=builtin
+    - TEST_SUITE=testinstall ABI=64 HPCGAP=yes BUILDDIR=build
+    - TEST_SUITE=testinstall ABI=64 HPCGAP=yes BUILDDIR=build CONFIGFLAGS=--with-gmp=builtin
 
 # TODO: boehm GC, HPC-GAP compatibility mode
 
@@ -103,13 +111,7 @@ after_success:
 
 script:
   - export GAPROOT=$TRAVIS_BUILD_DIR
-  - ./autogen.sh
-  - mkdir -p $BUILDDIR
-  - cd $BUILDDIR
-  - $GAPROOT/configure $CONFIGFLAGS
-  - make -j4
-  - make bootstrap-pkg-full
-  - if [[ $BUILDDIR != . ]] ; then mv pkg $GAPROOT/ ; fi
+  - bash $GAPROOT/etc/ci-prepare.sh
   - bash $GAPROOT/etc/ci.sh
 
 notifications:

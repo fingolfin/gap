@@ -11,6 +11,8 @@ set -ex
 GAPROOT=${GAPROOT:-$PWD}
 BUILDDIR=${BUILDDIR:-.}
 
+cd $BUILDDIR
+
 # If we don't care about code coverage, just run the test directly
 if [[ -n ${NO_COVERAGE} ]]
 then
@@ -32,7 +34,7 @@ fi
 
 if [[ "${TEST_SUITE}" == testerror ]]
 then
-    cd tst/test-error
+    cd $GAPROOT/tst/test-error
     ./run_error_tests.sh
     exit 0
 fi
@@ -116,7 +118,7 @@ GAPInput
 
     bin/gap.sh --cover $COVDIR/${TEST_SUITE}.coverage \
                <(echo 'SetUserPreference("ReproducibleBehaviour", true);') \
-               tst/${TEST_SUITE}.g
+               $GAPROOT/tst/${TEST_SUITE}.g
 esac;
 
 # generate library coverage reports
