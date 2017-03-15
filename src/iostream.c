@@ -387,7 +387,9 @@ void ChildStatusChanged( int whichsig )
           Pr("#E Unexpected waitpid error %d\n",errno, 0);
   } while (retcode != 0 && retcode != -1);
   
+#if !defined(LIBGAP)
   signal(SIGCHLD, ChildStatusChanged);
+#endif
 }
 
 Int StartChildProcess ( Char *dir, Char *prg, Char *args[] )

@@ -12,12 +12,15 @@
 # Default rule: build gap
 ########################################################################
 all: gap$(EXEEXT) gac
-.PHONY: all
+
+ifeq ($(BUILD_LIBGAP),yes)
+libgap: libgap.la
+.PHONY: libgap
+endif
 
 # Backwards compatibility: add "default" target as alias for "all"
 default: all
 .PHONY: default
-
 
 ########################################################################
 # Source files
@@ -112,6 +115,9 @@ ifeq ($(HPCGAP),yes)
   SOURCES += src/hpc/traverse.c
 endif
 
+ifeq ($(BUILD_LIBGAP),yes)
+  SOURCES += src/sage_interface.c
+endif
 
 ########################################################################
 # Preprocessor flags
@@ -199,7 +205,6 @@ GAP_LIBS += $(LIBATOMIC_OPS_LIBS)
 # Finally add user provided flags
 GAP_LIBS += $(LIBS)
 
-
 ########################################################################
 # HPC-GAP: transform code using ward
 #
@@ -275,6 +280,7 @@ QUIET_CC      = @echo "   C       $< => $@";
 QUIET_LINK    = @echo "   LINK    $@";
 QUIET_WARD    = @echo "   WARD    $< => $@";
 QUIET_SED     = @echo "   SED     $< => $@";
+QUIET_INSTALL = @echo "   INSTALL $< => $@";
 QUIET         = @
 LIBTOOL 	 += --silent
 endif
@@ -375,9 +381,11 @@ else
 # Linking rule and dependencies for the main gap executable
 gap$(EXEEXT): $(OBJS)
 	$(QUIET_LINK)$(LINK) $(OBJS) $(GAP_LDFLAGS) $(GAP_LIBS) -o $@
-
+ 
 endif
 
+libgap.la: $(OBJS)
+	$(QUIET_LINK)$(LINK) -rpath $(libdir) $(GAP_LDFLAGS) $(OBJS) $(LIBS) -o $@
 
 ########################################################################
 # The "docomp" target regenerates the various src/c_*.c files, and
@@ -406,9 +414,9 @@ distclean: clean
 clean:
 	rm -rf obj
 	rm -f gap$(EXEEXT) gac
+	rm -f libgap.la
 
 .PHONY: clean distclean
-
 
 ########################################################################
 # Building subprojects
@@ -950,3 +958,17 @@ GNUmakefile: $(srcdir)/GNUmakefile.in config.status
 
 gac: $(srcdir)/cnf/gac.in config.status
 	$(SHELL) ./config.status $@
+
+LTINSTALL=$(LIBTOOL) --mode=install $(INSTALL)
+install-libgap: libgap.la
+	$(QUIET_INSTALL)$(LTINSTALL) libgap.la $(libdir)
+
+# TODO: This needs to be done more elegantly
+obj/libgap-test-0001.lo: $(top_srcdir)/tst/testlibgap/0001.c
+	$(QUIET_CC)$(COMPILE) $(DEPFLAGS) $(GAP_CFLAGS) $(CC_EXTRA_FLAGS) $(GAP_CPPFLAGS) -c $< -o $@
+
+test-libgap: libgap.la obj/libgap-test-0001.lo 
+	$(QUIET_LINK)$(LINK) $(OBJS) $(GAP_LDFLAGS) $(GAP_LIBS) obj/libgap-test-0001.lo -o test-libgap
+	./test-libgap -l $(top_srcdir) -m 32m -q -T > 0001.out
+	diff $(top_srcdir)/tst/testlibgap/0001.expect 0001.out
+

@@ -87,6 +87,10 @@ extern int errno;
 #include <process.h>
 #endif
 
+#if defined(LIBGAP)
+#include "sage_interface_internal.h"
+#endif
+
 
 /* utility to check return value of 'write'  */
 ssize_t writeandcheck(int fd, const char *buf, size_t count) {
@@ -1019,16 +1023,20 @@ Int syFid;
 
 void syAnswerCont ( int signr )
 {
+#if !defined(LIBGAP)
     syStartraw( syFid );
     signal( SIGCONT, SIG_DFL );
     kill( getpid(), SIGCONT );
+#endif
 }
 
 void syAnswerTstp ( int signr )
 {
+#if !defined(LIBGAP)
     syStopraw( syFid );
     signal( SIGCONT, syAnswerCont );
     kill( getpid(), SIGTSTP );
+#endif
 }
 
 #endif
@@ -1102,7 +1110,7 @@ UInt syStartraw ( Int fid )
 #endif
 
 
-#ifdef SIGTSTP
+#if !defined(LIBGAP) && defined(SIGTSTP)
     /* install signal handler for stop                                     */
     syFid = fid;
     signal( SIGTSTP, syAnswerTstp );
@@ -1129,7 +1137,7 @@ void syStopraw (
     if ( SyWindow )
         return;
 
-#ifdef SIGTSTP
+#if !defined(LIBGAP) && defined(SIGTSTP)
     /* remove signal handler for stop                                      */
     signal( SIGTSTP, SIG_DFL );
 #endif
@@ -1226,11 +1234,13 @@ void syAnswerIntr ( int signr )
 
 void SyInstallAnswerIntr ( void )
 {
+#if !defined(LIBGAP)
     if ( signal( SIGINT, SIG_IGN ) != SIG_IGN )
     {
         signal( SIGINT, syAnswerIntr );
         siginterrupt( SIGINT, 0 );
     }
+#endif
 }
 
 
@@ -1295,7 +1305,9 @@ void getwindowsize( void )
             if (CO <= 0)
                 CO = win.ws_col;
         }
+#if !defined(LIBGAP)
         (void) signal(SIGWINCH, syWindowChangeIntr);
+#endif
     }
 #endif /* TIOCGWINSZ */
 
@@ -2892,7 +2904,19 @@ Char * SyFgets (
     UInt                length,
     Int                 fid)
 {
-  return syFgets( line, length, fid, 1);
+#if !defined(LIBGAP)
+    return syFgets( line, length, fid, 1);
+#else
+    if(fid!=0 && fid!=2) {
+        /* TODO: Do this properly */
+        // not stdin/stderr; probably file IO. Do the standard thing.
+        // printf("SyFgets fid=%i\n", fid);
+        return syFgets( line, length, fid, 1);
+    }
+    return libgap_get_input(line, length);
+    // return syFgets( line, length, fid, 1);
+#endif
+
 }
 
 
@@ -3101,7 +3125,9 @@ UInt SyExecuteProcess (
        `After that, we call the old signal handler, in case any other children have died in the
        meantime. This resets the handler */
 
+#if !defined(LIBGAP)
     func2 = signal( SIGCHLD, SIG_DFL );
+#endif
 
     /* This may return SIG_DFL (0x0) or SIG_IGN (0x1) if the previous handler
      * was set to the default or 'ignore'. In these cases (or if SIG_ERR is
@@ -3119,24 +3145,32 @@ UInt SyExecuteProcess (
     /* we are the parent                                                   */
     if ( pid != 0 ) {
 
+#if !defined(LIBGAP)
         /* ignore a CTRL-C                                                 */
         func = signal( SIGINT, SIG_IGN );
+#endif
 
         /* wait for some action                                            */
         wait_pid = waitpid( pid, &status, 0 );
         if ( wait_pid == -1 ) {
+#if !defined(LIBGAP)
             signal( SIGINT, func );
             (*func2)(SIGCHLD);
+#endif
             return -1;
         }
 
         if ( WIFSIGNALED(status) ) {
+#if !defined(LIBGAP)
             signal( SIGINT, func );
             (*func2)(SIGCHLD);
+#endif
             return -1;
         }
+#if !defined(LIBGAP)
         signal( SIGINT, func );
         (*func2)(SIGCHLD);
+#endif
         return WEXITSTATUS(status);
     }
 

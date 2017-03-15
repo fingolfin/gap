@@ -197,12 +197,14 @@ typedef struct {
 #endif
 
 static StructImportedGVars ImportedGVars[MAX_IMPORTED_GVARS];
-static Int NrImportedGVars;
+Int NrImportedGVars;
 
 static StructImportedGVars ImportedFuncs[MAX_IMPORTED_GVARS];
-static Int NrImportedFuncs;
+Int NrImportedFuncs;
 
 static char **sysenviron;
+
+TJumpToCatchFunc JumpToCatchFunc = 0;
 
 /*
 TL: Obj ShellContext = 0;
@@ -479,7 +481,7 @@ Obj FuncSHELL (Obj self, Obj args)
   return res;
 }
 
-#ifdef COMPILECYGWINDLL
+#if defined(COMPILECYGWINDLL) || defined(LIBGAP) 
 #define main realmain
 #endif
 
@@ -1118,6 +1120,9 @@ Obj FuncCALL_WITH_CATCH( Obj self, Obj func, Obj args )
 
 Obj FuncJUMP_TO_CATCH( Obj self, Obj payload)
 {
+  if(JumpToCatchFunc != 0) {
+      (*JumpToCatchFunc)();
+  }
   TLS(ThrownObject) = payload;
   syLongjmp(TLS(ReadJmpError), 1);
   return 0;
@@ -3268,6 +3273,8 @@ void InitializeGap (
 
     NrImportedGVars = 0;
     NrImportedFuncs = 0;
+
+    JumpToCatchFunc = 0;
 
     sysenviron = environ;
 
