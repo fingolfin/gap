@@ -341,13 +341,13 @@ COMPILE=$(LIBTOOL) --mode=compile $(CC)
 ifeq ($(HPCGAP),no)
 obj/%.lo: src/%.c
 	@$(MKDIR_P) $(@D)/$(DEPDIRNAME)
-	$(QUIET_CC)$(COMPILE) $(DEPFLAGS) $(GAP_CFLAGS) $(CC_EXTRA_FLAGS) $(GAP_CPPFLAGS) -c $< -o $@
+	$(QUIET_CC)$(COMPILE) $(DEPFLAGS) $(GAP_CFLAGS) $(GAP_CPPFLAGS) -c $< -o $@
 endif
 
 # Build rule for generated C source files
 obj/%.lo: gen/%.c
 	@$(MKDIR_P) $(@D)/$(DEPDIRNAME)
-	$(QUIET_CC)$(COMPILE) $(DEPFLAGS) $(GAP_CFLAGS) $(CC_EXTRA_FLAGS) $(GAP_CPPFLAGS) -c $< -o $@
+	$(QUIET_CC)$(COMPILE) $(DEPFLAGS) $(GAP_CFLAGS) $(GAP_CPPFLAGS) -c $< -o $@
 
 
 ########################################################################
@@ -358,11 +358,12 @@ LINK=$(LIBTOOL) --mode=link $(CC) -export-dynamic
 
 ifeq ($(SYS_IS_CYGWIN32),yes)
 
+GAP_CPPFLAGS += " -DCOMPILECYGWINDLL"
+
 # Special build rules for CYGWIN / Windows: In order to allow kernel
 # extensions, we employ a trick: GAP itself is compiled into DLL, in which 
 # GAP's standard main function is renamed. And gap.exe is a tiny binary which
 # loads that DLL and calls the renamed main function.
-src/gap.lo: CC_EXTRA_FLAGS := -DCOMPILECYGWINDLL
 gap.dll: $(OBJS)
 	$(QUIET_LINK)$(LINK) -shared $(OBJS) $(GAP_LDFLAGS) $(GAP_LIBS) -o $@
 gap$(EXEEXT): gap.dll
