@@ -463,7 +463,8 @@ EXTERN_FILES += $(LIBATOMIC_OPS_FILES)
 
 libatomic_ops: $(LIBATOMIC_OPS_FILES)
 $(LIBATOMIC_OPS_FILES):
-	MAKE=$(MAKE) $(srcdir)/cnf/build-extern.sh libatomic_ops "$(abs_top_srcdir)/hpcgap/extern/libatomic_ops" ABI=$(ABI)
+	MAKE=$(MAKE) CFLAGS=$(ABI_CFLAGS) LDFLAGS=$(ABI_CFLAGS) \
+	$(srcdir)/cnf/build-extern.sh libatomic_ops "$(abs_top_srcdir)/hpcgap/extern/libatomic_ops"
 
 # TODO: MAKEFLAGS=-j1
 
@@ -501,9 +502,11 @@ boehm: gc # alias
 gc: $(BOEHM_GC_FILES)
 $(BOEHM_GC_FILES):
 	MAKE=$(MAKE) \
+	CFLAGS=$(ABI_CFLAGS) \
+	LDFLAGS=$(ABI_CFLAGS) \
 	ATOMIC_OPS_CFLAGS=$(LIBATOMIC_OPS_CPPFLAGS) \
 	ATOMIC_OPS_LIBS=$(LIBATOMIC_OPS_LDFLAGS) \
-	$(srcdir)/cnf/build-extern.sh gc "$(abs_top_srcdir)/hpcgap/extern/gc" ABI=$(ABI)
+	$(srcdir)/cnf/build-extern.sh gc "$(abs_top_srcdir)/hpcgap/extern/gc"
 
 ifeq ($(BUILD_LIBATOMIC_OPS),yes)
 $(BOEHM_GC_FILES): $(LIBATOMIC_OPS_FILES)
