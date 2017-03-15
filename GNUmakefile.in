@@ -140,7 +140,16 @@ top_srcdir = @top_srcdir@
 
 
 #
+# Set vpath values to make GNU make read source files from $(srcdir).
 #
+# The vpath directives below ensure that if we reference src/foo.c, then if it
+# is not found in the build dir (e.g. because we are doing an out-of-tree
+# build), GNU make automatically looks for $(srcdir)/src/foo.c
+# #
+# Note that `vpath' is a GNU make extension. Unlike VPATH, it can be
+# restricted to certain file extensions. This way, we can mix in-tree and
+# out-of-tree builds without accidentally picking up e.g. *.o files from the
+# wrong tree. Wee still have to be careful about gen/config.h, though.
 #
 vpath %.h $(srcdir)
 vpath %.c $(srcdir)
