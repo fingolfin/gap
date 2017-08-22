@@ -98,13 +98,25 @@ enum {
 
 /****************************************************************************
 **
-*T  Set NORETURN to suitable compiler attribute.
+*T  NORETURN_PRE / NORETURN_POST allow marking functions as not returning
 **
 */
-#ifdef HAVE_FUNC_ATTRIBUTE_NORETURN
-#define NORETURN __attribute__((noreturn))
+#if HAVE_STDNORETURN_H
+
+#include <stdnoreturn.h>
+#define NORETURN_PRE    noreturn
+#define NORETURN_POST
+
+#elif HAVE_FUNC_ATTRIBUTE_NORETURN
+
+#define NORETURN_PRE
+#define NORETURN_POST   __attribute__((noreturn))
+
 #else
-#define NORETURN
+
+#define NORETURN_PRE
+#define NORETURN_POST
+
 #endif
 
 /****************************************************************************
@@ -777,7 +789,7 @@ extern UInt * * * SyAllocBags (
 **
 **  'SyAbortBags' is the function called by Gasman in case of an emergency.
 */
-extern void SyAbortBags(const Char * msg) NORETURN;
+extern NORETURN_PRE void SyAbortBags(const Char * msg) NORETURN_POST;
 
 
 /****************************************************************************
@@ -948,7 +960,7 @@ typedef struct {
 **  If ret is 0 'SyExit' should signal to a calling proccess that all is  ok.
 **  If ret is 1 'SyExit' should signal a  failure  to  the  calling proccess.
 */
-extern void SyExit(UInt ret) NORETURN;
+NORETURN_PRE void SyExit(UInt ret) NORETURN_POST;
 
 
 /****************************************************************************
@@ -1033,7 +1045,7 @@ extern Char *getOptionArg(Char key, UInt which);
 #define syJmp_buf jmp_buf
 #endif
 
-void syLongjmp(syJmp_buf* buf, int val) NORETURN;
+NORETURN_PRE void syLongjmp(syJmp_buf* buf, int val) NORETURN_POST;
 
 /****************************************************************************
 **

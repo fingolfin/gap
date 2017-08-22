@@ -133,8 +133,12 @@ AC_DEFINE_UNQUOTED([HAVE_ARITHRIGHTSHIFT],
     [$HAVE_ARITHRIGHTSHIFT],
     [define as 1 if >> for long int behaves like an arithmetic right shift for negative numbers])
 
-dnl function attributes
-AX_GCC_FUNC_ATTRIBUTE([noreturn])
+dnl marking functions as "noreturn"
+AC_CHECK_HEADERS([stdnoreturn.h])
+AS_IF([test "x$ac_cv_header_stdnoreturn_h" = xno],[
+  AX_GCC_FUNC_ATTRIBUTE([noreturn])
+  ])
+
 
 dnl compiler builtins
 AC_DEFUN([CHECK_COMPILER_BUILTIN],

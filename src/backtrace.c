@@ -7,7 +7,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-static void BacktraceHandler(int sig) NORETURN;
+static NORETURN_PRE void BacktraceHandler(int sig) NORETURN_POST;
 
 static void BacktraceHandler(int sig) {
   void *trace[32];

@@ -1149,7 +1149,7 @@ Obj FuncCALL_WITH_CATCH( Obj self, Obj func, volatile Obj args )
     return res;
 }
 
-Obj FuncJUMP_TO_CATCH( Obj self, Obj payload)
+NORETURN_PRE Obj FuncJUMP_TO_CATCH( Obj self, Obj payload) NORETURN_POST
 {
   STATE(ThrownObject) = payload;
   syLongjmp(&(STATE(ReadJmpError)), 1);
