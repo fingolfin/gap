@@ -234,6 +234,21 @@ function( stream )
     CloseStream(stream);
 end );
 
+BindGlobal("EvaluateString",
+function(string)
+   local stream, r, res;
+   stream := InputTextString(string);
+   res := READ_ALL_COMMANDS(stream, false);
+
+   for r in res do
+       if r[1] = true then
+           return ViewString(r[2]);
+       fi;
+   od;
+ 
+   return ViewString(fail);
+end);
+
 
 #############################################################################
 ##

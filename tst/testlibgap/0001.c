@@ -8,6 +8,8 @@
 #include <src/libgap.h>
 #include <src/libgap_internal.h>
 
+extern Obj EvalString_;
+
 extern char ** environ;
 
 void error_handler(char * msg)
@@ -31,6 +33,14 @@ void eval(char * cmd)
     GAP_finish_interaction();
 }
 
+void eval_new(const char * cmd)
+{
+    Obj res;
+
+    res = CALL_1ARGS(EvalString_, MakeString(cmd));
+    printf("Output:\n%s", CSTR_STRING(res));
+}
+
 int main(int argc, char **argv)
 {
     GAP_set_error_handler(&error_handler);
@@ -41,14 +51,14 @@ int main(int argc, char **argv)
     CollectBags(0, 1);    // full GC
     GAP_exit();
 
-    eval("1+2+3;\n");
-    eval("g:=FreeGroup(2);\n");
-    eval("a:=g.1;\n");
-    eval("b:=g.2;\n");
-    eval("lis:=[a^2, a^2, b*a];\n");
-    eval("h:=g/lis;\n");
-    eval("c:=h.1;\n");
-    eval("Set([1..1000000], i->Order(c));\n");
+    eval_new("1+2+3;\n");
+    eval_new("g:=FreeGroup(2);\n");
+    eval_new("a:=g.1;\n");
+    eval_new("b:=g.2;\n");
+    eval_new("lis:=[a^2, a^2, b*a];\n");
+    eval_new("h:=g/lis;\n");
+    eval_new("c:=h.1;\n");
+    eval_new("Set([1..1000000], i->Order(c));\n");
 
     GAP_finalize();
     return 0;

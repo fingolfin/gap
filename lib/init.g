@@ -1016,14 +1016,16 @@ InstallAndCallPostRestore( function()
     od;
 end );
 
+
 if IsHPCGAP and THREAD_UI() then
   ReadLib("hpc/consoleui.g");
   MULTI_SESSION();
-else
+  PROGRAM_CLEAN_UP();
+elif not IsLIBGAP then
   SESSION();
+  PROGRAM_CLEAN_UP();
 fi;
 
-PROGRAM_CLEAN_UP();
 
 
 #############################################################################
