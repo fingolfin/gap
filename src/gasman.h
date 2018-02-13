@@ -1140,9 +1140,14 @@ extern void CallbackForAllBags( void (*func)(Bag) );
 void *AllocateMemoryBlock(UInt size);
 #endif
 
-
 #ifdef GAP_MEM_CHECK
 Int enableMemCheck(Char ** argv, void * dummy);
 #endif
+
+/*
+ * If not 0 this function will be called in
+ * CollectBags to allow users of libgap to mark bags
+ */
+extern TNumExtraMarkFuncBags ExtraMarkFuncBags;
 
 #endif // GAP_GASMAN_H
