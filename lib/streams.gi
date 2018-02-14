@@ -236,17 +236,21 @@ end );
 
 BindGlobal("EvaluateString",
 function(string)
-   local stream, r, res;
-   stream := InputTextString(string);
-   res := READ_ALL_COMMANDS(stream, false);
+   local instream, outstream, r, res, obj;
+   res := "";
+   instream := InputTextString(string);
+   outstream := OutputTextString(res, true);
 
-   for r in res do
-       if r[1] = true then
-           return ViewString(r[2]);
-       fi;
+   SET_OUTPUT(outstream, true); 
+   obj := READ_ALL_COMMANDS(instream, false);
+   for r in obj do
+      if r[1] = true then
+         ViewObj(r[2]);
+      fi;
    od;
- 
-   return ViewString(fail);
+   SET_PREVIOUS_OUTPUT();
+
+   return res;
 end);
 
 
