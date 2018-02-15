@@ -58,12 +58,12 @@ int GAP_in_enter_exit_block = 0; /* false */
 /*** Global Initialization ***********************************************/
 /*************************************************************************/
 
-void GAP_initialize(int argc, char** argv)
+void GAP_initialize(int argc, char** argv, char ** env)
 {
     /* Init interpreter state */
     InitGAPState(&MainGAPState);
     GAP_mark_stack_bottom();
-    InitializeGap(&argc, argv, environ);
+    InitializeGap(&argc, argv, env);
     STATE(JumpToCatchCallback) = GAP_call_error_handler;
 }
 

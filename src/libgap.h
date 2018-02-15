@@ -34,7 +34,7 @@
  * argv = "libgap", "-l", "/path/to/gap-library", "-K", "64M", NULL
  * env = NULL
  */
-void GAP_initialize(int argc, char** argv);
+void GAP_initialize(int argc, char** argv, char** env);
 
 
 /* Currently, this does nothing. One day, it should correctly

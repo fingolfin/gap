@@ -44,7 +44,7 @@ void eval_new(const char * cmd)
 int main(int argc, char **argv)
 {
     GAP_set_error_handler(&error_handler);
-    GAP_initialize(argc, argv);
+    GAP_initialize(argc, argv, environ );
     printf("Initialized\n");
 
     GAP_enter();
