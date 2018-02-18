@@ -61,6 +61,7 @@ SOURCES += src/intrprtr.c
 SOURCES += src/io.c
 SOURCES += src/iostream.c
 SOURCES += src/libgap.c
+SOURCES += src/libgap-api.c
 SOURCES += src/listfunc.c
 SOURCES += src/listoper.c
 SOURCES += src/lists.c
