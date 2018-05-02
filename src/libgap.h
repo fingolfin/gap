@@ -164,4 +164,5 @@ char* GAP_get_output(void);
 void GAP_finish_interaction(void);
 
 
+
 #endif /* LIBGAP__H */

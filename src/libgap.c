@@ -29,6 +29,10 @@
 #include <stdio.h>
 #include <string.h>
 
+#include "gap.h"
+#include "calls.h"
+#include "stringobj.h"
+
 /* Pointers to input/output buffers. libGAP users must not access these buffers directly!
  */
 
@@ -49,6 +53,8 @@ static char stderr_buffer[STDERR_BUFSIZE];
 static size_t stderr_pos = 0;
 
 int GAP_in_enter_exit_block = 0; /* false */
+
+extern Obj EvalString_;
 
 /*************************************************************************/
 /*** Initialize / Finalize ***********************************************/
@@ -205,4 +211,12 @@ void GAP_set_error(char* msg)
   int i;
   for (i=0; i<strlen(msg); i++)
     GAP_append_stderr(msg[i]);
+}
+
+Obj GAP_EvalString(const char * cmd)
+{
+    Obj res;
+
+    res = CALL_1ARGS(EvalString_, MakeString(cmd));
+    return res;
 }

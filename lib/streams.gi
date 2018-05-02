@@ -253,6 +253,14 @@ function(string)
    return res;
 end);
 
+BindGlobal("LIBGAP_EvalString",
+function(string)
+   local instream, obj;
+   instream := InputTextString(string);
+   obj := READ_ALL_COMMANDS(instream, false);
+   return obj;
+end);
+
 
 #############################################################################
 ##
