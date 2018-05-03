@@ -16,7 +16,7 @@
 all: gap$(EXEEXT) gac
 .PHONY: all
 
-libgap: libgap.la sysinfo.gap
+libgap: libgap.la sysinfo.gap symlinks
 .PHONY: libgap
 
 # Backwards compatibility: add "default" target as alias for "all"
