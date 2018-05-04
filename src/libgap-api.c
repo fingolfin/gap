@@ -27,7 +27,7 @@ Int GAP_Int_IntObj( Obj value )
 /*************************************************************************/
 
 char* GAP_CSTR_STRING( Obj str ){
-    return GAP_CSTR_STRING( str );
+    return CSTR_STRING( str );
 }
 
 Obj GAP_MakeString( char * str )
