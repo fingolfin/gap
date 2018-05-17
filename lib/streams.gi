@@ -241,14 +241,12 @@ function(string)
    instream := InputTextString(string);
    outstream := OutputTextString(res, true);
 
-   SET_OUTPUT(outstream, true); 
-   obj := READ_ALL_COMMANDS(instream, false);
+   obj := READ_ALL_COMMANDS(instream, outstream, false);
    for r in obj do
       if r[1] = true then
          ViewObj(r[2]);
       fi;
    od;
-   SET_PREVIOUS_OUTPUT();
 
    return res;
 end);
@@ -257,7 +255,7 @@ BindGlobal("LIBGAP_EvalString",
 function(string)
    local instream, obj;
    instream := InputTextString(string);
-   obj := READ_ALL_COMMANDS(instream, false);
+   obj := READ_ALL_COMMANDS(instream, 0, false);
    return obj;
 end);
 

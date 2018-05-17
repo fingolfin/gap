@@ -97,7 +97,7 @@ static Int READ_COMMAND(Obj *evalResult)
  * execute cells and is likely to be replaced by a function that can read a single command
  * from a stream without losing the rest of its content.
  */
-Obj FuncREAD_ALL_COMMANDS( Obj self, Obj stream, Obj echo )
+Obj FuncREAD_ALL_COMMANDS( Obj self, Obj instream, Obj outstream, Obj echo )
 {
     ExecStatus status;
     Int resultCount, resultCapacity;
@@ -105,8 +105,12 @@ Obj FuncREAD_ALL_COMMANDS( Obj self, Obj stream, Obj echo )
     Obj result, resultList;
     Obj evalResult;
 
-    /* try to open the stream */
-    if (!OpenInputStream(stream, echo == True)) {
+    /* try to open the streams */
+    if (!OpenInputStream(instream, echo == True)) {
+        return Fail;
+    }
+    if (outstream != INTOBJ_INT(0) && !OpenOutputStream(outstream)) {
+        CloseInput();
         return Fail;
     }
 
@@ -141,7 +145,10 @@ Obj FuncREAD_ALL_COMMANDS( Obj self, Obj stream, Obj echo )
                 }
             }
         }
-    } while(!(status & (STATUS_EOF | STATUS_QUIT | STATUS_QQUIT)));
+    } while (!(status & (STATUS_EOF | STATUS_QUIT | STATUS_QQUIT)));
+
+    if (outstream != INTOBJ_INT(0))
+        CloseOutput();
     CloseInput();
     ClearError();
 
@@ -2144,7 +2151,7 @@ static StructGVarFunc GVarFuncs[] = {
 
     GVAR_FUNC(READ, 1, "filename"),
     GVAR_FUNC(READ_NORECOVERY, 1, "filename"),
-    GVAR_FUNC(READ_ALL_COMMANDS, 2, "stream, echo"),
+    GVAR_FUNC(READ_ALL_COMMANDS, 3, "instream, oustream, echo"),
     GVAR_FUNC(READ_COMMAND_REAL, 2, "stream, echo"),
     GVAR_FUNC(READ_STREAM, 1, "stream"),
     GVAR_FUNC(READ_STREAM_LOOP, 2, "stream, catchstderrout"),
