@@ -121,10 +121,17 @@ char* GAP_get_error(void)
   return strdup(stderr_buffer);
 }
 
+// HACK: import private NextSymbol
+extern void NextSymbol(void);
+
 void GAP_finish_interaction(void)
 {
+  // FIXME: Max says: instead of abusing NextSymbol() here, instead it should
+  // suffice to just flush the input buffer; if this claim is wrong
+  // (unfortunately, I have no idea how to properly test this code), I still
+  // have hopes that we can avoid using NextSymbol(); please talk to me.
   while (STATE(Symbol) != S_EOF)
-    GetSymbol();
+    NextSymbol();
   stdin_buffer = NULL;
 
   stdout_bufsize = 0;

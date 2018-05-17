@@ -25,7 +25,7 @@
 #include "stringobj.h"
 
 
-static void NextSymbol(void);
+extern void NextSymbol(void);
 
 
 /****************************************************************************
@@ -909,7 +909,7 @@ static void GetHelp(void)
 **  After reading  a  symbol the current  character   is the first  character
 **  beyond that symbol.
 */
-static void NextSymbol(void)
+void NextSymbol(void)
 {
     Char c = PEEK_CURR_CHAR();
 
