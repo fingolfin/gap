@@ -85,8 +85,6 @@ void GAP_finalize(void)
 /*** Garbage collector callback ******************************************/
 /*************************************************************************/
 
-static GAP_gasman_callback_ptr gasman_callback = NULL;
-
 void GAP_set_gasman_callback(GAP_gasman_callback_ptr callback)
 {
     ExtraMarkFuncBags = callback;
