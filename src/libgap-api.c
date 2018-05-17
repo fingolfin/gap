@@ -1,12 +1,12 @@
 // LibGAP API - API for using GAP as shared library.
 
-#include <src/libgap-api.h>
+#include "libgap-api.h"
 
-#include <src/calls.h>
-#include <src/gvars.h>
-#include <src/intobj.h>
-#include <src/plist.h>
-#include <src/stringobj.h>
+#include "calls.h"
+#include "gvars.h"
+#include "intobj.h"
+#include "plist.h"
+#include "stringobj.h"
 
 /*************************************************************************/
 /*** Integer *************************************************************/

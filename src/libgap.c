@@ -17,14 +17,15 @@
  */
 
 
-#include <src/libgap.h>
-#include <src/libgap_internal.h>
-#include <src/system.h>
-#include <src/gap.h>
-#include <src/gapstate.h>
-#include <src/gasman.h>
-#include <src/scanner.h>
-#include <src/stats.h>
+#include "libgap.h"
+#include "libgap_internal.h"
+
+#include "gap.h"
+#include "gapstate.h"
+#include "gasman.h"
+#include "scanner.h"
+#include "stats.h"
+
 #include <assert.h>
 #include <stdio.h>
 #include <string.h>
