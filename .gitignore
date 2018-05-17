@@ -86,7 +86,5 @@ doc/gapmacrodoc.idx
 
 /builds/
 
-#libGAP
-libgap.la
-.libs
-
+/libgap.la
+/.libs
