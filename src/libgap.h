@@ -117,7 +117,7 @@ extern int GAP_in_enter_exit_block;
 /*************************************************************************/
 
 /* This will be called before garbage collection by GAP's memory
- * manager GASMAN. You can use the MARK_BAG(bag) GAP function to mark
+ * manager GASMAN. You can use the MarkBag(bag) GAP function to mark
  * GAP memory bags that you want to survive the following garbage
  * collection.
  */
