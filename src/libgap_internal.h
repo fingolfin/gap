@@ -21,12 +21,12 @@
 #define LIBGAP_INTERNAL__H
 
 /* Allow environment access to OSX dylib, see http://trac.sagemath.org/14038 */
-#ifdef __APPLE__
-#include <crt_externs.h>
-#define environ (*_NSGetEnviron())
-#else
-extern char** environ;
-#endif /* __APPLE__ */
+// #ifdef __APPLE__
+// #include <crt_externs.h>
+// #define environ (*_NSGetEnviron())
+// #else
+// extern char** environ;
+// #endif /* __APPLE__ */
 
 
 /* libGAP functions that are used in the modified GAP kernel, not part
