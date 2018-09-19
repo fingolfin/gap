@@ -689,13 +689,10 @@ InstallMethod( ListOp,
     C -> ShallowCopy( Enumerator( C ) ) );
 
 InstallMethod( ListOp,
-    "for a collection that is a list",
-    [ IsCollection and IsList ],
-    ShallowCopy );
-
-InstallMethod( ListOp,
     "for a list",
     [ IsList ],
+    # ensure lists which are collections are handled by this
+    {} -> RankFilter( IsCollection ),
     ShallowCopy );
 
 
@@ -707,28 +704,10 @@ InstallMethod( ListOp,
     "for a list/collection, and a function",
     [ IsListOrCollection, IsFunction ],
     function ( C, func )
-    local   res, i, elm;
+    local   res, elm;
     res := [];
-    i   := 0;
     for elm in C do
-      i:= i+1;
-      res[i]:= func( elm );
-    od;
-    return res;
-    end );
-
-InstallMethod( ListOp,
-    "for a list, and a function",
-    [ IsList, IsFunction ],
-    function ( C, func )
-    local   res, i, elm;
-    res := [];
-    i   := 0;
-    for elm in [1..Length(C)] do
-      if IsBound(C[elm]) then
-          i:= i+1;
-          res[i]:= func( C[elm] );
-      fi;
+      Add( res, func( elm ) );
     od;
     return res;
     end );
@@ -1458,34 +1437,6 @@ InstallMethod( NumberOp,
     od;
     return nr;
     end );
-InstallMethod( NumberOp,
-    "for a list, and a function",
-    [ IsList, IsFunction ],
-    function ( C, func )
-    local nr, elm;
-    nr := 0;
-    for elm in [1..Length(C)] do
-        if IsBound(C[elm]) then
-            if func( C[elm] ) then
-                nr:= nr + 1;
-            fi;
-        fi;
-    od;
-    return nr;
-    end );
-InstallMethod( NumberOp,
-    "for a dense list, and a function",
-    [ IsDenseList, IsFunction ],
-    function ( C, func )
-    local nr, elm;
-    nr := 0;
-    for elm in [1..Length(C)] do
-        if func( C[elm] ) then
-            nr:= nr + 1;
-        fi;
-    od;
-    return nr;
-    end );
 
 
 #############################################################################
@@ -1500,19 +1451,6 @@ InstallOtherMethod( NumberOp,
     nr := 0;
     for elm in C do
         nr := nr + 1;
-    od;
-    return nr;
-    end );
-InstallOtherMethod( NumberOp,
-    "for a list",
-    [ IsList ],
-    function ( C )
-    local nr, elm;
-    nr := 0;
-    for elm in [1..Length(C)] do
-        if IsBound(C[elm]) then
-            nr := nr + 1;
-        fi;
     od;
     return nr;
     end );
@@ -1559,32 +1497,6 @@ InstallMethod( ForAllOp,
     od;
     return true;
     end );
-InstallMethod( ForAllOp,
-    "for a list, and a function",
-    [ IsList and IsFinite, IsFunction ],
-    function ( C, func )
-    local elm;
-    for elm in [1..Length(C)] do
-        if IsBound(C[elm]) then
-            if not func( C[elm] ) then
-                return false;
-            fi;
-        fi;
-    od;
-    return true;
-    end );
-InstallMethod( ForAllOp,
-    "for a dense list, and a function",
-    [ IsDenseList and IsFinite, IsFunction ],
-    function ( C, func )
-    local elm;
-    for elm in [1..Length(C)] do
-        if not func( C[elm] ) then
-            return false;
-        fi;
-    od;
-    return true;
-    end );
 
 
 #############################################################################
@@ -1625,33 +1537,6 @@ InstallMethod( ForAnyOp,
     od;
     return false;
 end );
-
-InstallMethod( ForAnyOp,
-    "for a list, and a function",
-    [ IsList and IsFinite, IsFunction ],
-    function ( C, func )
-    local elm;
-    for elm in [1..Length(C)] do
-        if IsBound(C[elm]) then
-            if func( C[elm] ) then
-                return true;
-            fi;
-        fi;
-    od;
-    return false;
-    end );
-InstallMethod( ForAnyOp,
-    "for a dense list, and a function",
-    [ IsDenseList and IsFinite, IsFunction ],
-    function ( C, func )
-    local elm;
-    for elm in [1..Length(C)] do
-        if func( C[elm] ) then
-            return true;
-        fi;
-    od;
-    return false;
-    end );
 
 
 #############################################################################
