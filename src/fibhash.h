@@ -13,22 +13,17 @@
 
 #include "system.h"
 
-#if !defined(SIZEOF_VOID_P)
-#error Require SIZEOF_VOID_P to be defined
-#endif
-
-#if SIZEOF_VOID_P == 4
+#ifdef SYS_IS_64_BIT
 #define FIB_HASH_MULT 0x9e3779b9UL
+#define FIB_HASH_BITS 64
 #else
 #define FIB_HASH_MULT 0x9e3779b97f4a7c13UL
+#define FIB_HASH_BITS 32
 #endif
-
-#define FIB_HASH_BITS (SIZEOF_VOID_P * 8)
 
 EXPORT_INLINE UInt FibHash(UInt word, unsigned bits)
 {
-  return (word * FIB_HASH_MULT) >>
-    (FIB_HASH_BITS - bits);
+    return (word * FIB_HASH_MULT) >> (FIB_HASH_BITS - bits);
 }
 
 #endif // GAP_FIBHASH_H
