@@ -134,7 +134,7 @@ static Stat * ADDR_STAT(Stat stat)
     return (Stat *)STATE(PtrBody) + stat / sizeof(Stat);
 }
 
-static void WRITE_EXPR(Expr expr, UInt idx, UInt val)
+void WRITE_EXPR(Expr expr, UInt idx, UInt val)
 {
     ADDR_EXPR(expr)[idx] = val;
 }
@@ -250,20 +250,7 @@ Obj GET_VALUE_FROM_CURRENT_BODY(Int ix)
     return ELM_PLIST(values, ix);
 }
 
-
-/****************************************************************************
-**
-*F  NewStat( <type>, <size> ) . . . . . . . . . . .  allocate a new statement
-**
-**  'NewStat'   allocates a new   statement memory block  of  type <type> and
-**  <size> bytes.  'NewStat' returns the identifier of the new statement.
-**
-**  NewStatWithProf( <type>, <size>, <line>, <file> ) allows the line number
-**  and fileid of the statement to also be specified, else the current line
-**  and file when NewStat was called is used. line=0, file=0 is used
-**  to denote a statement which should not be tracked.
-*/
-static Stat NewStatWithProf (
+Stat NewStatWithProf (
     UInt                type,
     UInt                size,
     UInt                line)
@@ -337,7 +324,7 @@ static inline UInt CapacityStatStack(void)
     return SIZE_BAG(CS(StackStat)) / sizeof(Stat) - 1;
 }
 
-static void PushStat (
+void PushStat (
     Stat                stat )
 {
     /* there must be a stack, it must not be underfull or overfull         */
@@ -553,14 +540,7 @@ static void PushBinaryOp(UInt type)
 }
 
 
-/****************************************************************************
-**
-*F  PushValue( <val> ) . . . . . . . . . . . . . . store value in values list
-**
-**  'PushValue' pushes a value into the value list of the body, and returns
-**  the index at which the value was inserted.
-*/
-static Int PushValue(Obj val)
+Int PushValue(Obj val)
 {
     BodyHeader * header = (BodyHeader *)STATE(PtrBody);
     Obj values = header->values;
@@ -853,7 +833,7 @@ void CodeFuncExprBegin (
     assert( stat1 == OFFSET_FIRST_STAT );
 }
 
-void CodeFuncExprEnd(UInt nr)
+Expr CodeFuncExprEnd(UInt nr, UInt pushExpr)
 {
     Expr                expr;           /* function expression, result     */
     Stat                stat1;          /* single statement of body        */
@@ -920,7 +900,10 @@ void CodeFuncExprEnd(UInt nr)
         len = PushValue(fexp);
         expr = NewExpr( T_FUNC_EXPR, sizeof(Expr) );
         WRITE_EXPR(expr, 0, len);
-        PushExpr( expr );
+        if (pushExpr) {
+            PushExpr(expr);
+        }
+        return expr;
     }
 
     // otherwise, make the function and store it in 'CS(CodeResult)'
@@ -928,6 +911,7 @@ void CodeFuncExprEnd(UInt nr)
         CS(CodeResult) = MakeFunction(fexp);
     }
 
+    return 0;
 }
 
 
@@ -1895,7 +1879,7 @@ static UInt CheckForCommonFloat(const Char * str)
         return 0;
 }
 
-static void CodeLazyFloatExpr(Obj str)
+Expr CodeLazyFloatExpr(Obj str, UInt pushExpr)
 {
     UInt ix;
 
@@ -1909,7 +1893,10 @@ static void CodeLazyFloatExpr(Obj str)
     WRITE_EXPR(fl, 1, PushValue(str));
 
     /* push the expression */
-    PushExpr(fl);
+    if(pushExpr) {
+        PushExpr(fl);
+    }
+    return fl;
 }
 
 static void CodeEagerFloatExpr(Obj str, Char mark)
@@ -1944,7 +1931,7 @@ void CodeFloatExpr(Obj s)
         CodeEagerFloatExpr(s, mark);
     }
     else {
-        CodeLazyFloatExpr(s);
+        CodeLazyFloatExpr(s, 1);
     }
 }
 

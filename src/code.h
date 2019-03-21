@@ -109,6 +109,25 @@ EXPORT_INLINE Obj VALUES_BODY(Obj body)
     return BODY_HEADER(body)->values;
 }
 
+
+/****************************************************************************
+**
+*F  NewStat( <type>, <size> ) . . . . . . . . . . .  allocate a new statement
+**
+**  'NewStat'   allocates a new   statement memory block  of  type <type> and
+**  <size> bytes.  'NewStat' returns the identifier of the new statement.
+**
+**  NewStatWithProf( <type>, <size>, <line>, <file> ) allows the line number
+**  and fileid of the statement to also be specified, else the current line
+**  and file when NewStat was called is used. line=0, file=0 is used
+**  to denote a statement which should not be tracked.
+*/
+Stat NewStatWithProf(UInt type, UInt size, UInt line);
+
+
+void PushStat(Stat stat);
+
+
 /****************************************************************************
 **
 *V  OFFSET_FIRST_STAT . . . . . . . . . . offset of first statement in a body
@@ -126,6 +145,9 @@ enum {
 *F  NewFunctionBody() . . . . . . . . . . . . . .  create a new function body
 */
 Obj NewFunctionBody(void);
+
+
+void WRITE_EXPR(Expr expr, UInt idx, UInt val);
 
 
 /****************************************************************************
@@ -651,7 +673,7 @@ void CodeFuncCallEnd(UInt funccall, UInt options, UInt nr);
 /****************************************************************************
 **
 *F  CodeFuncExprBegin(<narg>,<nloc>,<nams>,<startline>) . code function expression, begin
-*F  CodeFuncExprEnd(<nr>) . . . . . . . . . . . code function expression, end
+*F  CodeFuncExprEnd(<nr>,<pushExpr>) . . . . .  code function expression, end
 **
 **  'CodeFuncExprBegin'  is an action to code  a  function expression.  It is
 **  called when the reader encounters the beginning of a function expression.
@@ -661,12 +683,22 @@ void CodeFuncCallEnd(UInt funccall, UInt options, UInt nr);
 **
 **  'CodeFuncExprEnd'  is an action to  code  a function  expression.  It  is
 **  called when the reader encounters the end of a function expression.  <nr>
-**  is the number of statements in the body of the function.
+**  is the number of statements in the body of the function. If <pushExpr>
+**  is set, the current function expression is pushed on the expression stack.
 **
 */
 void CodeFuncExprBegin(Int narg, Int nloc, Obj nams, Int startLine);
 
-void CodeFuncExprEnd(UInt nr);
+Expr CodeFuncExprEnd(UInt nr, UInt pushExpr);
+
+/****************************************************************************
+**
+*F  PushValue( <val> ) . . . . . . . . . . . . . . store value in values list
+**
+**  'PushValue' pushes a value into the value list of the body, and returns
+**  the index at which the value was inserted.
+*/
+Int PushValue(Obj val);
 
 /****************************************************************************
 **
@@ -1068,6 +1100,14 @@ void CodeListExprEnd(UInt nr, UInt range, UInt top, UInt tilde);
 *F  CodeStringExpr(<str>) . . . . . . . . . .  code literal string expression
 */
 void CodeStringExpr(Obj str);
+
+
+/****************************************************************************
+**
+*F  CodeLazyFloatExpr(<str>,<pushExpr>) . . .  code literal string expression
+*/
+Expr CodeLazyFloatExpr(Obj str, UInt pushExpr);
+
 
 /****************************************************************************
 **

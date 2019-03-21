@@ -11,6 +11,14 @@ gap> SyntaxTree(x -> x);
 gap> SyntaxTree(\+);
 Error, SYNTAX_TREE: <func> must be a plain GAP function (not a function)
 
+gap> test_tree := function( f )
+>       local curr_tree, new_func, new_tree;
+>       curr_tree := SYNTAX_TREE( f );
+>       new_func := SYNTAX_TREE_CODE( curr_tree );
+>       new_tree := SYNTAX_TREE( new_func );
+>       return new_tree = curr_tree;
+> end;;
+
 # Just try compiling all functions we can find in the workspace
 # to see nothing crashes.
 gap> for n in NamesGVars() do
@@ -37,8 +45,7 @@ gap> testit := function(f)
 >   local tree;
 >   tree := SYNTAX_TREE(f);
 >   Display(tree);
->   # TODO: recode the tree, then decode again and compare
->   return true;
+>   return test_tree( f );
 > end;;
 
 # T_PROCCALL_0ARGS
@@ -2854,6 +2861,8 @@ rec(
   stats := rec(
       statements := [ rec(
               obj := rec(
+                  mark := '\000',
+                  string := "1.0",
                   type := "T_FLOAT_EXPR_EAGER",
                   value := 1 ),
               type := "T_RETURN_OBJ" ) ],
