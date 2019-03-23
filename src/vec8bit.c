@@ -534,7 +534,6 @@ static void RewriteVec8Bit(Obj vec, UInt q)
         ErrorMayQuit("You cannot convert a locked vector compressed over "
                      "GF(%i) to GF(%i)",
                      q1, q);
-        return;
     }
 
     // extract the required info
@@ -613,7 +612,6 @@ void RewriteGF2Vec(Obj vec, UInt q)
         ErrorMayQuit("You cannot convert a locked vector compressed over "
                      "GF(2) to GF(%i)",
                      q, 0);
-        return;
     }
 
     // extract the required info
@@ -949,7 +947,6 @@ void PlainVec8Bit(Obj list)
         ErrorMayQuit(
             "Attempt to convert locked compressed vector to plain list", 0,
             0);
-        return;
     }
 
     len = LEN_VEC8BIT(list);
@@ -1013,7 +1010,6 @@ static Obj FuncPLAIN_VEC8BIT(Obj self, Obj list)
         ErrorMayQuit("You cannot convert a locked vector compressed over "
                      "GF(%i) to a plain list",
                      FIELD_VEC8BIT(list), 0);
-        return 0;
     }
     PlainVec8Bit(list);
 
@@ -1027,10 +1023,6 @@ static Obj FuncPLAIN_VEC8BIT(Obj self, Obj list)
 *F * * * * * * * * * * * * arithmetic operations  * * * * * * * * * * * *
 ** *
 */
-
-#define BLOCKS_VEC8BIT(vec) ((UInt *)BYTES_VEC8BIT(vec))
-#define CONST_BLOCKS_VEC8BIT(vec) ((const UInt *)CONST_BYTES_VEC8BIT(vec))
-
 
 /****************************************************************************
 **
@@ -1096,29 +1088,27 @@ AddVec8BitVec8BitInner(Obj sum, Obj vl, Obj vr, UInt start, UInt stop)
     start--;
     stop--;
     if (p == 2) {
-        UInt * ptrL2;
-        UInt * ptrR2;
+        const UInt * ptrL2;
+        const UInt * ptrR2;
         UInt * ptrS2;
         UInt * endS2;
         // HPCGAP: Make sure to only check read guards for vl & vr.
-        ptrL2 = (UInt *)(CONST_BLOCKS_VEC8BIT(vl) +
-                         start / (sizeof(UInt) * elts));
-        ptrR2 = (UInt *)(CONST_BLOCKS_VEC8BIT(vr) +
-                         start / (sizeof(UInt) * elts));
+        ptrL2 = CONST_BLOCKS_VEC8BIT(vl) + start / (sizeof(UInt) * elts);
+        ptrR2 = CONST_BLOCKS_VEC8BIT(vr) + start / (sizeof(UInt) * elts);
         ptrS2 = BLOCKS_VEC8BIT(sum) + start / (sizeof(UInt) * elts);
         endS2 = BLOCKS_VEC8BIT(sum) + stop / (sizeof(UInt) * elts) + 1;
         if (sum == vl) {
-            while (ptrL2 < endS2) {
-                *ptrL2 ^= *ptrR2;
-                ptrL2++;
+            while (ptrS2 < endS2) {
+                *ptrS2 ^= *ptrR2;
+                ptrS2++;
                 ptrR2++;
             }
         }
         else if (sum == vr) {
-            while (ptrR2 < endS2) {
-                *ptrR2 ^= *ptrL2;
+            while (ptrS2 < endS2) {
+                *ptrS2 ^= *ptrL2;
                 ptrL2++;
-                ptrR2++;
+                ptrS2++;
             }
         }
         else
@@ -1126,30 +1116,32 @@ AddVec8BitVec8BitInner(Obj sum, Obj vl, Obj vr, UInt start, UInt stop)
                 *ptrS2++ = *ptrL2++ ^ *ptrR2++;
     }
     else {
-        UInt1 * ptrL;
-        UInt1 * ptrR;
+        const UInt1 * ptrL;
+        const UInt1 * ptrR;
         UInt1 * ptrS;
         UInt1 * endS;
         UInt    x;
         const UInt1 * addtab = ADD_FIELDINFO_8BIT(info);
         // HPCGAP: Make sure to only check read guards for vl & vr.
-        ptrL = (UInt1 *)(CONST_BYTES_VEC8BIT(vl) + start / elts);
-        ptrR = (UInt1 *)(CONST_BYTES_VEC8BIT(vr) + start / elts);
+        ptrL = CONST_BYTES_VEC8BIT(vl) + start / elts;
+        ptrR = CONST_BYTES_VEC8BIT(vr) + start / elts;
         ptrS = BYTES_VEC8BIT(sum) + start / elts;
         endS = BYTES_VEC8BIT(sum) + stop / elts + 1;
         if (vl == sum) {
-            while (ptrL < endS) {
-                if ((x = *ptrR) != 0)
-                    *ptrL = addtab[256 * (*ptrL) + x];
+            while (ptrS < endS) {
+                x = *ptrR;
+                if (x != 0)
+                    *ptrS = addtab[256 * (*ptrS) + x];
                 ptrR++;
-                ptrL++;
+                ptrS++;
             }
         }
         else if (vr == sum) {
-            while (ptrR < endS) {
-                if ((x = *ptrL) != 0)
-                    *ptrR = addtab[256 * (x) + *ptrR];
-                ptrR++;
+            while (ptrS < endS) {
+                x = *ptrL;
+                if (x != 0)
+                    *ptrS = addtab[256 * (x) + *ptrS];
+                ptrS++;
                 ptrL++;
             }
         }

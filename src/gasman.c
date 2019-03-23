@@ -222,7 +222,7 @@ static inline UInt WORDS_BAG(UInt size)
 
 static inline Bag *DATA(BagHeader *bag)
 {
-    return (Bag *)(((char *)bag) + sizeof(BagHeader));
+    return (Bag *)(bag + 1);
 }
 
 
@@ -611,12 +611,12 @@ static inline Bag MARKED_DEAD(Bag x)
 
 static inline Bag MARKED_ALIVE(Bag x)
 {
-    return (Bag)(((Char *)x) + 1);
+    return (Bag)((UInt)x | ALIVE);
 }
 
 static inline Bag MARKED_HALFDEAD(Bag x)
 {
-    return (Bag)(((Char *)x) + 2);
+    return (Bag)((UInt)x | HALFDEAD);
 }
 
 static inline Int IS_MARKED_DEAD(Bag x)
@@ -645,13 +645,13 @@ static inline Bag UNMARKED_DEAD(Bag x)
 static inline Bag UNMARKED_ALIVE(Bag x)
 {
     GAP_ASSERT(GET_MARK_BITS(x) == ALIVE);
-    return (Bag)(((Char *)x) - ALIVE);
+    return (Bag)(((UInt)x) & ~ALIVE);
 }
 
 static inline Bag UNMARKED_HALFDEAD(Bag x)
 {
     GAP_ASSERT(GET_MARK_BITS(x) == HALFDEAD);
-    return (Bag)(((Char *)x) - HALFDEAD);
+    return (Bag)(((UInt)x) & ~HALFDEAD);
 }
 
 
@@ -2429,30 +2429,4 @@ void SwapMasterPoint(Bag bag1, Bag bag2)
     swapbag = LINK_BAG(bag1);
     LINK_BAG(bag1) = LINK_BAG(bag2);
     LINK_BAG(bag2) = swapbag;
-}
-
-
-/****************************************************************************
-**
-*F  BAG(<bid>)  . . . . . . . . . . . . . . . . . . bag (from bag identifier)
-*F  ELM_BAG(<bag>,<i>)  . . . . . . . . . . . . . . . <i>-th element of a bag
-*F  SET_ELM_BAG(<bag>,<i>,<elm>)  . . . . . . . . set <i>-th element of a bag
-**
-**  'BAG', 'ELM_BAG', and 'SET_ELM_BAG' are functions to support  debugging.
-**  They are not intended to be used in an application using {\Gasman}.
-*/
-Bag BAG(UInt bid)
-{
-    return IS_BAG_ID((Bag)bid) ? (Bag)bid : 0;
-}
-
-UInt ELM_BAG(Bag bag, UInt i)
-{
-    return (UInt) ((*(Bag**)(bag))[i]);
-}
-
-UInt SET_ELM_BAG(Bag bag, UInt i, UInt elm)
-{
-    (*(Bag **)(bag))[i] = (Bag)elm;
-    return elm;
 }

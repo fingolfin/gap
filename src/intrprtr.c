@@ -234,7 +234,7 @@ static inline void FinishAndCallFakeFuncExpr(void)
     assert(STATE(IntrCoding) == 0);
 
     // code a function expression (with one statement in the body)
-    CodeFuncExprEnd(1);
+    CodeFuncExprEnd(1, 1);
 
     // switch back to immediate mode and get the function
     Obj func = CodeEnd(0);
@@ -525,7 +525,7 @@ void IntrFuncExprEnd(UInt nr)
     assert(STATE(IntrCoding) > 0);
 
     STATE(IntrCoding)--;
-    CodeFuncExprEnd(nr);
+    CodeFuncExprEnd(nr, 1);
 
     if (STATE(IntrCoding) == 0) {
         // switch back to immediate mode and get the function
@@ -2199,6 +2199,19 @@ void           IntrStringExpr (
 
     /* push the string, already newly created                              */
     PushObj( string );
+}
+
+void           IntrPragma (
+    Obj               pragma )
+{
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
+    if ( STATE(IntrCoding)    > 0 ) {
+        CodePragma( pragma );
+    } else {
+        // Push a void when interpreting
+        PushVoidObj();
+    }
 }
 
 /****************************************************************************

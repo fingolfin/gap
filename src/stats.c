@@ -1513,6 +1513,14 @@ static void PrintReturnVoid(Stat stat)
     Pr( "return;", 0L, 0L );
 }
 
+static void PrintPragma(Expr expr)
+{
+    UInt ix = READ_EXPR(expr, 0);
+    Obj string = GET_VALUE_FROM_CURRENT_BODY(ix);
+
+    Pr( "#", 0L, 0L );
+    Pr( CSTR_STRING( string ), 0L, 0L );
+}
 
 /****************************************************************************
 **
@@ -1575,6 +1583,7 @@ static Int InitKernel (
     InstallExecStatFunc( T_RETURN_OBJ     , ExecReturnObj);
     InstallExecStatFunc( T_RETURN_VOID    , ExecReturnVoid);
     InstallExecStatFunc( T_EMPTY          , ExecEmpty);
+    InstallExecStatFunc( T_PRAGMA         , ExecEmpty);
 #ifdef HPCGAP
     InstallExecStatFunc( T_ATOMIC         , ExecAtomic);
 #endif
@@ -1615,6 +1624,7 @@ static Int InitKernel (
     InstallPrintStatFunc( T_RETURN_OBJ     , PrintReturnObj);
     InstallPrintStatFunc( T_RETURN_VOID    , PrintReturnVoid);
     InstallPrintStatFunc( T_EMPTY          , PrintEmpty);
+    InstallPrintStatFunc( T_PRAGMA         , PrintPragma);
 #ifdef HPCGAP
     InstallPrintStatFunc( T_ATOMIC         , PrintAtomic);
 #endif

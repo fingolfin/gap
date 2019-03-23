@@ -1618,6 +1618,8 @@ static Int syGetchTerm(Int fid)
         syBuf[fid].crlast = 1;
         return (Int)'\n';
     }
+    // We saw a '\r' without a '\n'
+    syBuf[fid].crlast = 0;
 #endif  /* line end hack */
 
     /* return the character                                                */
@@ -1626,7 +1628,7 @@ static Int syGetchTerm(Int fid)
 
 static Int syGetchNonTerm(Int fid)
 {
-    UChar                ch;
+    UChar               ch = 0;
     UInt                bufno;
     int                 ret;
 
@@ -1678,6 +1680,8 @@ static Int syGetchNonTerm(Int fid)
         syBuf[fid].crlast = 1;
         return (Int)'\n';
     }
+    // We saw a '\r' without a '\n'
+    syBuf[fid].crlast = 0;
 #endif  /* line end hack */
 
     /* return the character                                                */
