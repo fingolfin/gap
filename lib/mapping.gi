@@ -29,7 +29,13 @@ InstallMethod( FamiliesOfGeneralMappingsAndRanges,
     "for a family (return empty list)",
     true,
     [ IsFamily ], 0,
-    Fam -> WeakPointerObj( [] ) );
+    function(fam)
+    if IsHPCGAP then
+      return LockAndMigrateObj(WeakPointerObj( [] ), GENERAL_MAPPING_REGION);
+    else
+      return WeakPointerObj( [] );
+    fi;
+    end);
 
 
 #############################################################################
@@ -40,6 +46,7 @@ InstallGlobalFunction( GeneralMappingsFamily, function( FS, FR )
 
     local info, i, len, entry, Fam, freepos;
 
+  atomic readwrite GENERAL_MAPPING_REGION do # for HPC-GAP only; ignored in GAP
     # Check whether this family was already constructed.
     info:= FamiliesOfGeneralMappingsAndRanges( FS );
     len:= LengthWPObj( info );
@@ -71,6 +78,7 @@ InstallGlobalFunction( GeneralMappingsFamily, function( FS, FR )
 
     # Return the family.
     return Fam;
+  od; # end of atomic
 end );
 
 
