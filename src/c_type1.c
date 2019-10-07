@@ -1,7 +1,7 @@
 #ifndef AVOID_PRECOMPILED
 /* C file produced by GAC */
 #include "compiled.h"
-#define FILE_CRC  "-88497608"
+#define FILE_CRC  "-111807373"
 
 /* global variables used in handlers */
 static GVar G_NAME__FUNC;
@@ -41,6 +41,10 @@ static GVar G_IS__DATOBJ;
 static Obj  GF_IS__DATOBJ;
 static GVar G_SET__TYPE__DATOBJ;
 static Obj  GF_SET__TYPE__DATOBJ;
+static GVar G_INPUT__FILENAME;
+static Obj  GF_INPUT__FILENAME;
+static GVar G_INPUT__LINENUMBER;
+static Obj  GF_INPUT__LINENUMBER;
 static GVar G_IS__OBJECT;
 static Obj  GC_IS__OBJECT;
 static GVar G_AND__FLAGS;
@@ -69,6 +73,8 @@ static GVar G_IS__AND__FILTER;
 static Obj  GF_IS__AND__FILTER;
 static GVar G_COMPACT__TYPE__IDS;
 static Obj  GF_COMPACT__TYPE__IDS;
+static GVar G_STRING__INT;
+static Obj  GF_STRING__INT;
 static GVar G_fail;
 static Obj  GC_fail;
 static GVar G_LEN__LIST;
@@ -121,12 +127,12 @@ static GVar G_TypeObj;
 static Obj  GF_TypeObj;
 static GVar G_DataType;
 static Obj  GF_DataType;
-static GVar G_IsNonAtomicComponentObjectRep;
-static Obj  GC_IsNonAtomicComponentObjectRep;
-static GVar G_IsAtomicPositionalObjectRep;
-static Obj  GC_IsAtomicPositionalObjectRep;
-static GVar G_IsReadOnlyPositionalObjectRep;
-static Obj  GC_IsReadOnlyPositionalObjectRep;
+static GVar G_IsPositionalObjectRep;
+static Obj  GC_IsPositionalObjectRep;
+static GVar G_IsComponentObjectRep;
+static Obj  GC_IsComponentObjectRep;
+static GVar G_INFO__DEBUG;
+static Obj  GF_INFO__DEBUG;
 static GVar G_IsNoImmediateMethodsObject;
 static Obj  GF_IsNoImmediateMethodsObject;
 static GVar G_RunImmediateMethods;
@@ -1820,6 +1826,10 @@ static Obj  HdlrFunc17 (
  Obj t_2 = 0;
  Obj t_3 = 0;
  Obj t_4 = 0;
+ Obj t_5 = 0;
+ Obj t_6 = 0;
+ Obj t_7 = 0;
+ Obj t_8 = 0;
  (void)l_flags;
  Bag oldFrame;
  
@@ -1853,6 +1863,17 @@ static Obj  HdlrFunc17 (
  }
  /* fi */
  
+ /* flags := FlagsType( type ); */
+ t_2 = GF_FlagsType;
+ if ( TNUM_OBJ( t_2 ) == T_FUNCTION ) {
+  t_1 = CALL_1ARGS( t_2, a_type );
+ }
+ else {
+  t_1 = DoOperation2Args( CallFuncListOper, t_2, NewPlistFromArgs( a_type ) );
+ }
+ CHECK_FUNC_RESULT( t_1 );
+ l_flags = t_1;
+ 
  /* if IS_LIST( obj ) then */
  t_3 = GF_IS__LIST;
  if ( TNUM_OBJ( t_3 ) == T_FUNCTION ) {
@@ -1865,6 +1886,123 @@ static Obj  HdlrFunc17 (
  CHECK_BOOL( t_2 );
  t_1 = (Obj)(UInt)(t_2 != False);
  if ( t_1 ) {
+  
+  /* Assert( ... ); */
+  if ( ! LT(CurrentAssertionLevel, INTOBJ_INT(0)) ) {
+   t_3 = GF_IS__SUBSET__FLAGS;
+   t_5 = GF_FLAGS__FILTER;
+   t_6 = GC_IsPositionalObjectRep;
+   CHECK_BOUND( t_6, "IsPositionalObjectRep" );
+   if ( TNUM_OBJ( t_5 ) == T_FUNCTION ) {
+    t_4 = CALL_1ARGS( t_5, t_6 );
+   }
+   else {
+    t_4 = DoOperation2Args( CallFuncListOper, t_5, NewPlistFromArgs( t_6 ) );
+   }
+   CHECK_FUNC_RESULT( t_4 );
+   if ( TNUM_OBJ( t_3 ) == T_FUNCTION ) {
+    t_2 = CALL_2ARGS( t_3, l_flags, t_4 );
+   }
+   else {
+    t_2 = DoOperation2Args( CallFuncListOper, t_3, NewPlistFromArgs( l_flags, t_4 ) );
+   }
+   CHECK_FUNC_RESULT( t_2 );
+   CHECK_BOOL( t_2 );
+   t_1 = (Obj)(UInt)(t_2 != False);
+   if ( ! t_1 ) {
+    AssertionFailure();
+   }
+  }
+  
+  /* Assert( ... ); */
+  if ( ! LT(CurrentAssertionLevel, INTOBJ_INT(0)) ) {
+   t_4 = GF_IS__SUBSET__FLAGS;
+   t_6 = GF_FLAGS__FILTER;
+   t_7 = GC_IsComponentObjectRep;
+   CHECK_BOUND( t_7, "IsComponentObjectRep" );
+   if ( TNUM_OBJ( t_6 ) == T_FUNCTION ) {
+    t_5 = CALL_1ARGS( t_6, t_7 );
+   }
+   else {
+    t_5 = DoOperation2Args( CallFuncListOper, t_6, NewPlistFromArgs( t_7 ) );
+   }
+   CHECK_FUNC_RESULT( t_5 );
+   if ( TNUM_OBJ( t_4 ) == T_FUNCTION ) {
+    t_3 = CALL_2ARGS( t_4, l_flags, t_5 );
+   }
+   else {
+    t_3 = DoOperation2Args( CallFuncListOper, t_4, NewPlistFromArgs( l_flags, t_5 ) );
+   }
+   CHECK_FUNC_RESULT( t_3 );
+   CHECK_BOOL( t_3 );
+   t_2 = (Obj)(UInt)(t_3 != False);
+   t_1 = (Obj)(UInt)( ! ((Int)t_2) );
+   if ( ! t_1 ) {
+    AssertionFailure();
+   }
+  }
+  
+  /* if not IS_SUBSET_FLAGS( flags, FLAGS_FILTER( IsPositionalObjectRep ) ) then */
+  t_4 = GF_IS__SUBSET__FLAGS;
+  t_6 = GF_FLAGS__FILTER;
+  t_7 = GC_IsPositionalObjectRep;
+  CHECK_BOUND( t_7, "IsPositionalObjectRep" );
+  if ( TNUM_OBJ( t_6 ) == T_FUNCTION ) {
+   t_5 = CALL_1ARGS( t_6, t_7 );
+  }
+  else {
+   t_5 = DoOperation2Args( CallFuncListOper, t_6, NewPlistFromArgs( t_7 ) );
+  }
+  CHECK_FUNC_RESULT( t_5 );
+  if ( TNUM_OBJ( t_4 ) == T_FUNCTION ) {
+   t_3 = CALL_2ARGS( t_4, l_flags, t_5 );
+  }
+  else {
+   t_3 = DoOperation2Args( CallFuncListOper, t_4, NewPlistFromArgs( l_flags, t_5 ) );
+  }
+  CHECK_FUNC_RESULT( t_3 );
+  CHECK_BOOL( t_3 );
+  t_2 = (Obj)(UInt)(t_3 != False);
+  t_1 = (Obj)(UInt)( ! ((Int)t_2) );
+  if ( t_1 ) {
+   
+   /* INFO_DEBUG( 1, "Objectify: type does not imply IsPositionalObjectRep ", INPUT_FILENAME(  ), ":", STRING_INT( INPUT_LINENUMBER(  ) ) ); */
+   t_1 = GF_INFO__DEBUG;
+   t_2 = MakeString( "Objectify: type does not imply IsPositionalObjectRep " );
+   t_4 = GF_INPUT__FILENAME;
+   if ( TNUM_OBJ( t_4 ) == T_FUNCTION ) {
+    t_3 = CALL_0ARGS( t_4 );
+   }
+   else {
+    t_3 = DoOperation2Args( CallFuncListOper, t_4, NewPlistFromArgs( ) );
+   }
+   CHECK_FUNC_RESULT( t_3 );
+   t_4 = MakeString( ":" );
+   t_6 = GF_STRING__INT;
+   t_8 = GF_INPUT__LINENUMBER;
+   if ( TNUM_OBJ( t_8 ) == T_FUNCTION ) {
+    t_7 = CALL_0ARGS( t_8 );
+   }
+   else {
+    t_7 = DoOperation2Args( CallFuncListOper, t_8, NewPlistFromArgs( ) );
+   }
+   CHECK_FUNC_RESULT( t_7 );
+   if ( TNUM_OBJ( t_6 ) == T_FUNCTION ) {
+    t_5 = CALL_1ARGS( t_6, t_7 );
+   }
+   else {
+    t_5 = DoOperation2Args( CallFuncListOper, t_6, NewPlistFromArgs( t_7 ) );
+   }
+   CHECK_FUNC_RESULT( t_5 );
+   if ( TNUM_OBJ( t_1 ) == T_FUNCTION ) {
+    CALL_5ARGS( t_1, INTOBJ_INT(1), t_2, t_3, t_4, t_5 );
+   }
+   else {
+    DoOperation2Args( CallFuncListOper, t_1, NewPlistFromArgs( INTOBJ_INT(1), t_2, t_3, t_4, t_5 ) );
+   }
+   
+  }
+  /* fi */
   
   /* SET_TYPE_POSOBJ( obj, type ); */
   t_1 = GF_SET__TYPE__POSOBJ;
@@ -1891,6 +2029,123 @@ static Obj  HdlrFunc17 (
   t_1 = (Obj)(UInt)(t_2 != False);
   if ( t_1 ) {
    
+   /* Assert( ... ); */
+   if ( ! LT(CurrentAssertionLevel, INTOBJ_INT(0)) ) {
+    t_3 = GF_IS__SUBSET__FLAGS;
+    t_5 = GF_FLAGS__FILTER;
+    t_6 = GC_IsComponentObjectRep;
+    CHECK_BOUND( t_6, "IsComponentObjectRep" );
+    if ( TNUM_OBJ( t_5 ) == T_FUNCTION ) {
+     t_4 = CALL_1ARGS( t_5, t_6 );
+    }
+    else {
+     t_4 = DoOperation2Args( CallFuncListOper, t_5, NewPlistFromArgs( t_6 ) );
+    }
+    CHECK_FUNC_RESULT( t_4 );
+    if ( TNUM_OBJ( t_3 ) == T_FUNCTION ) {
+     t_2 = CALL_2ARGS( t_3, l_flags, t_4 );
+    }
+    else {
+     t_2 = DoOperation2Args( CallFuncListOper, t_3, NewPlistFromArgs( l_flags, t_4 ) );
+    }
+    CHECK_FUNC_RESULT( t_2 );
+    CHECK_BOOL( t_2 );
+    t_1 = (Obj)(UInt)(t_2 != False);
+    if ( ! t_1 ) {
+     AssertionFailure();
+    }
+   }
+   
+   /* Assert( ... ); */
+   if ( ! LT(CurrentAssertionLevel, INTOBJ_INT(0)) ) {
+    t_4 = GF_IS__SUBSET__FLAGS;
+    t_6 = GF_FLAGS__FILTER;
+    t_7 = GC_IsPositionalObjectRep;
+    CHECK_BOUND( t_7, "IsPositionalObjectRep" );
+    if ( TNUM_OBJ( t_6 ) == T_FUNCTION ) {
+     t_5 = CALL_1ARGS( t_6, t_7 );
+    }
+    else {
+     t_5 = DoOperation2Args( CallFuncListOper, t_6, NewPlistFromArgs( t_7 ) );
+    }
+    CHECK_FUNC_RESULT( t_5 );
+    if ( TNUM_OBJ( t_4 ) == T_FUNCTION ) {
+     t_3 = CALL_2ARGS( t_4, l_flags, t_5 );
+    }
+    else {
+     t_3 = DoOperation2Args( CallFuncListOper, t_4, NewPlistFromArgs( l_flags, t_5 ) );
+    }
+    CHECK_FUNC_RESULT( t_3 );
+    CHECK_BOOL( t_3 );
+    t_2 = (Obj)(UInt)(t_3 != False);
+    t_1 = (Obj)(UInt)( ! ((Int)t_2) );
+    if ( ! t_1 ) {
+     AssertionFailure();
+    }
+   }
+   
+   /* if not IS_SUBSET_FLAGS( flags, FLAGS_FILTER( IsComponentObjectRep ) ) then */
+   t_4 = GF_IS__SUBSET__FLAGS;
+   t_6 = GF_FLAGS__FILTER;
+   t_7 = GC_IsComponentObjectRep;
+   CHECK_BOUND( t_7, "IsComponentObjectRep" );
+   if ( TNUM_OBJ( t_6 ) == T_FUNCTION ) {
+    t_5 = CALL_1ARGS( t_6, t_7 );
+   }
+   else {
+    t_5 = DoOperation2Args( CallFuncListOper, t_6, NewPlistFromArgs( t_7 ) );
+   }
+   CHECK_FUNC_RESULT( t_5 );
+   if ( TNUM_OBJ( t_4 ) == T_FUNCTION ) {
+    t_3 = CALL_2ARGS( t_4, l_flags, t_5 );
+   }
+   else {
+    t_3 = DoOperation2Args( CallFuncListOper, t_4, NewPlistFromArgs( l_flags, t_5 ) );
+   }
+   CHECK_FUNC_RESULT( t_3 );
+   CHECK_BOOL( t_3 );
+   t_2 = (Obj)(UInt)(t_3 != False);
+   t_1 = (Obj)(UInt)( ! ((Int)t_2) );
+   if ( t_1 ) {
+    
+    /* INFO_DEBUG( 1, "Objectify: type does not imply IsComponentObjectRep ", INPUT_FILENAME(  ), ":", STRING_INT( INPUT_LINENUMBER(  ) ) ); */
+    t_1 = GF_INFO__DEBUG;
+    t_2 = MakeString( "Objectify: type does not imply IsComponentObjectRep " );
+    t_4 = GF_INPUT__FILENAME;
+    if ( TNUM_OBJ( t_4 ) == T_FUNCTION ) {
+     t_3 = CALL_0ARGS( t_4 );
+    }
+    else {
+     t_3 = DoOperation2Args( CallFuncListOper, t_4, NewPlistFromArgs( ) );
+    }
+    CHECK_FUNC_RESULT( t_3 );
+    t_4 = MakeString( ":" );
+    t_6 = GF_STRING__INT;
+    t_8 = GF_INPUT__LINENUMBER;
+    if ( TNUM_OBJ( t_8 ) == T_FUNCTION ) {
+     t_7 = CALL_0ARGS( t_8 );
+    }
+    else {
+     t_7 = DoOperation2Args( CallFuncListOper, t_8, NewPlistFromArgs( ) );
+    }
+    CHECK_FUNC_RESULT( t_7 );
+    if ( TNUM_OBJ( t_6 ) == T_FUNCTION ) {
+     t_5 = CALL_1ARGS( t_6, t_7 );
+    }
+    else {
+     t_5 = DoOperation2Args( CallFuncListOper, t_6, NewPlistFromArgs( t_7 ) );
+    }
+    CHECK_FUNC_RESULT( t_5 );
+    if ( TNUM_OBJ( t_1 ) == T_FUNCTION ) {
+     CALL_5ARGS( t_1, INTOBJ_INT(1), t_2, t_3, t_4, t_5 );
+    }
+    else {
+     DoOperation2Args( CallFuncListOper, t_1, NewPlistFromArgs( INTOBJ_INT(1), t_2, t_3, t_4, t_5 ) );
+    }
+    
+   }
+   /* fi */
+   
    /* SET_TYPE_COMOBJ( obj, type ); */
    t_1 = GF_SET__TYPE__COMOBJ;
    if ( TNUM_OBJ( t_1 ) == T_FUNCTION ) {
@@ -1898,6 +2153,21 @@ static Obj  HdlrFunc17 (
    }
    else {
     DoOperation2Args( CallFuncListOper, t_1, NewPlistFromArgs( a_obj, a_type ) );
+   }
+   
+  }
+  
+  /* else */
+  else {
+   
+   /* Error( "<obj> must be a list or a record" ); */
+   t_1 = GF_Error;
+   t_2 = MakeString( "<obj> must be a list or a record" );
+   if ( TNUM_OBJ( t_1 ) == T_FUNCTION ) {
+    CALL_1ARGS( t_1, t_2 );
+   }
+   else {
+    DoOperation2Args( CallFuncListOper, t_1, NewPlistFromArgs( t_2 ) );
    }
    
   }
@@ -3310,76 +3580,29 @@ static Obj  HdlrFunc1 (
   DoOperation2Args( CallFuncListOper, t_1, NewPlistFromArgs( t_2, t_3 ) );
  }
  
- /* BIND_GLOBAL( "IsNonAtomicComponentObjectRepFlags", FLAGS_FILTER( IsNonAtomicComponentObjectRep ) ); */
- t_1 = GF_BIND__GLOBAL;
- t_2 = MakeString( "IsNonAtomicComponentObjectRepFlags" );
- t_4 = GF_FLAGS__FILTER;
- t_5 = GC_IsNonAtomicComponentObjectRep;
- CHECK_BOUND( t_5, "IsNonAtomicComponentObjectRep" );
- if ( TNUM_OBJ( t_4 ) == T_FUNCTION ) {
-  t_3 = CALL_1ARGS( t_4, t_5 );
- }
- else {
-  t_3 = DoOperation2Args( CallFuncListOper, t_4, NewPlistFromArgs( t_5 ) );
- }
- CHECK_FUNC_RESULT( t_3 );
- if ( TNUM_OBJ( t_1 ) == T_FUNCTION ) {
-  CALL_2ARGS( t_1, t_2, t_3 );
- }
- else {
-  DoOperation2Args( CallFuncListOper, t_1, NewPlistFromArgs( t_2, t_3 ) );
- }
- 
- /* BIND_GLOBAL( "IsAtomicPositionalObjectRepFlags", FLAGS_FILTER( IsAtomicPositionalObjectRep ) ); */
- t_1 = GF_BIND__GLOBAL;
- t_2 = MakeString( "IsAtomicPositionalObjectRepFlags" );
- t_4 = GF_FLAGS__FILTER;
- t_5 = GC_IsAtomicPositionalObjectRep;
- CHECK_BOUND( t_5, "IsAtomicPositionalObjectRep" );
- if ( TNUM_OBJ( t_4 ) == T_FUNCTION ) {
-  t_3 = CALL_1ARGS( t_4, t_5 );
- }
- else {
-  t_3 = DoOperation2Args( CallFuncListOper, t_4, NewPlistFromArgs( t_5 ) );
- }
- CHECK_FUNC_RESULT( t_3 );
- if ( TNUM_OBJ( t_1 ) == T_FUNCTION ) {
-  CALL_2ARGS( t_1, t_2, t_3 );
- }
- else {
-  DoOperation2Args( CallFuncListOper, t_1, NewPlistFromArgs( t_2, t_3 ) );
- }
- 
- /* BIND_GLOBAL( "IsReadOnlyPositionalObjectRepFlags", FLAGS_FILTER( IsReadOnlyPositionalObjectRep ) ); */
- t_1 = GF_BIND__GLOBAL;
- t_2 = MakeString( "IsReadOnlyPositionalObjectRepFlags" );
- t_4 = GF_FLAGS__FILTER;
- t_5 = GC_IsReadOnlyPositionalObjectRep;
- CHECK_BOUND( t_5, "IsReadOnlyPositionalObjectRep" );
- if ( TNUM_OBJ( t_4 ) == T_FUNCTION ) {
-  t_3 = CALL_1ARGS( t_4, t_5 );
- }
- else {
-  t_3 = DoOperation2Args( CallFuncListOper, t_4, NewPlistFromArgs( t_5 ) );
- }
- CHECK_FUNC_RESULT( t_3 );
- if ( TNUM_OBJ( t_1 ) == T_FUNCTION ) {
-  CALL_2ARGS( t_1, t_2, t_3 );
- }
- else {
-  DoOperation2Args( CallFuncListOper, t_1, NewPlistFromArgs( t_2, t_3 ) );
- }
- 
  /* BIND_GLOBAL( "Objectify", function ( type, obj )
       local flags;
       if not IsType( type ) then
           Error( "<type> must be a type" );
       fi;
+      flags := FlagsType( type );
       ;
       if IS_LIST( obj ) then
+          Assert( 0, IS_SUBSET_FLAGS( flags, FLAGS_FILTER( IsPositionalObjectRep ) ) );
+          Assert( 0, not IS_SUBSET_FLAGS( flags, FLAGS_FILTER( IsComponentObjectRep ) ) );
+          if not IS_SUBSET_FLAGS( flags, FLAGS_FILTER( IsPositionalObjectRep ) ) then
+              INFO_DEBUG( 1, "Objectify: type does not imply IsPositionalObjectRep ", INPUT_FILENAME(  ), ":", STRING_INT( INPUT_LINENUMBER(  ) ) );
+          fi;
           SET_TYPE_POSOBJ( obj, type );
       elif IS_REC( obj ) then
+          Assert( 0, IS_SUBSET_FLAGS( flags, FLAGS_FILTER( IsComponentObjectRep ) ) );
+          Assert( 0, not IS_SUBSET_FLAGS( flags, FLAGS_FILTER( IsPositionalObjectRep ) ) );
+          if not IS_SUBSET_FLAGS( flags, FLAGS_FILTER( IsComponentObjectRep ) ) then
+              INFO_DEBUG( 1, "Objectify: type does not imply IsComponentObjectRep ", INPUT_FILENAME(  ), ":", STRING_INT( INPUT_LINENUMBER(  ) ) );
+          fi;
           SET_TYPE_COMOBJ( obj, type );
+      else
+          Error( "<obj> must be a list or a record" );
       fi;
       if not IsNoImmediateMethodsObject( obj ) then
           RunImmediateMethods( obj, type![2] );
@@ -3392,8 +3615,8 @@ static Obj  HdlrFunc1 (
  t_3 = NewFunction( NameFunc[17], 2, ArgStringToList("type,obj"), HdlrFunc17 );
  SET_ENVI_FUNC( t_3, STATE(CurrLVars) );
  t_4 = NewFunctionBody();
- SET_STARTLINE_BODY(t_4, 590);
- SET_ENDLINE_BODY(t_4, 625);
+ SET_STARTLINE_BODY(t_4, 583);
+ SET_ENDLINE_BODY(t_4, 632);
  SET_FILENAME_BODY(t_4, FileName);
  SET_BODY_FUNC(t_3, t_4);
  if ( TNUM_OBJ( t_1 ) == T_FUNCTION ) {
@@ -3429,8 +3652,8 @@ static Obj  HdlrFunc1 (
  t_3 = NewFunction( NameFunc[18], 2, ArgStringToList("obj,filter"), HdlrFunc18 );
  SET_ENVI_FUNC( t_3, STATE(CurrLVars) );
  t_4 = NewFunctionBody();
- SET_STARTLINE_BODY(t_4, 647);
- SET_ENDLINE_BODY(t_4, 667);
+ SET_STARTLINE_BODY(t_4, 654);
+ SET_ENDLINE_BODY(t_4, 674);
  SET_FILENAME_BODY(t_4, FileName);
  SET_BODY_FUNC(t_3, t_4);
  if ( TNUM_OBJ( t_1 ) == T_FUNCTION ) {
@@ -3463,8 +3686,8 @@ static Obj  HdlrFunc1 (
  t_3 = NewFunction( NameFunc[19], 2, ArgStringToList("obj,filter"), HdlrFunc19 );
  SET_ENVI_FUNC( t_3, STATE(CurrLVars) );
  t_4 = NewFunctionBody();
- SET_STARTLINE_BODY(t_4, 687);
- SET_ENDLINE_BODY(t_4, 705);
+ SET_STARTLINE_BODY(t_4, 694);
+ SET_ENDLINE_BODY(t_4, 712);
  SET_FILENAME_BODY(t_4, FileName);
  SET_BODY_FUNC(t_3, t_4);
  if ( TNUM_OBJ( t_1 ) == T_FUNCTION ) {
@@ -3565,8 +3788,8 @@ static Obj  HdlrFunc1 (
  t_3 = NewFunction( NameFunc[20], -1, ArgStringToList("arg"), HdlrFunc20 );
  SET_ENVI_FUNC( t_3, STATE(CurrLVars) );
  t_4 = NewFunctionBody();
- SET_STARTLINE_BODY(t_4, 753);
- SET_ENDLINE_BODY(t_4, 815);
+ SET_STARTLINE_BODY(t_4, 760);
+ SET_ENDLINE_BODY(t_4, 822);
  SET_FILENAME_BODY(t_4, FileName);
  SET_BODY_FUNC(t_3, t_4);
  if ( TNUM_OBJ( t_1 ) == T_FUNCTION ) {
@@ -3608,6 +3831,8 @@ static Int PostRestore ( StructInitInfo * module )
  G_LEN__POSOBJ = GVarName( "LEN_POSOBJ" );
  G_IS__DATOBJ = GVarName( "IS_DATOBJ" );
  G_SET__TYPE__DATOBJ = GVarName( "SET_TYPE_DATOBJ" );
+ G_INPUT__FILENAME = GVarName( "INPUT_FILENAME" );
+ G_INPUT__LINENUMBER = GVarName( "INPUT_LINENUMBER" );
  G_IS__OBJECT = GVarName( "IS_OBJECT" );
  G_AND__FLAGS = GVarName( "AND_FLAGS" );
  G_SUB__FLAGS = GVarName( "SUB_FLAGS" );
@@ -3622,6 +3847,7 @@ static Int PostRestore ( StructInitInfo * module )
  G_GETTER__FUNCTION = GVarName( "GETTER_FUNCTION" );
  G_IS__AND__FILTER = GVarName( "IS_AND_FILTER" );
  G_COMPACT__TYPE__IDS = GVarName( "COMPACT_TYPE_IDS" );
+ G_STRING__INT = GVarName( "STRING_INT" );
  G_fail = GVarName( "fail" );
  G_LEN__LIST = GVarName( "LEN_LIST" );
  G_GASMAN = GVarName( "GASMAN" );
@@ -3648,9 +3874,9 @@ static Int PostRestore ( StructInitInfo * module )
  G_FlagsType = GVarName( "FlagsType" );
  G_TypeObj = GVarName( "TypeObj" );
  G_DataType = GVarName( "DataType" );
- G_IsNonAtomicComponentObjectRep = GVarName( "IsNonAtomicComponentObjectRep" );
- G_IsAtomicPositionalObjectRep = GVarName( "IsAtomicPositionalObjectRep" );
- G_IsReadOnlyPositionalObjectRep = GVarName( "IsReadOnlyPositionalObjectRep" );
+ G_IsPositionalObjectRep = GVarName( "IsPositionalObjectRep" );
+ G_IsComponentObjectRep = GVarName( "IsComponentObjectRep" );
+ G_INFO__DEBUG = GVarName( "INFO_DEBUG" );
  G_IsNoImmediateMethodsObject = GVarName( "IsNoImmediateMethodsObject" );
  G_RunImmediateMethods = GVarName( "RunImmediateMethods" );
  G_ErrorNoReturn = GVarName( "ErrorNoReturn" );
@@ -3726,6 +3952,8 @@ static Int InitKernel ( StructInitInfo * module )
  InitFopyGVar( "LEN_POSOBJ", &GF_LEN__POSOBJ );
  InitFopyGVar( "IS_DATOBJ", &GF_IS__DATOBJ );
  InitFopyGVar( "SET_TYPE_DATOBJ", &GF_SET__TYPE__DATOBJ );
+ InitFopyGVar( "INPUT_FILENAME", &GF_INPUT__FILENAME );
+ InitFopyGVar( "INPUT_LINENUMBER", &GF_INPUT__LINENUMBER );
  InitCopyGVar( "IS_OBJECT", &GC_IS__OBJECT );
  InitFopyGVar( "AND_FLAGS", &GF_AND__FLAGS );
  InitFopyGVar( "SUB_FLAGS", &GF_SUB__FLAGS );
@@ -3740,6 +3968,7 @@ static Int InitKernel ( StructInitInfo * module )
  InitFopyGVar( "GETTER_FUNCTION", &GF_GETTER__FUNCTION );
  InitFopyGVar( "IS_AND_FILTER", &GF_IS__AND__FILTER );
  InitFopyGVar( "COMPACT_TYPE_IDS", &GF_COMPACT__TYPE__IDS );
+ InitFopyGVar( "STRING_INT", &GF_STRING__INT );
  InitCopyGVar( "fail", &GC_fail );
  InitFopyGVar( "LEN_LIST", &GF_LEN__LIST );
  InitFopyGVar( "GASMAN", &GF_GASMAN );
@@ -3766,9 +3995,9 @@ static Int InitKernel ( StructInitInfo * module )
  InitFopyGVar( "FlagsType", &GF_FlagsType );
  InitFopyGVar( "TypeObj", &GF_TypeObj );
  InitFopyGVar( "DataType", &GF_DataType );
- InitCopyGVar( "IsNonAtomicComponentObjectRep", &GC_IsNonAtomicComponentObjectRep );
- InitCopyGVar( "IsAtomicPositionalObjectRep", &GC_IsAtomicPositionalObjectRep );
- InitCopyGVar( "IsReadOnlyPositionalObjectRep", &GC_IsReadOnlyPositionalObjectRep );
+ InitCopyGVar( "IsPositionalObjectRep", &GC_IsPositionalObjectRep );
+ InitCopyGVar( "IsComponentObjectRep", &GC_IsComponentObjectRep );
+ InitFopyGVar( "INFO_DEBUG", &GF_INFO__DEBUG );
  InitFopyGVar( "IsNoImmediateMethodsObject", &GF_IsNoImmediateMethodsObject );
  InitFopyGVar( "RunImmediateMethods", &GF_RunImmediateMethods );
  InitFopyGVar( "ErrorNoReturn", &GF_ErrorNoReturn );
@@ -3859,7 +4088,7 @@ static Int InitLibrary ( StructInitInfo * module )
 static StructInitInfo module = {
  .type        = MODULE_STATIC,
  .name        = "GAPROOT/lib/type1.g",
- .crc         = -88497608,
+ .crc         = -111807373,
  .initKernel  = InitKernel,
  .initLibrary = InitLibrary,
  .postRestore = PostRestore,
