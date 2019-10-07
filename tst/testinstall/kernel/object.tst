@@ -4,8 +4,8 @@
 gap> START_TEST("object.tst");
 
 # test some standard object types
-gap> r := Objectify(TYPE_KERNEL_OBJECT, rec());
-<kernel object>
+gap> r := Objectify( NewType(NewFamily("foo", IsObject), IsComponentObjectRep), rec());
+<object>
 gap> KnownAttributesOfObject(r);
 [  ]
 gap> KnownAttributesOfObject((1,2));

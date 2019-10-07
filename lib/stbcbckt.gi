@@ -35,7 +35,7 @@ BindGlobal("STBBCKT_STRING_TWOCLOSURE",MakeImmutable("TwoClosure"));
 ##
 #F  IsSlicedPerm( <perm> )  . . . . . . . . . . . . . . . sliced permutations
 ##
-DeclareRepresentation( "IsSlicedPerm", IsPerm,
+DeclareRepresentation( "IsSlicedPerm", IsPerm and IsComponentObjectRep,
                         [ "length", "word", "lftObj","opr" ] );
 
 #############################################################################
@@ -88,7 +88,7 @@ InstallMethod( ViewObj,"sliced perm", true, [ IsSlicedPerm ], 0,
     Print( "<perm word of length ", perm!.length, ">" );
 end );
 
-DeclareRepresentation( "IsSlicedPermInv", IsPerm,
+DeclareRepresentation( "IsSlicedPermInv", IsPerm and IsComponentObjectRep,
                            [ "length", "word", "lftObj", "opr" ] );
 
 InstallOtherMethod( \^,"sliced perm", true, [ IsObject, IsSlicedPermInv ], 0,

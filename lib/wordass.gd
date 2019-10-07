@@ -219,12 +219,8 @@ DeclareRepresentation( "IsSyllableAssocWordRep", IsAssocWord, [] );
 ##  </ManSection>
 ##  <#/GAPDoc>
 ##
-if IsHPCGAP then
 DeclareRepresentation( "IsLetterAssocWordRep", 
                        IsAssocWord and IsAtomicPositionalObjectRep, [] );
-else
-DeclareRepresentation( "IsLetterAssocWordRep", IsAssocWord, [] );
-fi;
 
 #############################################################################
 ##

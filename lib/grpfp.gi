@@ -2893,8 +2893,8 @@ j, ok, b,k,tr;
   # these are scratch space for the kernel (partial permutations)
   mu:=ListWithIdenticalEntries(N,0);
   nu:=ListWithIdenticalEntries(N,0);
-  Objectify(TYPE_LOWINDEX_DATA,mu);
-  Objectify(TYPE_LOWINDEX_DATA,nu);
+  SET_TYPE_DATOBJ(mu,TYPE_LOWINDEX_DATA);
+  SET_TYPE_DATOBJ(nu,TYPE_LOWINDEX_DATA);
   
   tr:=[2*m,2*m-1..1];
 

@@ -12,6 +12,8 @@
 
 # Elements...
 
+# FIXME: all methods for IsReesMatrixSemigroupElement and
+# IsReesZeroMatrixSemigroupElement really expect a specific representation...
 DeclareCategory( "IsReesMatrixSemigroupElement", IsAssociativeElement);
 DeclareCategory( "IsReesZeroMatrixSemigroupElement", IsAssociativeElement);
 
