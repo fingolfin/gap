@@ -963,6 +963,9 @@ static void StoreSymbolPosition(ScannerState * s)
 */
 static UInt NextSymbol(ScannerState * s)
 {
+    s->ValueObj = 0;
+    s->Value[0] = 0;
+
     // Record end of previous symbol's position
     StoreSymbolPosition(s);
 

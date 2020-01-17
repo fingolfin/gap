@@ -101,7 +101,7 @@ static void ReadExpr(ReaderState * rs, TypSymbolSet follow, Char mode);
 
 static UInt ReadStats(ReaderState * rs, TypSymbolSet follow);
 
-static void ReadFuncExprAbbrevSingle(ReaderState * rs, TypSymbolSet follow);
+static void ReadFuncExprAbbrevSingle(ReaderState * rs, const Char * argname, TypSymbolSet follow);
 
 static void ReadAtom(ReaderState * rs, TypSymbolSet follow, Char mode);
 
@@ -604,7 +604,7 @@ static void ReadReferenceModifiers(ReaderState * rs, TypSymbolSet follow)
 **
 **  <Ident> :=  a|b|..|z|A|B|..|Z { a|b|..|z|A|B|..|Z|0|..|9|_ }
 */
-static LHSRef ReadVar(ReaderState * rs, TypSymbolSet follow)
+static LHSRef ReadVar(ReaderState * rs, const Char * varname, TypSymbolSet follow)
 {
     LHSRef ref = { R_INVALID, 0, {0}, {0} };
 
@@ -614,13 +614,6 @@ static LHSRef ReadVar(ReaderState * rs, TypSymbolSet follow)
     Obj  lvars0;                    // environment
     UInt nest0;                     // nesting level of a higher var.
     UInt indx;                      // index of a local variable
-    Char varname[MAX_VALUE_LEN];    // copy of variable name
-
-    /* all variables must begin with an identifier                         */
-    if (rs->s.Symbol != S_IDENT) {
-        SyntaxError(&rs->s, "Identifier expected");
-        return ref;
-    }
 
     // try to look up the variable on the stack of local variables
     const UInt countNams = LEN_PLIST(rs->StackNams);
@@ -671,19 +664,13 @@ static LHSRef ReadVar(ReaderState * rs, TypSymbolSet follow)
         nest0++;
     }
 
-    // get the variable as a global variable
-    if (ref.type == R_INVALID) {
-        ref.type = R_GVAR;
-        // we do not want to call GVarName on this value until after we
-        // have checked if this is the argument to a lambda function
-        strlcpy(varname, rs->s.Value, sizeof(varname));
-    }
-
     // match away the identifier, now that we know the variable
     Match(&rs->s, S_IDENT, "identifier", follow);
 
-    // If this isn't a lambda function, look up the name
-    if (rs->s.Symbol != S_MAPTO && ref.type == R_GVAR) {
+    // If this isn't a lambda function, and we decided above that it is
+    // not the same name of an lvar, hvar or dvar, thenlook up the name
+    if (rs->s.Symbol != S_MAPTO && ref.type == R_INVALID) {
+        ref.type = R_GVAR;
         ref.var = GVarName(varname);
     }
 
@@ -763,19 +750,29 @@ static void CheckUnboundGlobal(ReaderState * rs, LHSRef ref)
 */
 static void ReadCallVarAss(ReaderState * rs, TypSymbolSet follow, Char mode)
 {
-    volatile LHSRef ref = ReadVar(rs, follow);
-    if (ref.type == R_INVALID)
-        return;
+    Char varname[MAX_VALUE_LEN];
+
+    // all variables must begin with an identifier
+    if (rs->s.Symbol != S_IDENT) {
+        SyntaxError(&rs->s, "Identifier expected");
+    }
+
+    // copy the identifier, as calls to Match inside ReadVar may overwrite it
+    strlcpy(varname, rs->s.Value, sizeof(varname));
+
+    volatile LHSRef ref = ReadVar(rs, varname, follow);
 
     // if this was actually the beginning of a function literal, then we are
     // in the wrong function
     if (rs->s.Symbol == S_MAPTO) {
         if (mode == 'r' || mode == 'x')
-            ReadFuncExprAbbrevSingle(rs, follow);
+            ReadFuncExprAbbrevSingle(rs, varname, follow);
         else
             SyntaxError(&rs->s, "Function literal in impossible context");
         return;
     }
+
+    GAP_ASSERT(ref.type != R_INVALID);
 
     // Check if the variable is a constant
     if (ref.type == R_GVAR && IsConstantGVar(ref.var) && ValGVar(ref.var)) {
@@ -1382,11 +1379,11 @@ static void ReadFuncExprAbbrevMulti(ReaderState * rs, TypSymbolSet follow)
 **
 **      <Function>      := <Var> '->' <Expr>
 */
-static void ReadFuncExprAbbrevSingle(ReaderState * rs, TypSymbolSet follow)
+static void ReadFuncExprAbbrevSingle(ReaderState * rs, const Char * argname, TypSymbolSet follow)
 {
     /* make and push the new local variables list                          */
     Obj nams = NEW_PLIST(T_PLIST, 1);
-    PushPlist(nams, MakeImmString(rs->s.Value));
+    PushPlist(nams, MakeImmString(argname));
 
     ArgList args;
     args.narg = 1;
@@ -1481,7 +1478,6 @@ static void ReadLiteral(ReaderState * rs, TypSymbolSet follow, Char mode)
         GAP_ASSERT(rs->s.ValueObj != 0);
         TRY_IF_NO_ERROR { IntrStringExpr(&rs->intr, rs->s.ValueObj); }
         Match(&rs->s, S_STRING, "", follow);
-        rs->s.ValueObj = 0;
         break;
 
     /* <List>                                                              */
@@ -2011,7 +2007,7 @@ static void ReadFor(ReaderState * rs, TypSymbolSet follow)
     Match(&rs->s, S_FOR, "for", follow);
 
     /* <Var>                                                               */
-    volatile LHSRef ref = ReadVar(rs, follow);
+    volatile LHSRef ref = ReadVar(rs, rs->s.Value, follow);
     if (ref.type != R_INVALID)
         EvalRef(rs, ref, 1);
     CheckUnboundGlobal(rs, ref);
@@ -2318,13 +2314,11 @@ static void ReadTryNext(ReaderState * rs, TypSymbolSet follow)
 static void ReadHelp(ReaderState * rs, TypSymbolSet follow)
 {
     TRY_IF_NO_ERROR { IntrHelp(&rs->intr, rs->s.ValueObj); }
-    rs->s.ValueObj = 0;
 }
 
 static void ReadPragma(ReaderState * rs, TypSymbolSet follow)
 {
     TRY_IF_NO_ERROR { IntrPragma(&rs->intr, rs->s.ValueObj); }
-    rs->s.ValueObj = 0;
 }
 
 /****************************************************************************
