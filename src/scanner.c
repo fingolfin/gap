@@ -264,7 +264,7 @@ static UInt GetIdent(ScannerState * s, Int i, Char c)
     Int isQuoted = 0;
 
     // read all characters into 's->Value'
-    for (; IsIdent(c) || c == '\\'; i++) {
+    while (IsIdent(c) || c == '\\') {
 
         // handle escape sequences
         if (c == '\\') {
@@ -277,11 +277,28 @@ static UInt GetIdent(ScannerState * s, Int i, Char c)
             default:
                 isQuoted = 1;
             }
-        }
 
-        /// put char into 's->Value' but only if there is room
-        if (i < MAX_VALUE_LEN - 1)
-            s->Value[i] = c;
+            // put char into 's->Value' but only if there is room
+            if (i < MAX_VALUE_LEN - 1)
+                s->Value[i] = c;
+
+            i++;
+        }
+        else if (i < MAX_VALUE_LEN - 1) {
+            Char * in = STATE(In);
+            do {
+                s->Value[i++] = *in++;
+            } while (IsIdent(*in) && i < MAX_VALUE_LEN - 1);
+            STATE(In) = in - 1;
+        }
+        else {
+            Char * in = STATE(In);
+            do {
+                i++;
+                in++;
+            } while (IsIdent(*in));
+            STATE(In) = in - 1;
+        }
 
         // read the next character
         c = GET_NEXT_CHAR();

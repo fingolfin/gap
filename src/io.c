@@ -294,7 +294,6 @@ void SKIP_TO_END_OF_LINE(void)
         c = GET_NEXT_CHAR_NO_LC();
 }
 
-
 const Char * GetInputFilename(void)
 {
     GAP_ASSERT(IO()->Input);
