@@ -25,6 +25,23 @@
 #include "stringobj.h"
 #include "sysstr.h"
 
+Char GET_NEXT_CHAR_HACK(void)
+{
+    char c = STATE(In)[1];
+
+    // handle line continuation, i.e., backslash followed by new line; and
+    // also the case when we run out of buffered data
+    if (c == '\\' || c == 0) {
+        return GET_NEXT_CHAR();
+    }
+    STATE(In)++;
+
+    return c;
+}
+
+//#define GET_NEXT_CHAR GET_NEXT_CHAR_HACK
+
+
 
 static UInt NextSymbol(ScannerState * s);
 
