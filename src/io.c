@@ -1203,9 +1203,23 @@ static Int GetLine2 (
         }
     }
     else {
+#if 0
         if ( ! SyFgets( buffer, length, input->file ) ) {
             return 0;
         }
+#else
+        int fid = input->file;
+        if (fid != 0 && fid != 2) {
+            int len = SyRead(fid, buffer, length-1);
+            if (len <= 0)
+                return 0;
+            buffer[len] = '\0';
+        }
+        else {
+            if (!SyFgets(buffer, length, fid))
+                return 0;
+        }
+#endif
     }
     return 1;
 }
@@ -1255,6 +1269,7 @@ static Char GetLine(void)
     /* bump the line number                                                */
     if (STATE(In) > IO()->Input->line && STATE(In)[-1] == '\n') {
         IO()->Input->number++;
+        // FIXME: need to increment this in more places
     }
 
     /* initialize 'STATE(In)', no errors on this line so far                      */
