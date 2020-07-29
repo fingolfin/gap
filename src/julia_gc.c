@@ -29,6 +29,7 @@
 
 #include "bags.inc"
 
+#include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -812,6 +813,9 @@ void GAP_register_GapObj(jl_datatype_t * gapobj_type)
 
 void InitBags(UInt initial_size, Bag * stack_bottom, UInt stack_align)
 {
+int val = offsetof(jl_tls_states_t, safe_restore);
+fprintf(stderr, "Julia %s: offsetof(jl_tls_states_t, safe_restore) = %d = 0x%x\n", JULIA_VERSION_STRING, val, val);
+
     // HOOK: initialization happens here.
     GapStackBottom = stack_bottom;
     for (UInt i = 0; i < NUM_TYPES; i++) {

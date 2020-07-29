@@ -129,19 +129,23 @@ typedef struct {
     BOOL isTTY;
 } SYS_SY_BUF;
 
-#define SYS_FILE_BUF_SIZE 20000
+#define SYS_FILE_BUF_SIZE 65536
 
 typedef struct {
     Char buf[SYS_FILE_BUF_SIZE];
     BOOL inuse;
     UInt bufstart;
-    UInt buflen;
+    UInt bufend;
 } SYS_SY_BUFFER;
 
 static SYS_SY_BUF syBuf[256];
 
 static SYS_SY_BUFFER syBuffers[32];
 
+static inline int syBufferAvailableBytes(int bufno)
+{
+    return syBuffers[bufno].bufend - syBuffers[bufno].bufstart;
+}
 
 /* utility to check return value of 'write'  */
 static ssize_t echoandcheck(int fid, const char *buf, size_t count)
@@ -664,11 +668,11 @@ Int SyFopen (
         // buffer was not big enough, give up
         namegz[0] = '\0';
     }
-    if (strncmp( mode, "r", 1 ) == 0)
+    if (*mode == 'r')
       flags = O_RDONLY;
-    else if (strncmp( mode, "w",1 ) == 0)
+    else if (*mode == 'w')
       flags = O_WRONLY | O_CREAT | O_TRUNC;
-    else if (strncmp( mode, "a",1) == 0)
+    else if (*mode == 'a')
       flags = O_WRONLY | O_APPEND | O_CREAT;
     else {
         Panic("Unknown mode %s", mode);
@@ -689,7 +693,7 @@ Int SyFopen (
         syBuf[fid].echo = syBuf[fid].fp;
         syBuf[fid].bufno = -1;
     }
-    else if (strncmp(mode, "r", 1) == 0 && SyIsReadableFile(namegz) == 0 &&
+    else if (*mode == 'r' && SyIsReadableFile(namegz) == 0 &&
              (syBuf[fid].gzfp = gzopen(namegz, mode))) {
         syBuf[fid].type = gzip_socket;
         syBuf[fid].fp = -1;
@@ -702,7 +706,7 @@ Int SyFopen (
 
     HashUnlock(&syBuf);
 
-    if(strncmp(mode, "r", 1) == 0)
+    if (*mode == 'r')
         SySetBuffering(fid);
 
     /* return file identifier                                              */
@@ -731,7 +735,7 @@ UInt SySetBuffering( UInt fid )
   syBuf[fid].bufno = bufno;
   syBuffers[bufno].inuse = TRUE;
   syBuffers[bufno].bufstart = 0;
-  syBuffers[bufno].buflen = 0;
+  syBuffers[bufno].bufend = 0;
   HashUnlock(&syBuf);
   return 1;
 }
@@ -1247,7 +1251,7 @@ Int SyFtell (
     // Need to account for characters in buffer
     if (syBuf[fid].bufno >= 0) {
         UInt bufno = syBuf[fid].bufno;
-        ret -= syBuffers[bufno].buflen - syBuffers[bufno].bufstart;
+        ret -= syBufferAvailableBytes(bufno);
     }
     return ret;
 }
@@ -1268,7 +1272,7 @@ Int SyFseek (
 
     if (syBuf[fid].bufno >= 0) {
         UInt bufno = syBuf[fid].bufno;
-        syBuffers[bufno].buflen = 0;
+        syBuffers[bufno].bufend = 0;
         syBuffers[bufno].bufstart = 0;
     }
 
@@ -1343,7 +1347,7 @@ Int SyReadWithBuffer(Int fid, void * ptr, size_t len)
     // first drain the buffer
     if (syBuf[fid].bufno >= 0) {
         UInt   bufno = syBuf[fid].bufno;
-        size_t avail = syBuffers[bufno].buflen - syBuffers[bufno].bufstart;
+        size_t avail = syBufferAvailableBytes(bufno);
         if (avail > 0) {
             if (avail > len)
                 avail = len;
@@ -1478,7 +1482,7 @@ static Int syGetchNonTerm(Int fid)
             ;
     else {
         bufno = syBuf[fid].bufno;
-        if (syBuffers[bufno].bufstart < syBuffers[bufno].buflen) {
+        if (syBuffers[bufno].bufstart < syBuffers[bufno].bufend) {
             ch = syBuffers[bufno].buf[syBuffers[bufno].bufstart++];
             ret = 1;
         } else {
@@ -1489,7 +1493,7 @@ static Int syGetchNonTerm(Int fid)
             if (ret > 0) {
                 ch = syBuffers[bufno].buf[0];
                 syBuffers[bufno].bufstart = 1;
-                syBuffers[bufno].buflen = ret;
+                syBuffers[bufno].bufend = ret;
             }
         }
     }
@@ -1799,7 +1803,7 @@ Int HasAvailableBytes( UInt fid )
   if (syBuf[fid].bufno >= 0)
     {
       bufno = syBuf[fid].bufno;
-      if (syBuffers[bufno].bufstart < syBuffers[bufno].buflen)
+      if (syBufferAvailableBytes(bufno) > 0)
         return 1;
     }
 
@@ -1836,9 +1840,9 @@ static Char * syFgetsNoEdit(Char * line, UInt length, Int fid, UInt block)
   int buflen;
   if(!syBuf[fid].isTTY && syBuf[fid].bufno >= 0) {
     bufno = syBuf[fid].bufno;
-    if (syBuffers[bufno].bufstart < syBuffers[bufno].buflen) {
+    buflen = syBufferAvailableBytes(bufno);
+    if (buflen > 0) {
       bufstart = syBuffers[bufno].buf + syBuffers[bufno].bufstart;
-      buflen = syBuffers[bufno].buflen - syBuffers[bufno].bufstart;
       newlinepos = memchr(bufstart, '\n', buflen);
       if(newlinepos && (newlinepos - bufstart) < length - 2) {
           newlinepos++;
