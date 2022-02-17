@@ -1,4 +1,4 @@
-#@local entry,equ,pair,sml,oldTermEncoding,pkginfo,info,mockpkgpath,p,n
+#@local entry,equ,pair,sml,oldTermEncoding,pkginfo,info,mockpkgpath,p,n,gapdir
 gap> START_TEST("package.tst");
 
 # CompareVersionNumbers( <supplied>, <required>[, \"equal\"] )
@@ -581,6 +581,23 @@ gap> IsPackageLoaded("mockpkg", "=2.0");
 false
 gap> IsPackageLoaded("mockpkg", ">=2.0");
 false
+
+#
+# Compile the package and try to load its kernel extension
+#
+gap> gapdir := First(GAPInfo.RootPaths,d->IsExistingFile(Concatenation(d,"sysinfo.gap")));;
+gap> IsString(gapdir);
+true
+gap> Process(Directory(mockpkgpath), "configure", InputTextUser(), OutputTextNone(), []);
+0
+gap> Process(Directory(mockpkgpath), Filename(DirectoriesSystemPrograms(), "make"), InputTextUser(), OutputTextNone(), []);
+0
+gap> IsBound(TestCommand) or IsKernelExtensionAvailable("mockpkg");
+true
+gao> IsBound(TestCommand) or LoadKernelExtension("mockpkg");
+true
+gap> TestCommand();
+42
 
 #
 gap> STOP_TEST( "package.tst", 1);
