@@ -1,0 +1,30 @@
+# This workflow takes care of creating nightly release archives for the
+# GAP distribution. It works by tagging the latest master branch as "nightly"
+# which then triggers the regular release workflow. Doing it this way ensures
+# that everything is as close as possible to a regular release.
+name: "Nightly releases"
+
+on:
+  workflow_dispatch:
+  schedule:
+    # Every day at 3:33 AM UTC
+    - cron: '39 3 * * *'
+
+jobs:
+  nightly:
+    runs-on: ubuntu-latest
+    steps:
+      #- uses: dev-drprasad/delete-tag-and-release@v1.0
+      #  with:
+      #    tag_name: nightly
+      #    github_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/checkout@v4
+      - uses: rickstaa/action-create-tag@v1
+        id: "tag_create"
+        with:
+          tag: "nightly"
+          force_push_tag: true
+          message: "Nightly build"
+
+
