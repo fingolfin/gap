@@ -13,7 +13,6 @@ on:
     tags:
       - v[1-9]+.[0-9]+.[0-9]    # allow v1.2.3
       - v[1-9]+.[0-9]+.[0-9]-*  # allow v1.2.3-beta3 etc.
-      - nightly
     branches:
       - master
       - stable-*
@@ -38,7 +37,8 @@ jobs:
     if: ${{ !(github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository) }}
     runs-on: ubuntu-latest
     outputs:
-      gap-build-version: ${{ steps.get-build.outputs.name }}
+      version: ${{ steps.get-version.outputs.version }}
+      tagname: ${{ steps.get-tagname.outputs.tag }}
 
     steps:
       - uses: actions/checkout@v3
@@ -78,11 +78,11 @@ jobs:
       - name: "Build GAP"
         run: dev/ci-build-gap.sh
       - name: "Record the GAP build version"
-        id: get-build
+        id: get-version
         run: |
           BUILD=`head -1 cnf/GAP-VERSION-FILE | cut -d ' ' -f3`
-          echo "steps.get-build.outputs.name = ${BUILD}"
-          echo "name=${BUILD}" >> $GITHUB_OUTPUT
+          echo "steps.get-version.outputs.version = ${BUILD}"
+          echo "version=${BUILD}" >> $GITHUB_OUTPUT
       - name: "Make archives"
         run: python -u ./dev/releases/make_archives.py
 
@@ -90,7 +90,7 @@ jobs:
         run: |
           mkdir -p test-gap-tarball
           pushd test-gap-tarball
-          tar xvf ../tmp/gap-${{ steps.get-build.outputs.name }}.tar.gz
+          tar xvf ../tmp/gap-${{ steps.get-version.outputs.name }}.tar.gz
           cd gap*
           # test building GAP
           ./configure --prefix=/tmp/gapprefix
@@ -111,7 +111,7 @@ jobs:
         with:
           if-no-files-found: error
           name: gap
-          path: tmp/gap-${{ steps.get-build.outputs.name }}.tar.gz
+          path: tmp/gap-${{ steps.get-version.outputs.name }}.tar.gz
           retention-days: 1
 
       # Always upload metadata, and keep longer, since it is much smaller.
@@ -123,9 +123,19 @@ jobs:
           path: tmp/*json.gz
           retention-days: 7
 
+      - name: "Record the GAP tagname"
+        id: get-tagname
+        run: |
+          TAGNAME=${GITHUB_REF#refs/tags/}
+          if [[ $TAGNAME != v4* ]]; then
+            TAGNAME="nightly"
+          fi
+          echo "steps.get-tagname.outputs.tag = ${TAGNAME}"
+          echo "tag=${TAGNAME}" >> $GITHUB_OUTPUT
+
       - name: "Make GitHub release"
-        if: ${{ startsWith(github.ref, 'refs/tags/v') || github.ref == 'refs/tags/nightly' }}
-        run: python -u ./dev/releases/make_github_release.py ${GITHUB_REF#refs/tags/} tmp/
+        if: ${{ github.event_name == 'tags' || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' }}
+        run: python -u ./dev/releases/make_github_release.py ${{ steps.get-tagname.outputs.tag }} tmp/
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -135,7 +145,7 @@ jobs:
     runs-on: windows-2019
     env:
       CHERE_INVOKING: 1
-      GAP_VERSION: ${{ needs.unix.outputs.gap-build-version }}
+      GAP_VERSION: ${{ needs.unix.outputs.version }}
     defaults:
       run:
         shell: bash
@@ -206,8 +216,9 @@ jobs:
 
       - name: "Upload the installer to tag"
         uses: softprops/action-gh-release@v1
-        if: ${{ startsWith(github.ref, 'refs/tags/v') || github.ref == 'refs/tags/nightly' }}
+        if: ${{ github.event_name == 'tags' || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' }}
         with:
+          tag_name: ${{ needs.unix.outputs.tagname }}
           files: |
             gap-windows/Output/gap-${{ env.GAP_VERSION }}-x86_64.exe
             gap-windows/Output/gap-${{ env.GAP_VERSION }}-x86_64.exe.sha256
