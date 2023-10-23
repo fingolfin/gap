@@ -20,9 +20,22 @@ jobs:
       #    github_token: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: actions/checkout@v4
+
+      # We set up a GitHub App in order to ensure that workflows are run on the PRs
+      # created by us, following the instructions here:
+      # <https://github.com/peter-evans/create-pull-request/blob/main/docs/concepts-guidelines.md#authenticating-with-github-app-generated-tokens>
+      # The bot can also be set up for personal forks of this repository, for testing
+      # and debugging, see <https://github.com/apps/gap-package-distribution-bot>.
+      - uses: tibdex/github-app-token@v1
+        id: generate-token
+        with:
+          app_id: ${{ secrets.APP_ID }}
+          private_key: ${{ secrets.APP_PRIVATE_KEY }}
+
       - uses: rickstaa/action-create-tag@v1
         id: "tag_create"
         with:
+          github_token: ${{ steps.generate-token.outputs.token }}
           tag: "nightly"
           force_push_tag: true
           message: "Nightly build"
