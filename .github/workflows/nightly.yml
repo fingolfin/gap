@@ -33,7 +33,7 @@ jobs:
           private_key: ${{ secrets.APP_PRIVATE_KEY }}
 
       - name: "Update nightly tag"
-      - env:
+        env:
           GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
         run: |
           git config --global user.name 'GAP Team'
