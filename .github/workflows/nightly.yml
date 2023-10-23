@@ -32,7 +32,10 @@ jobs:
           app_id: ${{ secrets.APP_ID }}
           private_key: ${{ secrets.APP_PRIVATE_KEY }}
 
-      - run: |
+      - name: "Update nightly tag"
+      - env:
+          GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
+        run: |
           git config --global user.name 'GAP Team'
           git config --global user.email 'support@gap-system.org'
           git remote set-url origin https://x-access-token:${{ steps.generate-token.outputs.token }}@github.com/${GITHUB_REPOSITORY}
