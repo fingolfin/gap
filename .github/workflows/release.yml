@@ -37,7 +37,7 @@ jobs:
     if: ${{ !(github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository) }}
     runs-on: ubuntu-latest
     outputs:
-      version: ${{ steps.get-version.outputs.version }}
+      version: ${{ steps.get-build.outputs.name }}
       tagname: ${{ steps.get-tagname.outputs.tag }}
 
     steps:
@@ -78,11 +78,11 @@ jobs:
       - name: "Build GAP"
         run: dev/ci-build-gap.sh
       - name: "Record the GAP build version"
-        id: get-version
+        id: get-build
         run: |
           BUILD=`head -1 cnf/GAP-VERSION-FILE | cut -d ' ' -f3`
-          echo "steps.get-version.outputs.version = ${BUILD}"
-          echo "version=${BUILD}" >> $GITHUB_OUTPUT
+          echo "steps.get-build.outputs.name = ${BUILD}"
+          echo "name=${BUILD}" >> $GITHUB_OUTPUT
       - name: "Make archives"
         run: python -u ./dev/releases/make_archives.py
 
@@ -90,7 +90,7 @@ jobs:
         run: |
           mkdir -p test-gap-tarball
           pushd test-gap-tarball
-          tar xvf ../tmp/gap-${{ steps.get-version.outputs.name }}.tar.gz
+          tar xvf ../tmp/gap-${{ steps.get-build.outputs.name }}.tar.gz
           cd gap*
           # test building GAP
           ./configure --prefix=/tmp/gapprefix
@@ -111,7 +111,7 @@ jobs:
         with:
           if-no-files-found: error
           name: gap
-          path: tmp/gap-${{ steps.get-version.outputs.name }}.tar.gz
+          path: tmp/gap-${{ steps.get-build.outputs.name }}.tar.gz
           retention-days: 1
 
       # Always upload metadata, and keep longer, since it is much smaller.
