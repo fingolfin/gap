@@ -14,32 +14,33 @@ jobs:
   nightly:
     runs-on: ubuntu-latest
     steps:
+      # We set up a GitHub App in order to ensure that workflows are run on the PRs
+      # created by us, following the instructions here:
+      # <https://github.com/peter-evans/create-pull-request/blob/main/docs/concepts-guidelines.md#authenticating-with-github-app-generated-tokens>
+      # The bot can also be set up for personal forks of this repository, for testing
+      # and debugging, see <https://github.com/apps/gap-package-distribution-bot>.
+      - uses: actions/create-github-app-token@v1
+        id: generate-token
+        with:
+          app-id: ${{ vars.APP_ID }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+
       #- uses: dev-drprasad/delete-tag-and-release@v1.0
       #  with:
       #    tag_name: nightly
       #    github_token: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: actions/checkout@v4
-
-      # We set up a GitHub App in order to ensure that workflows are run on the PRs
-      # created by us, following the instructions here:
-      # <https://github.com/peter-evans/create-pull-request/blob/main/docs/concepts-guidelines.md#authenticating-with-github-app-generated-tokens>
-      # The bot can also be set up for personal forks of this repository, for testing
-      # and debugging, see <https://github.com/apps/gap-package-distribution-bot>.
-      - uses: tibdex/github-app-token@v2
-        id: generate-token
         with:
-          app_id: ${{ secrets.APP_ID }}
-          private_key: ${{ secrets.APP_PRIVATE_KEY }}
+          token: ${{ steps.generate-token.outputs.token }}
+          # Make sure the value of GITHUB_TOKEN will not be persisted in repo's config
+          persist-credentials: false
 
       - name: "Update nightly tag"
         env:
           GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
         run: |
-          git config --global user.name 'GAP Team'
-          git config --global user.email 'support@gap-system.org'
-          git remote set-url origin https://x-access-token:${{ steps.generate-token.outputs.token }}@github.com/${GITHUB_REPOSITORY}
-          git tag -f -m "Nightly build" nightly
+          git tag -f nightly
           git push -f origin nightly
 
 #       - uses: rickstaa/action-create-tag@v1
