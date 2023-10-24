@@ -145,7 +145,7 @@ jobs:
           git push -f origin nightly
 
       - name: "Make GitHub release"
-        if: ${{ github.event_name == 'tags' || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' }}
+        if: ${{ startsWith(github.ref, 'refs/tags/v') || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' }}
         run: python -u ./dev/releases/make_github_release.py ${{ steps.get-tagname.outputs.tag }} tmp/
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -227,7 +227,7 @@ jobs:
 
       - name: "Upload the installer to tag"
         uses: softprops/action-gh-release@v1
-        if: ${{ github.event_name == 'tags' || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' }}
+        if: ${{ startsWith(github.ref, 'refs/tags/v') || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' }}
         with:
           tag_name: ${{ needs.unix.outputs.tagname }}
           files: |
