@@ -133,6 +133,17 @@ jobs:
           echo "steps.get-tagname.outputs.tag = ${TAGNAME}"
           echo "tag=${TAGNAME}" >> $GITHUB_OUTPUT
 
+      - name: "Update nightly tag"
+        if: ${{ github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' }}
+        env:
+          GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
+        run: |
+          git config --global user.name 'GAP Team'
+          git config --global user.email 'support@gap-system.org'
+          #git remote set-url origin https://x-access-token:${{ steps.get-tagname.outputs.tag }}@github.com/${GITHUB_REPOSITORY}
+          git tag -f -m "Nightly build" nightly
+          git push -f origin nightly
+
       - name: "Make GitHub release"
         if: ${{ github.event_name == 'tags' || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' }}
         run: python -u ./dev/releases/make_github_release.py ${{ steps.get-tagname.outputs.tag }} tmp/
