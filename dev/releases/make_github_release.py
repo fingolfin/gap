@@ -26,7 +26,7 @@ PATH_TO_RELEASE = sys.argv[2]
 if TAG_NAME.startswith("v4"):
     VERSION = TAG_NAME[1:]  # strip 'v' prefix
 else:
-    VERSION = TAG_NAME
+    VERSION = TAG_NAME # for "nightly"
 
 utils.verify_git_clean()
 utils.verify_is_possible_gap_release_tag(TAG_NAME)
@@ -43,7 +43,7 @@ if not any(tag.name == TAG_NAME for tag in utils.CURRENT_REPO.get_tags()):
 utils.check_git_tag_for_release(TAG_NAME)
 
 # Error if this release has been already created on GitHub
-if any(r.tag_name == TAG_NAME for r in utils.CURRENT_REPO.get_releases()):
+if TAG_NAME != "nightly" and any(r.tag_name == TAG_NAME for r in utils.CURRENT_REPO.get_releases()):
     utils.error(f"Github release with tag '{TAG_NAME}' already exists!")
 
 # Create release
