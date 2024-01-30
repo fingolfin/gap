@@ -20,37 +20,42 @@ import gzip
 import json
 import os
 import re
-import requests
 import shutil
 import sys
 import tarfile
 import tempfile
+import requests
+
 import utils
 import utils_github
 
 from utils import error, notice
 
-if sys.version_info < (3,6):
+if sys.version_info < (3, 6):
     error("Python 3.6 or newer is required")
 
-parser = argparse.ArgumentParser(formatter_class=argparse.RawDescriptionHelpFormatter,
-description=
-"""Update the GAP website from the GAP releases data on GitHub.
+parser = argparse.ArgumentParser(
+    formatter_class=argparse.RawDescriptionHelpFormatter,
+    description="""Update the GAP website from the GAP releases data on GitHub.
 
 Run this script in the root of a clone of the GapWWW repository, \
 checked out at the version from which you want to update \
 (most likely the master branch of github.com/gap-system/GapWWW). \
 The script modifies the working directory according to the information \
 on GitHub.""",
-epilog=
-"""Notes:
+    epilog="""Notes:
 * To learn how to create a GitHub access token, please consult \
   https://help.github.com/articles/creating-an-access-token-for-command-line-use
-""")
+""",
+)
 group = parser.add_argument_group("Repository details and access")
 group.add_argument("--token", type=str, help="GitHub access token")
-group.add_argument("--gap-fork", type=str, default="gap-system",
-        help="GitHub GAP fork to search for releases (for testing; default: gap-system)")
+group.add_argument(
+    "--gap-fork",
+    type=str,
+    default="gap-system",
+    help="GitHub GAP fork to search for releases (for testing; default: gap-system)",
+)
 args = parser.parse_args()
 
 utils.verify_command_available("git")
@@ -65,31 +70,38 @@ tmpdir = tempfile.gettempdir()
 # (global variable <release>, with assets <assets>) to <writedir>.
 def download_asset_by_name(asset_name, writedir):
     try:
-        url = [ x for x in assets if x.name == asset_name ][0].browser_download_url
+        url = [x for x in assets if x.name == asset_name][0].browser_download_url
     except:
-        error(f"Cannot find {asset_name} in the GitHub release with tag {release.tag_name}")
+        error(
+            f"Cannot find {asset_name} in the GitHub release with tag {release.tag_name}"
+        )
 
     with utils.working_directory(writedir):
         notice(f"Downloading {url} to {writedir} . . .")
         utils.download_with_sha256(url, asset_name)
 
+
 def extract_tarball(tarball):
-    notice(f"Extracting {tarball} . . .")
-    with tarfile.open(tarball) as tar:
+    notice(f"Extracting {tball} . . .")
+    with tarfile.open(tball) as tar:
         try:
             tar.extractall()
         except:
-            error(f"Failed to extract {tarball}!")
+            error(f"Failed to extract {tball}!")
+
 
 def get_date_from_configure_ac(gaproot):
-    with open(f"{gaproot}/configure.ac", "r") as configure_ac:
+    with open(f"{gaproot}/configure.ac", "r", encoding="utf-8") as configure_ac:
         filedata = configure_ac.read()
-        try: # Expect date in YYYY-MM-DD format
-            release_date = re.search("\[gap_releaseday\], \[(\d{4}-\d{2}-\d{2})\]", filedata).group(1)
-            release_date = datetime.datetime.strptime(release_date, "%Y-%m-%d")
-        except:
+        release_date = re.search(
+            r"\[gap_releaseday\], \[(\d{4}-\d{2}-\d{2})\]", filedata
+        )
+        if release_date:
+            release_date = datetime.datetime.strptime(release_date.group(1), "%Y-%m-%d")
+        else:
             error("Cannot find the release date in configure.ac!")
     return release_date.strftime("%d %B %Y")
+
 
 # This function deals with package-infos.json.gz and help-links.json.gz.
 # The function downloads the release asset called <asset_name> to the tmpdir.
@@ -98,7 +110,7 @@ def download_and_extract_json_gz_asset(asset_name, dest):
     download_asset_by_name(asset_name, tmpdir)
     with utils.working_directory(tmpdir):
         with gzip.open(asset_name, "rt", encoding="utf-8") as file_in:
-            with open(dest, "w") as file_out:
+            with open(dest, "w", encoding="utf-8") as file_out:
                 shutil.copyfileobj(file_in, file_out)
 
 
@@ -108,13 +120,20 @@ utils_github.CURRENT_REPO_NAME = f"{args.gap_fork}/gap"
 utils_github.initialize_github(args.token)
 notice(f"Will use temporary directory: {tmpdir}")
 
-releases = [ x for x in utils_github.CURRENT_REPO.get_releases() if
-                not x.draft and
-                not x.prerelease and
-                utils.is_possible_gap_release_tag(x.tag_name) and
-                (int(x.tag_name[1:].split('.')[0]) > 4 or
-                    (int(x.tag_name[1:].split('.')[0]) == 4 and
-                     int(x.tag_name[1:].split('.')[1]) >= 11)) ]
+releases = [
+    x
+    for x in utils_github.CURRENT_REPO.get_releases()
+    if not x.draft
+    and not x.prerelease
+    and utils.is_possible_gap_release_tag(x.tag_name)
+    and (
+        int(x.tag_name[1:].split(".")[0]) > 4
+        or (
+            int(x.tag_name[1:].split(".")[0]) == 4
+            and int(x.tag_name[1:].split(".")[1]) >= 11
+        )
+    )
+]
 if releases:
     notice(f"Found {len(releases)} published GAP releases >= v4.11.0")
 else:
@@ -122,7 +141,7 @@ else:
     sys.exit(0)
 
 # Sort by version number, biggest to smallest
-releases.sort(key=lambda s: list(map(int, s.tag_name[1:].split('.'))))
+releases.sort(key=lambda s: list(map(int, s.tag_name[1:].split("."))))
 releases.reverse()
 
 
@@ -137,11 +156,13 @@ for release in releases:
     known_release = os.path.isfile(f"_Releases/{version}.html")
     newest_release = releases.index(release) == 0
     if known_release:
-        notice(f"I have seen this release before")
+        notice("I have seen this release before")
     elif newest_release:
-        notice(f"This is a new release to me, and it has the biggest version number")
+        notice("This is a new release to me, and it has the biggest version number")
     else:
-        notice(f"This is a new release to me, but I know about releases with bigger version numbers")
+        notice(
+            "This is a new release to me, but I know about releases with bigger version numbers"
+        )
 
     # For all releases, record the assets (in case they were deleted/updated/added)
     notice(f"Collecting GitHub release asset data in _data/assets/{version_safe}.json")
@@ -163,7 +184,7 @@ for release in releases:
             "url": asset.browser_download_url,
         }
         asset_data.append(filtered_asset)
-    asset_data.sort(key=lambda s: list(map(str, s['name'])))
+    asset_data.sort(key=lambda s: list(map(str, s["name"])))
     with open(f"{pwd}/_data/assets/{version_safe}.json", "wb") as file:
         file.write(json.dumps(asset_data, indent=2).encode("utf-8"))
 
@@ -176,16 +197,19 @@ for release in releases:
         tarball = f"gap-{version}-core.tar.gz"
         download_asset_by_name(tarball, tmpdir)
         with utils.working_directory(tmpdir):
+            # FIXME extract_tarball is not defined
             extract_tarball(tarball)
         date = get_date_from_configure_ac(f"{tmpdir}/gap-{version}")
         notice(f"Using release date {date} for GAP {version}")
 
         notice(f"Writing the file _Releases/{version}.html")
-        with open(f"{pwd}/_Releases/{version}.html", "w") as file:
+        with open(f"{pwd}/_Releases/{version}.html", "w", encoding="utf-8") as file:
             file.write(f"---\nversion: {version}\ndate: '{date}'\n---\n")
 
         notice(f"Writing the file _data/package-infos/{version_safe}.json")
-        download_and_extract_json_gz_asset("package-infos.json.gz", f"{pwd}/_data/package-infos/{version_safe}.json")
+        download_and_extract_json_gz_asset(
+            "package-infos.json.gz", f"{pwd}/_data/package-infos/{version_safe}.json"
+        )
 
     # For a new-to-me release with biggest version number, also set this is the
     # 'default'/'main' version on the website (i.e. the most prominent release).
@@ -201,13 +225,19 @@ for release in releases:
             file.write(json.dumps(release_data, indent=2).encode("utf-8"))
 
         notice("Overwriting _data/help.json with the contents of help-links.json.gz")
-        download_and_extract_json_gz_asset("help-links.json.gz", f"{pwd}/_data/help.json")
+        download_and_extract_json_gz_asset(
+            "help-links.json.gz", f"{pwd}/_data/help.json"
+        )
 
-        notice("Repopulating _Packages/ with one HTML file for each package in packages-info.json")
+        notice(
+            "Repopulating _Packages/ with one HTML file for each package in packages-info.json"
+        )
         shutil.rmtree("_Packages")
         os.mkdir("_Packages")
         with open(f"{pwd}/_data/package-infos/{version_safe}.json", "rb") as file:
             data = json.loads(file.read())
             for pkg in data:
-                with open(f"{pwd}/_Packages/{pkg}.html", "w+") as pkg_file:
+                with open(
+                    f"{pwd}/_Packages/{pkg}.html", "w+", encoding="utf-8"
+                ) as pkg_file:
                     pkg_file.write(f"---\ntitle: {data[pkg]['PackageName']}\n---\n")

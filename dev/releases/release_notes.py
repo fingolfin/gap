@@ -24,12 +24,7 @@ import json
 import subprocess
 import sys
 
-from utils import error, notice
-
-import typing
-from tempfile import TemporaryDirectory
-from typing import Any, Dict, List, Optional
-
+from utils import error
 
 # the following is a list of pairs [LABEL, DESCRIPTION]; the first entry is the name of a GitHub label
 # (be careful to match them precisely), the second is a headline for a section the release notes; any PR with
@@ -116,82 +111,86 @@ def changes_overview(prs, startdate, new_version):
     """Writes files with information for release notes."""
 
     # Could also introduce some consistency checks here for wrong combinations of labels
+    with open(
+        "releasenotes_" + new_version + ".md", "w", encoding="utf-8"
+    ) as relnotes_file:
+        prs_with_use_title = [
+            pr for pr in prs if has_label(pr, "release notes: use title")
+        ]
 
-    relnotes_file = open("releasenotes_" + new_version + ".md", "w")
-    prs_with_use_title = [pr for pr in prs if has_label(pr, "release notes: use title")]
-
-    # Write out all PRs with 'use title'
-    relnotes_file.write(
-        f"""
+        # Write out all PRs with 'use title'
+        relnotes_file.write(
+            f"""
 ## GAP {new_version} (TODO insert date here, )
 
-The following gives an overview of the changes compared to the previous
-release. This list is not complete, many more internal or minor changes
-were made, but we tried to keep it to changes which we think might
-affect some users directly.
+    The following gives an overview of the changes compared to the previous
+    release. This list is not complete, many more internal or minor changes
+    were made, but we tried to keep it to changes which we think might
+    affect some users directly.
 
-"""
-    )
+    """
+        )
 
-    for priorityobject in prioritylist:
-        matches = [pr for pr in prs_with_use_title if has_label(pr, priorityobject[0])]
-        print("PRs with label '" + priorityobject[0] + "': ", len(matches))
-        if len(matches) == 0:
-            continue
-        relnotes_file.write("### " + priorityobject[1] + "\n\n")
-        for pr in matches:
-            relnotes_file.write(pr_to_md(pr))
-            prs_with_use_title.remove(pr)
-        relnotes_file.write("\n")
+        for priorityobject in prioritylist:
+            matches = [
+                pr for pr in prs_with_use_title if has_label(pr, priorityobject[0])
+            ]
+            print("PRs with label '" + priorityobject[0] + "': ", len(matches))
+            if len(matches) == 0:
+                continue
+            relnotes_file.write("### " + priorityobject[1] + "\n\n")
+            for pr in matches:
+                relnotes_file.write(pr_to_md(pr))
+                prs_with_use_title.remove(pr)
+            relnotes_file.write("\n")
 
-    # The remaining PRs have no "kind" or "topic" label from the priority list
-    # (may have other "kind" or "topic" label outside the priority list).
-    # Check their list in the release notes, and adjust labels if appropriate.
-    if len(prs_with_use_title) > 0:
-        relnotes_file.write("### Other changes\n\n")
-        for pr in prs_with_use_title:
-            relnotes_file.write(pr_to_md(pr))
-        relnotes_file.write("\n")
-    relnotes_file.close()
+        # The remaining PRs have no "kind" or "topic" label from the priority list
+        # (may have other "kind" or "topic" label outside the priority list).
+        # Check their list in the release notes, and adjust labels if appropriate.
+        if len(prs_with_use_title) > 0:
+            relnotes_file.write("### Other changes\n\n")
+            for pr in prs_with_use_title:
+                relnotes_file.write(pr_to_md(pr))
+            relnotes_file.write("\n")
+        relnotes_file.close()
 
-    unsorted_file = open("unsorted_PRs_" + new_version + ".md", "w")
+    with open(
+        "unsorted_PRs_" + new_version + ".md", "w", encoding="utf-8"
+    ) as unsorted_file:
+        # Report PRs that have to be updated before inclusion into release notes.
+        unsorted_file.write("### " + "release notes: to be added" + "\n\n")
+        unsorted_file.write(
+            "If there are any PRs listed below, check their title and labels.\n"
+        )
+        unsorted_file.write(
+            'When done, change their label to "release notes: use title".\n\n'
+        )
+        for pr in prs:
+            if has_label(pr, "release notes: to be added"):
+                unsorted_file.write(pr_to_md(pr))
 
-    # Report PRs that have to be updated before inclusion into release notes.
-    unsorted_file.write("### " + "release notes: to be added" + "\n\n")
-    unsorted_file.write(
-        "If there are any PRs listed below, check their title and labels.\n"
-    )
-    unsorted_file.write(
-        'When done, change their label to "release notes: use title".\n\n'
-    )
-    removelist = []
-    for pr in prs:
-        if has_label(pr, "release notes: to be added"):
-            unsorted_file.write(pr_to_md(pr))
+        prs = [pr for pr in prs if not has_label(pr, "release notes: to be added")]
 
-    prs = [pr for pr in prs if not has_label(pr, "release notes: to be added")]
+        unsorted_file.write("\n")
 
-    unsorted_file.write("\n")
-
-    # Report PRs that have neither "to be added" nor "added" or "use title" label
-    unsorted_file.write("### Uncategorized PR" + "\n\n")
-    unsorted_file.write(
-        "If there are any PRs listed below, either apply the same steps\n"
-    )
-    unsorted_file.write(
-        'as above, or change their label to "release notes: not needed".\n\n'
-    )
-    removelist = []
-    for pr in prs:
-        # we need to use both old "release notes: added" label and
-        # the newly introduced in "release notes: use title" label
-        # since both label may appear in GAP 4.12.0 changes overview
-        if not (
-            has_label(pr, "release notes: added")
-            or has_label(pr, "release notes: use title")
-        ):
-            unsorted_file.write(pr_to_md(pr))
-    unsorted_file.close()
+        # Report PRs that have neither "to be added" nor "added" or "use title" label
+        unsorted_file.write("### Uncategorized PR" + "\n\n")
+        unsorted_file.write(
+            "If there are any PRs listed below, either apply the same steps\n"
+        )
+        unsorted_file.write(
+            'as above, or change their label to "release notes: not needed".\n\n'
+        )
+        for pr in prs:
+            # we need to use both old "release notes: added" label and
+            # the newly introduced in "release notes: use title" label
+            # since both label may appear in GAP 4.12.0 changes overview
+            if not (
+                has_label(pr, "release notes: added")
+                or has_label(pr, "release notes: use title")
+            ):
+                unsorted_file.write(pr_to_md(pr))
+        unsorted_file.close()
 
 
 def main(new_version: str) -> None:

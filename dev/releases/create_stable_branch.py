@@ -14,11 +14,12 @@
 # TODO: implement parts of the steps described in
 # <https://github.com/gap-system/gap-distribution/blob/master/DistributionUpdate/STABLE_BRANCH_CHECKLIST.md>
 
+import subprocess
+import sys
+
 from utils import error, notice, patchfile
 import utils
 
-import subprocess
-import sys
 
 # Insist on Python >= 3.6 for f-strings and other goodies
 if sys.version_info < (3, 6):

@@ -22,14 +22,17 @@ import os
 import json
 import gzip
 
-from utils import *
+from utils import download_with_sha256
+
 
 def usage():
-    print("Usage: `./generate_package_release_notes.py OLD_GAP_VERSION NEW_GAP_VERSION`")
+    print(
+        "Usage: `./generate_package_release_notes.py OLD_GAP_VERSION NEW_GAP_VERSION`"
+    )
     sys.exit(1)
 
-def main(old_gap_version, new_gap_version):
 
+def main(old_gap_version, new_gap_version):
     # create tmp directory
     tmpdir = os.getcwd() + "/tmp"
     notice(f"Files will be put in {tmpdir}")
@@ -40,9 +43,15 @@ def main(old_gap_version, new_gap_version):
 
     # download package metadata
     old_json_file = f"{tmpdir}/package-infos-{old_gap_version}.json.gz"
-    download_with_sha256(f"https://github.com/gap-system/PackageDistro/releases/download/v{old_gap_version}/package-infos.json.gz", old_json_file)
+    download_with_sha256(
+        f"https://github.com/gap-system/PackageDistro/releases/download/v{old_gap_version}/package-infos.json.gz",
+        old_json_file,
+    )
     new_json_file = f"{tmpdir}/package-infos-{new_gap_version}.json.gz"
-    download_with_sha256(f"https://github.com/gap-system/PackageDistro/releases/download/v{new_gap_version}/package-infos.json.gz", new_json_file)
+    download_with_sha256(
+        f"https://github.com/gap-system/PackageDistro/releases/download/v{new_gap_version}/package-infos.json.gz",
+        new_json_file,
+    )
 
     # parse package metadata
     with gzip.open(old_json_file, "r") as f:
@@ -67,7 +76,11 @@ def main(old_gap_version, new_gap_version):
             home = pkg["PackageWWWHome"]
             desc = pkg["Subtitle"]
             vers = pkg["Version"]
-            authors = [x["FirstNames"]+" "+x["LastName"] for x in pkg["Persons"] if x["IsAuthor"]]
+            authors = [
+                x["FirstNames"] + " " + x["LastName"]
+                for x in pkg["Persons"]
+                if x["IsAuthor"]
+            ]
             authors = ", ".join(authors)
             print(f"- [**{name}**]({home}) {vers}: {desc}, by {authors}")
         print()
@@ -90,7 +103,8 @@ def main(old_gap_version, new_gap_version):
     updated = new_json.keys() & old_json.keys()
     updated = [p for p in updated if old_json[p]["Version"] != new_json[p]["Version"]]
     if len(updated) > 0:
-        print(f"""
+        print(
+            f"""
 #### Updated packages redistributed with GAP
 
 The GAP {new_gap_version} distribution contains {len(new_json)} packages, of which {len(updated)} have been
@@ -104,6 +118,7 @@ updated since GAP {old_gap_version}. The full list of updated packages is given 
             oldversion = old["Version"]
             newversion = new["Version"]
             print(f"- [**{name}**]({home}): {oldversion} -> {newversion}")
+
 
 if __name__ == "__main__":
     if len(sys.argv) != 3:

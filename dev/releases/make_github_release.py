@@ -15,14 +15,15 @@
 ##  If we do import * from utils, then initialize_github can't overwrite the
 ##  global CURRENT_REPO variables.
 ##
+import sys
+
 import utils
 import utils_github
-import sys
 
 from utils import error, notice
 
 if len(sys.argv) != 3:
-    error("usage: "+sys.argv[0]+" <tag_name> <path_to_release>")
+    error("usage: " + sys.argv[0] + " <tag_name> <path_to_release>")
 
 TAG_NAME = sys.argv[1]
 PATH_TO_RELEASE = sys.argv[2]
@@ -47,16 +48,18 @@ if any(r.tag_name == TAG_NAME for r in utils_github.CURRENT_REPO.get_releases())
     error(f"Github release with tag '{TAG_NAME}' already exists!")
 
 # Create release
-RELEASE_NOTE = f"For an overview of changes in GAP {VERSION} see the " \
+RELEASE_NOTE = (
+    f"For an overview of changes in GAP {VERSION} see the "
     + f"[CHANGES.md](https://github.com/gap-system/gap/blob/{TAG_NAME}/CHANGES.md) file."
+)
 notice(f"Creating release {TAG_NAME}")
-RELEASE = utils_github.CURRENT_REPO.create_git_release(TAG_NAME, TAG_NAME,
-                                                RELEASE_NOTE,
-                                                prerelease=True)
+RELEASE = utils_github.CURRENT_REPO.create_git_release(
+    TAG_NAME, TAG_NAME, RELEASE_NOTE, prerelease=True
+)
 
 with utils.working_directory(PATH_TO_RELEASE):
     manifest_filename = "MANIFEST"
-    with open(manifest_filename, 'r') as manifest_file:
+    with open(manifest_filename, "r", encoding="utf-8") as manifest_file:
         manifest = manifest_file.read().splitlines()
 
     notice(f"Contents of {manifest_filename}:")
@@ -65,7 +68,7 @@ with utils.working_directory(PATH_TO_RELEASE):
 
     # Now check that TAG_NAME and the created archives belong together
     main_archive_name = "gap-" + VERSION + ".tar.gz"
-    if not main_archive_name in manifest:
+    if main_archive_name not in manifest:
         error(f"Expected to find {main_archive_name} in MANIFEST, but did not!")
 
     # Upload all assets to release
