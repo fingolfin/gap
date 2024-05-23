@@ -61,7 +61,7 @@ JL_DLLEXPORT void * jl_get_ptls_states(void);
 
 // if SKIP_GUARD_PAGES is set, stack scanning will attempt to determine
 // the extent of any guard pages and skip them if needed.
-// #define SKIP_GUARD_PAGES
+#define SKIP_GUARD_PAGES
 
 // if REQUIRE_PRECISE_MARKING is defined, we assume that all marking
 // functions are precise, i.e., they only invoke MarkBag on valid bags,
@@ -188,9 +188,9 @@ static size_t MaxPoolObjSize;
 static int    FullGC;
 static UInt   StartTime, TotalTime;
 
-#ifdef SKIP_GUARD_PAGES
+// #ifdef SKIP_GUARD_PAGES
 static size_t GuardPageSize;
-#endif
+// #endif
 
 #if !defined(USE_GAP_INSIDE_JULIA)
 static Bag *       GapStackBottom;
@@ -427,14 +427,23 @@ static inline void * align_ptr(void * p)
     return (void *)u;
 }
 
+static volatile void * HACK_current;
+
 static void FindLiveRangeReverse(PtrArray * arr, void * start, void * end)
 {
-    if (lt_ptr(end, start)) {
-        SWAP(void *, start, end);
-    }
+//     if (lt_ptr(end, start)) {
+//         SWAP(void *, start, end);
+//     }
     char * p = (char *)(align_ptr(start));
+
+    // FIXME: is `start` ever not aligned??? verify
+if (p != start)
+    fprintf(stderr, "FindLiveRangeReverse: p %p, start %p\n", p, start);
+    // TODO: should we set C_STACK_ALIGN to just 8 ????
     char * q = (char *)end - sizeof(void *);
     while (!lt_ptr(q, p)) {
+// FIXME: something is wrong we sometimes seem to go *below* start ????????
+        HACK_current = q;
         void * addr = *(void **)q;
         if (addr && jl_gc_internal_obj_base_ptr(addr) == addr &&
             jl_typeis(addr, DatatypeGapObj)) {
@@ -444,8 +453,8 @@ static void FindLiveRangeReverse(PtrArray * arr, void * start, void * end)
     }
 }
 
-#ifdef SKIP_GUARD_PAGES
-
+// #ifdef SKIP_GUARD_PAGES
+//
 static void SetupGuardPagesSize(void)
 {
     // This is a generic implementation that assumes that all threads
@@ -458,18 +467,26 @@ static void SetupGuardPagesSize(void)
         abort();
     }
     pthread_attr_destroy(&attr);
+
+    fprintf(stderr, "GuardPageSize %d / 0x%x\n", (int)GuardPageSize, (int)GuardPageSize);
+// macOS: GuardPageSize 16384 / 0x4000
+
+GuardPageSize = 0x8000;  // HACK HACK HACK
+
 }
 
-#endif
+// #endif
 
 
-static void SafeScanTaskStack(PtrArray * stack, void * start, void * end)
+static void SafeScanTaskStack(jl_task_t * task, PtrArray * stack, void * start, void * end)
 {
-#ifdef SKIP_GUARD_PAGES
+    fprintf(stderr, "  SafeScanTaskStack for task %p, start %p, end %p\n", task, start, end);
+#ifdef SKIP_GUARD_PAGES_XX
     FindLiveRangeReverse(stack, start, end);
 #else
     volatile jl_jmp_buf * old_safe_restore = jl_get_safe_restore();
     jl_jmp_buf            exc_buf;
+    HACK_current = 0;
     if (!jl_setjmp(exc_buf, 0)) {
         // The start of the stack buffer may be protected with guard
         // pages; accessing these results in segmentation faults.
@@ -483,6 +500,17 @@ static void SafeScanTaskStack(PtrArray * stack, void * start, void * end)
         // optimize scanning for areas that contain only null bytes.
         jl_set_safe_restore(&exc_buf);
         FindLiveRangeReverse(stack, start, end);
+    } else {
+        // TODO: we only get here if there was an exception. record where that
+        // was and report it here
+        int offset = (char *)HACK_current - (char *)start;
+        fprintf(stderr, "  SafeScanTaskStack exception for task %p, at %p (offset %d / 0x%x)\n", task, HACK_current, offset, offset);
+/*
+SafeScanTaskStack exception at 0x10d28bfff (start 0x10d284000, end 0x10d684000 ; GuardPageSize 16384)
+SafeScanTaskStack exception at 0x16ed03fff (start 0x16ed022f0, end 0x16f4fe2f0 ; GuardPageSize 16384)
+SafeScanTaskStack exception at 0x10e307fff (start 0x10e300000, end 0x10e700000 ; GuardPageSize 16384)
+*/
+
     }
     jl_set_safe_restore((jl_jmp_buf *)old_safe_restore);
 #endif
@@ -520,7 +548,7 @@ ScanTaskStack(int rescan, jl_task_t * task, void * start, void * end)
         pthread_mutex_unlock(&TaskStacksMutex);
 #endif
     if (rescan) {
-        SafeScanTaskStack(stack, start, end);
+        SafeScanTaskStack(task, stack, start, end);
         // Remove duplicates
         if (stack->len > 0) {
             PtrArraySort(stack);
@@ -617,6 +645,8 @@ static void GapTaskScanner(jl_task_t * task, int root_task)
 {
     // If it is the current task, it has been scanned by GapRootScanner()
     // already.
+// FIXME: dangerous and wrong assumption if we use multiple GC threads.
+// Alas it should also just never be true
     if (task == (jl_task_t *)jl_get_current_task())
         return;
 
@@ -641,11 +671,16 @@ static void GapTaskScanner(jl_task_t * task, int root_task)
     jl_active_task_stack(task, &active_start, &active_end, &total_start,
                          &total_end);
 
+    fprintf(stderr, "GapTaskScanner for task %p: active %p to %p, total %p to %p\n",
+            task, active_start, active_end, total_start, total_end);
+
+
     if (active_start) {
 #ifdef SKIP_GUARD_PAGES
         if (total_start == active_start && total_end == active_end) {
             // The "active" range is actually the entire stack buffer
             // and may include guard pages at the start.
+            // FIXME: at the start? end? figure out empirically..
             active_start += GuardPageSize;
         }
 #endif
@@ -786,9 +821,9 @@ void GAP_InitJuliaMemoryInterface(jl_module_t *   module,
     jl_init();
 #endif
 
-#ifdef SKIP_GUARD_PAGES
+// #ifdef SKIP_GUARD_PAGES
     SetupGuardPagesSize();
-#endif
+// #endif
 
 #ifdef JULIA_MULTIPLE_GC_THREADS_SUPPORTED
     if (jl_n_gcthreads > 1)
