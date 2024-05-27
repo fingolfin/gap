@@ -417,7 +417,7 @@ static inline void * align_ptr(void * p)
     return (void *)u;
 }
 
-static void FindLiveRangeReverse(PtrArray * arr, void * start, void * end)
+static void FindLiveRangeReverse(PtrArray * arr, void * start, void * end, volatile void * volatile * HACK_current)
 {
     // HACK: the following deals with stacks of 'negative size' exposed by
     // Julia -- however, despite us having this code in here for a few years,
@@ -444,6 +444,7 @@ static void FindLiveRangeReverse(PtrArray * arr, void * start, void * end)
     char * p = (char *)(align_ptr(start));
     char * q = (char *)end - sizeof(void *);
     while (!lt_ptr(q, p)) {
+        *HACK_current = q;
         void * addr = *(void **)q;
         if (addr && jl_gc_internal_obj_base_ptr(addr) == addr &&
             jl_typeis(addr, DatatypeGapObj)) {
@@ -453,10 +454,12 @@ static void FindLiveRangeReverse(PtrArray * arr, void * start, void * end)
     }
 }
 
-static void SafeScanTaskStack(PtrArray * stack, void * start, void * end)
+static void SafeScanTaskStack(jl_task_t * task, PtrArray * stack, void * start, void * end)
 {
+    fprintf(stderr, "  SafeScanTaskStack for task %p, range %p - %p (size 0x%x)\n", task, start, end, (int)((char*)end-(char*)start));
     volatile jl_jmp_buf * old_safe_restore = jl_get_safe_restore();
     jl_jmp_buf            exc_buf;
+    volatile void * HACK_current = 0;
     if (!jl_setjmp(exc_buf, 0)) {
         // The start of the stack buffer may be protected with guard
         // pages; accessing these results in segmentation faults.
@@ -469,7 +472,12 @@ static void SafeScanTaskStack(PtrArray * stack, void * start, void * end)
         // of the stack buffer past the stack top. We therefore also
         // optimize scanning for areas that contain only null bytes.
         jl_set_safe_restore(&exc_buf);
-        FindLiveRangeReverse(stack, start, end);
+        FindLiveRangeReverse(stack, start, end, &HACK_current);
+    } else {
+        // TODO: we only get here if there was an exception. record where that
+        // was and report it here
+        int offset = (char *)HACK_current - (char *)start;
+        fprintf(stderr, "  !!! SafeScanTaskStack EXCEPTION for task %p, at %p (offset %d / 0x%x)\n", task, HACK_current, offset, offset);
     }
     jl_set_safe_restore((jl_jmp_buf *)old_safe_restore);
 }
@@ -506,7 +514,7 @@ ScanTaskStack(int rescan, jl_task_t * task, void * start, void * end)
         pthread_mutex_unlock(&TaskStacksMutex);
 #endif
     if (rescan) {
-        SafeScanTaskStack(stack, start, end);
+        SafeScanTaskStack(task, stack, start, end);
         // Remove duplicates
         if (stack->len > 0) {
             PtrArraySort(stack);
@@ -553,11 +561,19 @@ static void GapRootScanner(int full)
 
     ScannedRootTask = task;
 
+    fprintf(stderr, "GapRootScanner(%d) for task %p\n", full, task);
+
     // We figure out the end of the stack from the current task. While
     // `stack_bottom` is passed to InitBags(), we cannot use that if
     // current_task != root_task.
-    char *dummy, *stackend;
-    jl_active_task_stack(task, &dummy, &dummy, &dummy, &stackend);
+    char *active_start, *active_end, *total_start, *total_end;
+    jl_active_task_stack(task, &active_start, &active_end, &total_start,
+                         &total_end);
+
+    fprintf(stderr, "  active %p - %p (size 0x%x)\n"
+                    "  total %p - %p (size 0x%x)\n",
+            active_start, active_end, (int)((char*)active_end-(char*)active_start),
+            total_start, total_end, (int)((char*)total_end-(char*)total_start));
 
 #if !defined(USE_GAP_INSIDE_JULIA)
     // The following test overrides the stackend if the following two
@@ -572,7 +588,7 @@ static void GapRootScanner(int full)
     // reliably know where the bottom of the initial stack is. However,
     // GAP does have that information, so we use that instead.
     if (task == RootTaskOfMainThread) {
-        stackend = (char *)GapStackBottom;
+        total_end = (char *)GapStackBottom;
     }
 #endif
 
@@ -589,7 +605,9 @@ static void GapRootScanner(int full)
     jmp_buf registers;
     _setjmp(registers);
     TryMarkRange(ptls, registers, (char *)registers + sizeof(jmp_buf));
-    TryMarkRange(ptls, (char *)registers + sizeof(jmp_buf), stackend);
+    TryMarkRange(ptls, (char *)registers + sizeof(jmp_buf), total_end);
+
+    fprintf(stderr, "  registers %p,  sizeof(jmp_buf) %d\n", (char *)registers, (int)sizeof(jmp_buf));
 
     // mark all global objects
     for (Int i = 0; i < GlobalCount; i++) {
@@ -603,9 +621,13 @@ static void GapRootScanner(int full)
 // Julia callback
 static void GapTaskScanner(jl_task_t * task, int root_task)
 {
+    fprintf(stderr, "GapTaskScanner for task %p (root? %d):\n", task, root_task);
+
     // If this task has been scanned by GapRootScanner() already, skip it
-    if (task == ScannedRootTask)
+    if (task == ScannedRootTask) {
+        fprintf(stderr, "  skipping root task\n");
         return;
+    }
 
     int rescan = 1;
     if (!FullGC) {
@@ -628,6 +650,18 @@ static void GapTaskScanner(jl_task_t * task, int root_task)
     jl_active_task_stack(task, &active_start, &active_end, &total_start,
                          &total_end);
 
+    fprintf(stderr, "  active %p - %p (size 0x%x)\n"
+                    "  total %p - %p (size 0x%x)\n",
+            active_start, active_end, (int)((char*)active_end-(char*)active_start),
+            total_start, total_end, (int)((char*)total_end-(char*)total_start));
+
+    if (task->ptls) {
+        fprintf(stderr, "    from tls: %p - %p (size 0x%x)\n",
+            task->ptls->stackbase,
+            (char *)task->ptls->stackbase + task->ptls->stacksize,
+            (int)task->ptls->stacksize);
+    }
+
     if (active_start) {
 #if !defined(USE_GAP_INSIDE_JULIA)
         if (task == RootTaskOfMainThread) {
@@ -647,6 +681,7 @@ static void GapTaskScanner(jl_task_t * task, int root_task)
 static void PreGCHook(int full)
 {
     FullGC = full;
+    fprintf(stderr, "\n------\nPreGCHook(%d)\n", full);
 
     // This is the same code as in VarsBeforeCollectBags() for GASMAN.
     // It is necessary because ASS_LVAR() and related functionality
@@ -669,6 +704,7 @@ static void PreGCHook(int full)
 // Julia callback
 static void PostGCHook(int full)
 {
+    fprintf(stderr, "PostGCHook(%d)\n------\n", full);
     ScannedRootTask = 0;
     TotalTime += SyTime() - StartTime;
 #ifdef COLLECT_MARK_CACHE_STATS
