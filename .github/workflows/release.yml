@@ -252,6 +252,17 @@ jobs:
 
       - uses: gap-actions/setup-cygwin@v2
 
+      # Compiler cache for release_gap.sh. Most of the build time goes into a
+      # few C++-heavy packages that rarely change. The key covers what the
+      # cached objects depend on: package sources and GAP headers.
+      - name: "Restore the compiler cache"
+        id: ccache
+        uses: actions/cache/restore@v6
+        with:
+          path: gap-windows/ccache
+          key: ccache-cygwin-${{ hashFiles('gap-*/pkg/*/PackageInfo.g', 'gap-*/src/*.h') }}
+          restore-keys: ccache-cygwin-
+
       # Currently, the gap-windows/release_gap.sh script wraps the GAP
       # contained in gap-${GAP_VERSION}, and outputs its installer to
       # gap-windows/Output/gap-${GAP_VERSION}-$ARCH.exe
@@ -272,6 +283,15 @@ jobs:
 
         env:
           ARCH: x86_64
+
+      # Pull requests only read the cache, which keeps them from filling the
+      # repository's cache quota with copies of it.
+      - name: "Save the compiler cache"
+        if: ${{ github.event_name != 'pull_request' && steps.ccache.outputs.cache-hit != 'true' }}
+        uses: actions/cache/save@v6
+        with:
+          path: gap-windows/ccache
+          key: ${{ steps.ccache.outputs.cache-primary-key }}
 
       # Artifacts live for 1 day, i.e. until the next cron job runs.
       - name: "Upload the installer as an artifact"
