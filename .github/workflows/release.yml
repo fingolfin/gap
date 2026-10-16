@@ -247,7 +247,7 @@ jobs:
         uses: actions/checkout@v7
         with:
           repository: gap-system/gap-windows
-          ref: main
+          ref: mh-claude/ccache
           path: gap-windows
 
       - uses: gap-actions/setup-cygwin@v2
